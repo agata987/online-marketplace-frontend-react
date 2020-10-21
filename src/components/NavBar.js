@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import { Menu } from 'semantic-ui-react'
+import { Dropdown, Icon, Menu } from 'semantic-ui-react'
 
 export default class MenuExampleSecondaryPointing extends Component {
-    state = { activeItem: 'Ogloszenia' }
+    state = { activeItem: 'Ogłoszenia' }
   
     handleItemClick = (e, { name }) => this.setState({ activeItem: name })
   
@@ -10,11 +10,10 @@ export default class MenuExampleSecondaryPointing extends Component {
       const { activeItem } = this.state
   
       return (
-        <div>
-          <Menu pointing secondary>
+          <Menu pointing secondary size='massive' color='blue'>
             <Menu.Item
-              name='Ogloszenia'
-              active={activeItem === 'Ogloszenia'}
+              name='Ogłoszenia'
+              active={activeItem === 'Ogłoszenia'}
               onClick={this.handleItemClick}
             />
             <Menu.Item
@@ -28,15 +27,26 @@ export default class MenuExampleSecondaryPointing extends Component {
                     icon='envelope'
                     active={activeItem === ''}
                     onClick={this.handleItemClick}
+                    link='messages/'
                 />
-                <Menu.Item
-                    name='Moje konto'
-                    active={activeItem === 'Moje konto'}
-                    onClick={this.handleItemClick}
-                />
+                <Dropdown text='Moje konto' pointing className='link item' onClick={this.handleItemClick}>
+                    <Dropdown.Menu>
+                        <Dropdown.Item>
+                            <Icon name='star'/>
+                            Ulubione
+                        </Dropdown.Item>
+                        <Dropdown.Item>
+                            <Icon name='setting'/>
+                            Ustawienia
+                        </Dropdown.Item>
+                        <Dropdown.Item>
+                            <Icon name='sign out'/>
+                            Wyloguj się
+                        </Dropdown.Item>
+                    </Dropdown.Menu>
+                </Dropdown>
             </Menu.Menu>
           </Menu>
-        </div>
       )
     }
   }
