@@ -1,4 +1,4 @@
-import BACKEND_URL from '../../config'
+import { BACKEND_URL } from '../../config'
 
 // action creators (return an action object)
 
@@ -11,11 +11,14 @@ export const logOut = () => ({ type: 'LOG_OUT' })
 const axios = require('axios')
 
 export const fetchUser = userInfo => dispatch => {
-    axios.post(`${BACKEND_URL}/api/auth/token`, {
+    axios.post(`${BACKEND_URL}api/auth/token/`, {
         ...userInfo
     })
     .then( res => {
         localStorage.setItem('token', res.data.token)
         dispatch(setUser(res.data.user))
+    })
+    .catch( err => {
+        console.log(err)
     })
 }
