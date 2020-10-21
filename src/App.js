@@ -7,6 +7,7 @@ import {
 
 import NavBar from './components/NavBar'
 
+import LoginView from './views/authentication/LoginView'
 import FavouritesView from './views/FavouritesView'
 import JobsView from './views/JobsView'
 import MessagesView from './views/MessagesView'
@@ -22,6 +23,7 @@ function App() {
       <Router>
         <NavBar />
         <Switch>
+          <Route path='/login' exact component={LoginView} />
           <Route path='/favourites' exact component={FavouritesView} />
           <Route path='/jobs' exact component={JobsView} />
           <Route path='/messages' exact component={MessagesView} />

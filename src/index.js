@@ -2,14 +2,19 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import {Provider} from 'react-redux'
-import {createStore, applyMiddleware} from 'redux'
+import {createStore, compose, applyMiddleware} from 'redux'
 import thunk from 'redux-thunk'
 import rootReducer from './redux/reducers'
 
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
-const store = createStore(rootReducer, applyMiddleware(thunk))
+const composeEnhances = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose    // if we do not have the extension installed we use compose
+
+
+const store = createStore(rootReducer, composeEnhances(
+  applyMiddleware(thunk)
+))
 
 ReactDOM.render(
   <React.StrictMode>
