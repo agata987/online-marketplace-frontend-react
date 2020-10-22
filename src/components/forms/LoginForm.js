@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { Button, Form, Message, Icon } from 'semantic-ui-react'
 import { fetchUser } from '../../redux/actions/userActions'
 
-class LoginComponent extends React.Component {
+class LoginForm extends React.Component {
 
     state = {
         username_or_email: '',
@@ -26,7 +26,7 @@ class LoginComponent extends React.Component {
         return(
             <div>
                 <Form onSubmit={this.onSubmit}>
-                    <h2>Zaloguj się</h2>
+                    <h2>Logowanie</h2>
                     { this.props.userReducer.error ? 
                     <Message negative>
                     <p>Niepoprawna nazwa użytkownika/ adres e-mail lub hasło.</p>
@@ -53,7 +53,7 @@ class LoginComponent extends React.Component {
                 </Form>
                 <Message warning>
                 <Icon name='arrow alternate circle right' />
-                Nie posiadasz konta użytkownika? &nbsp;<a href='#'>Zarejestruj się</a>&nbsp;.
+                Nie posiadasz konta użytkownika? &nbsp;<a href='/register'>Zarejestruj się</a>&nbsp;.
                 </Message>
             </div>
         )
@@ -72,4 +72,4 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginComponent)
+export default connect(mapStateToProps, mapDispatchToProps)(LoginForm)
