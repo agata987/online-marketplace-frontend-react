@@ -38,6 +38,7 @@ class LoginForm extends React.Component {
                             name='username_or_email'
                             value={this.state.username_or_email}
                             onChange={this.onChange}
+                            placeholder='Nazwa użytkownika/ adres e-mail'
                         />
                     </Form.Field>
                     <Form.Field>
@@ -47,9 +48,10 @@ class LoginForm extends React.Component {
                             name='password'
                             value={this.state.password}
                             onChange={this.onChange}
+                            placeholder='Hasło'
                         />
                     </Form.Field>
-                    <Button type='submit'>Zaloguj się</Button>
+                    <Button type='submit' size='large' >Zaloguj się</Button>
                 </Form>
                 <Message warning>
                 <Icon name='arrow alternate circle right' />

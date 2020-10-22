@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Button, Form } from 'semantic-ui-react'
+import { Button, Form, Icon } from 'semantic-ui-react'
 import { signUpUser } from '../../redux/actions/userActions'
 
 class RegisterForm extends React.Component {
@@ -35,6 +35,10 @@ class RegisterForm extends React.Component {
     render() {
         return(
             <div>
+                <button class="ui labeled icon button small">
+                <Icon name='arrow alternate circle left' />
+                    Powrót do logowania
+                </button>
                 <Form onSubmit={this.onSubmit}>
                     <h2>Tworzenie nowego konta</h2>
                     <Form.Field >
@@ -43,6 +47,7 @@ class RegisterForm extends React.Component {
                             name='username'
                             value={this.state.username}
                             onChange={this.onChange}
+                            placeholder='Nazwa użytkownika'
                         />
                     </Form.Field>
                     <Form.Field >
@@ -51,6 +56,7 @@ class RegisterForm extends React.Component {
                             name='email'
                             value={this.state.email}
                             onChange={this.onChange}
+                            placeholder='Adres e-mail'
                         />
                     </Form.Field>
                     <Form.Field>
@@ -60,6 +66,7 @@ class RegisterForm extends React.Component {
                             name='password'
                             value={this.state.password}
                             onChange={this.onChange}
+                            placeholder='Hasło'
                         />
                     </Form.Field>
                     <Form.Field>
@@ -69,9 +76,10 @@ class RegisterForm extends React.Component {
                             name='password2'
                             value={this.state.password2}
                             onChange={this.onChange}
+                            placeholder='Powtórz hasło'
                         />
                     </Form.Field>
-                    <Button type='submit'>Zarejestruj się</Button>
+                    <Button type='submit' size='large'>Zarejestruj się</Button>
                 </Form>
             </div>
         )
