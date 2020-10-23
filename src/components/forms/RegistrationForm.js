@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Button, Form, Icon } from 'semantic-ui-react'
+import { Button, Form, Icon, Input } from 'semantic-ui-react'
 import { signUpUser } from '../../redux/actions/userActions'
 
 class RegisterForm extends React.Component {
@@ -41,8 +41,16 @@ class RegisterForm extends React.Component {
                 </button>
                 <Form onSubmit={this.onSubmit}>
                     <h2>Tworzenie nowego konta</h2>
-                    <Form.Field >
-                        <label>Nazwa użytkownika</label>
+                    <Form.Field 
+                        id='form-input-control-error-email'
+                        error={{
+                            content: 'Please enter a valid email address',
+                            pointing: 'below',
+                        }}
+                        control={Input}
+                        label='Nazwa użytkownika'
+                    >
+                        
                         <input 
                             name='username'
                             value={this.state.username}
@@ -89,7 +97,7 @@ class RegisterForm extends React.Component {
 
 const mapStateToProps = state => {
     return {
-        signUpUser: state.signUpUser
+        userReducer: state.userReduce
     }
 }
 

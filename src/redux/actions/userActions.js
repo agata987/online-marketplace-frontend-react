@@ -35,7 +35,11 @@ export const signUpUser = userInfo => dispatch => {
     })
     .then( res => {
         localStorage.setItem('token', res.data.token)
-        dispatch(setUser(res.data.user))
+        dispatch(setUser({
+            username: res.data.username,
+            email: res.data.email,
+            email_verified: false
+        }))
     })
     .catch( err => {
         console.log(err.response.data)
