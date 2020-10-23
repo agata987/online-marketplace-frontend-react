@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Button, Form, Icon, Input } from 'semantic-ui-react'
+import { Button, Form, Icon, Input, Message } from 'semantic-ui-react'
 import { signUpUser } from '../../redux/actions/userActions'
 import { FormField } from './FormField'
 
@@ -12,9 +12,7 @@ class RegisterForm extends React.Component {
         password: '',
         password2: '',
 
-        passwords_match: true,
-
-        empty_fields: false
+        passwords_match: true
     }
 
     onChange = e => {
@@ -25,14 +23,14 @@ class RegisterForm extends React.Component {
     onSubmit = e => {
         e.preventDefault()
 
-        // TODO OGARNĄĆ WYKORZYSTYWANIE ZMIENNJE EMPTY FIELDS
-        this.setState({empty_fields: (!this.state.username.trim() || !this.state.email.trim() || !this.state.password.trim() || !this.state.password2.trim())})
-
+        // password1 == password2
         this.setState({passwords_match: (this.state.password.trim() === this.state.password2.trim())})
 
-        if (this.state.passwords_match) {
+        // no empty fields
+        if (this.state.passwords_match && this.state.username.trim() !== '' &&  this.state.email.trim() !== '' && this.state.password.trim() !== '') {
             this.props.signUpUser(this.state)
         }
+
     }
 
     render() {
@@ -42,8 +40,14 @@ class RegisterForm extends React.Component {
                 <Icon name='arrow alternate circle left' />
                     Powrót do logowania
                 </button>
+
+                <h2>Tworzenie nowego konta</h2>
+
+                <Message warning>
+                <p><Icon name='exclamation'/>Wszystkie pola muszą być uzupełnione.</p>
+                </Message> 
                 <Form onSubmit={this.onSubmit}>
-                    <h2>Tworzenie nowego konta</h2>
+                    
                     <label>Nazwa użytkownika</label>
                     <FormField 
                         fieldError={this.props.userReducer.registerErrors ? this.props.userReducer.registerErrors.username ? true : false : false}

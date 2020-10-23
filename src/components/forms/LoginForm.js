@@ -1,13 +1,20 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Button, Form, Message, Icon } from 'semantic-ui-react'
-import { fetchUser } from '../../redux/actions/userActions'
+import { fetchUser, logoutUser } from '../../redux/actions/userActions'
 
 class LoginForm extends React.Component {
 
-    state = {
-        username_or_email: '',
-        password: ''
+    constructor(props) {
+        super(props)
+
+        // to clear register form errors if user comes back to login form
+        this.props.logoutUser()
+
+        this.state = {
+            username_or_email: '',
+            password: '',
+        }
     }
 
     onChange = e => {
@@ -17,6 +24,8 @@ class LoginForm extends React.Component {
 
     onSubmit = e => {
         e.preventDefault()
+
+        if (this.state.username_or_email.trim() !== '' && this.state.password.trim() !== '')
         this.props.fetchUser(this.state)
     }
 
@@ -68,7 +77,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        fetchUser: userInfo => dispatch(fetchUser(userInfo))
+        fetchUser: userInfo => dispatch(fetchUser(userInfo)),
+        logoutUser: () => dispatch(logoutUser())
     }
 }
 

@@ -5,7 +5,7 @@ import { BACKEND_URL } from '../../config'
 const setUser = payload => ({ type: 'SET_USER', payload })
 const setUserError = payload => ({ type: 'LOG_ERROR', payload })
 
-export const logOut = () => ({ type: 'LOG_OUT' })
+const logOut = () => ({ type: 'LOG_OUT' })
 
 // methods (handle API requests)
 
@@ -25,9 +25,14 @@ export const fetchUser = userInfo => dispatch => {
     })
 }
 
+// logout user
+export const logoutUser = () => dispatch => {
+    dispatch(logOut())
+}
+
 // register a new user
 export const signUpUser = userInfo => dispatch => {
-    
+
     axios.post(`${BACKEND_URL}api/auth/register/`, {
         username: userInfo.username,
         email: userInfo.email,
@@ -42,7 +47,6 @@ export const signUpUser = userInfo => dispatch => {
         }))
     })
     .catch( err => {
-        console.log(err.response.data)
         dispatch(setUserError(err.response.data))   // set register errors
-    })
+    })    
 }
