@@ -12,9 +12,7 @@ class LoginForm extends React.Component {
 
     onChange = e => {
         e.persist();
-        this.setState(() => ({
-            [e.target.name]: e.target.value 
-        }))
+        this.setState({[e.target.name]: e.target.value})
     }
 
     onSubmit = e => {

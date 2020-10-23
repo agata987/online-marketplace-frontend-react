@@ -11,32 +11,28 @@ class RegisterForm extends React.Component {
         email: '',
         password: '',
         password2: '',
-        passwords_match: true
+
+        passwords_match: true,
+
+        empty_fields: false
     }
 
     onChange = e => {
         e.persist();
-        this.setState(() => ({
-            [e.target.name]: e.target.value 
-        }))
+        this.setState({[e.target.name]: e.target.value})
     }
 
     onSubmit = e => {
         e.preventDefault()
 
-        if (this.state.password.trim() === this.state.password2.trim()) {
-            this.setState(() => ({
-                passwords_match: true
-            }))
-        } else {
-            this.setState(() => ({
-                passwords_match: false
-            }))
-        }
+        // TODO OGARNĄĆ WYKORZYSTYWANIE ZMIENNJE EMPTY FIELDS
+        this.setState({empty_fields: (!this.state.username.trim() || !this.state.email.trim() || !this.state.password.trim() || !this.state.password2.trim())})
 
-        if (this.state.passwords_match) 
+        this.setState({passwords_match: (this.state.password.trim() === this.state.password2.trim())})
+
+        if (this.state.passwords_match) {
             this.props.signUpUser(this.state)
-
+        }
     }
 
     render() {
@@ -90,8 +86,8 @@ class RegisterForm extends React.Component {
                     </FormField>
                     <label>Powtórz hasło</label>
                     <FormField 
-                        fieldError={!this.state.passwords_match ? true : false }
-                        content={!this.state.passwords_match ? 'Niepoprawnie powtórzone hasło.' : ''}
+                        fieldError={!this.state.passwords_match ? true : this.state.password2_empty ? true : false }
+                        content={!this.state.passwords_match ? 'Niepoprawnie powtórzone hasło.' : this.state.password2_empty ? 'To pole nie może być puste.' : ''}
                         control={Input}
                     >
                         <input
