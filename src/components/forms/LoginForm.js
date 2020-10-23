@@ -32,8 +32,8 @@ class LoginForm extends React.Component {
                     <p>Niepoprawna nazwa użytkownika/ adres e-mail lub hasło.</p>
                     </Message> 
                     : null }
+                    <label>Nazwa użytkownika / adres e-mail</label>
                     <Form.Field >
-                        <label>Nazwa użytkownika / adres e-mail</label>
                         <input 
                             name='username_or_email'
                             value={this.state.username_or_email}
@@ -41,8 +41,8 @@ class LoginForm extends React.Component {
                             placeholder='Nazwa użytkownika/ adres e-mail'
                         />
                     </Form.Field>
+                    <label>Hasło</label>
                     <Form.Field>
-                        <label>Hasło</label>
                         <input 
                             type='password'
                             name='password'

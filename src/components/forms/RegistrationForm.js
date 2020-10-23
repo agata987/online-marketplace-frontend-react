@@ -11,7 +11,7 @@ class RegisterForm extends React.Component {
         email: '',
         password: '',
         password2: '',
-        errors: ''
+        passwords_match: true
     }
 
     onChange = e => {
@@ -24,13 +24,19 @@ class RegisterForm extends React.Component {
     onSubmit = e => {
         e.preventDefault()
 
-        // if (toString(username).trim() === '' )
-        // if (password === password2) {
-        //     this.props.signUpUser(this.state)
-        // } else {
-        //     this.setState(errors, 'password does not mutch')
-        // }
-        this.props.signUpUser(this.state)
+        if (this.state.password.trim() === this.state.password2.trim()) {
+            this.setState(() => ({
+                passwords_match: true
+            }))
+        } else {
+            this.setState(() => ({
+                passwords_match: false
+            }))
+        }
+
+        if (this.state.passwords_match) 
+            this.props.signUpUser(this.state)
+
     }
 
     render() {
@@ -42,11 +48,11 @@ class RegisterForm extends React.Component {
                 </button>
                 <Form onSubmit={this.onSubmit}>
                     <h2>Tworzenie nowego konta</h2>
+                    <label>Nazwa użytkownika</label>
                     <FormField 
                         fieldError={this.props.userReducer.registerErrors ? this.props.userReducer.registerErrors.username ? true : false : false}
                         content={this.props.userReducer.registerErrors ? this.props.userReducer.registerErrors.username ? this.props.userReducer.registerErrors.username : '' : ''}
                         control={Input}
-                        label={'Nazwa użytkownika'}
                     >
                         <input 
                             name='username'
@@ -55,11 +61,11 @@ class RegisterForm extends React.Component {
                             placeholder='Nazwa użytkownika'
                         />
                     </FormField>
+                    <label>Adres e-mail</label>
                     <FormField 
                         fieldError={this.props.userReducer.registerErrors ? this.props.userReducer.registerErrors.email ? true : false : false}
                         content={this.props.userReducer.registerErrors ? this.props.userReducer.registerErrors.email ? this.props.userReducer.registerErrors.email : '' : ''}
                         control={Input}
-                        label={'Adres e-mail'}
                     >
                         <input 
                             name='email'
@@ -68,11 +74,11 @@ class RegisterForm extends React.Component {
                             placeholder='Adres e-mail'
                         />
                     </FormField>
+                    <label>Hasło</label>
                     <FormField 
                         fieldError={this.props.userReducer.registerErrors ? this.props.userReducer.registerErrors.password ? true : false : false}
                         content={this.props.userReducer.registerErrors ? this.props.userReducer.registerErrors.password ? this.props.userReducer.registerErrors.password : '' : ''}
                         control={Input}
-                        label={'Hasło'}
                     >
                         <input
                             type='password' 
@@ -82,16 +88,20 @@ class RegisterForm extends React.Component {
                             placeholder='Hasło'
                         />
                     </FormField>
-                    <Form.Field>
-                        <label>Powtórz hasło</label>
-                        <input 
-                            type='password'
+                    <label>Powtórz hasło</label>
+                    <FormField 
+                        fieldError={!this.state.passwords_match ? true : false }
+                        content={!this.state.passwords_match ? 'Niepoprawnie powtórzone hasło.' : ''}
+                        control={Input}
+                    >
+                        <input
+                            type='password' 
                             name='password2'
                             value={this.state.password2}
                             onChange={this.onChange}
                             placeholder='Powtórz hasło'
                         />
-                    </Form.Field>
+                    </FormField>
                     <Button type='submit' size='large'>Zarejestruj się</Button>
                 </Form>
             </div>
