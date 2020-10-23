@@ -20,7 +20,8 @@ const userReducer = (state = defaultState, action) => {
             localStorage.clear()
             return {
                 loggedIn: false,
-                error: true
+                error: true,
+                registerErrors: { ...action.payload }
             }
         default: return state
     }

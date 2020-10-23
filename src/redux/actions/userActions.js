@@ -3,7 +3,7 @@ import { BACKEND_URL } from '../../config'
 // action creators (return an action object)
 
 const setUser = payload => ({ type: 'SET_USER', payload })
-const setUserError = () => ({ type: 'LOG_ERROR' })
+const setUserError = payload => ({ type: 'LOG_ERROR', payload })
 
 export const logOut = () => ({ type: 'LOG_OUT' })
 
@@ -21,7 +21,7 @@ export const fetchUser = userInfo => dispatch => {
         dispatch(setUser(res.data.user))
     })
     .catch( () => {
-        dispatch(setUserError())
+        dispatch(setUserError())    // set login error
     })
 }
 
@@ -39,5 +39,6 @@ export const signUpUser = userInfo => dispatch => {
     })
     .catch( err => {
         console.log(err.response.data)
+        dispatch(setUserError(err.response.data))   // set register errors
     })
 }
