@@ -36,10 +36,13 @@ class RegisterForm extends React.Component {
     render() {
         return(
             <div>
-                <button class="ui labeled icon button small">
-                <Icon name='arrow alternate circle left' />
-                    Powrót do logowania
-                </button>
+                <a href='/login'>
+                    <button class="ui labeled icon button small">
+                        <Icon name='arrow alternate circle left' />
+                        Powrót do logowania
+                    </button>
+                </a>
+                
 
                 <h2>Tworzenie nowego konta</h2>
 
