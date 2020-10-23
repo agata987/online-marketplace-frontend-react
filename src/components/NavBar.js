@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { Dropdown, Icon, Menu } from 'semantic-ui-react'
+import { logoutUser } from '../redux/actions/userActions'
 
 class NavBar extends Component {
     state = { 
@@ -9,6 +10,11 @@ class NavBar extends Component {
     }  
   
     handleItemClick = (e, { name }) => this.setState({ activeItem: name })
+
+    logOut = () => {
+      this.props.logoutUser()
+      alert('Zostałeś wylogowany.')
+    }
 
     render() {
       const { activeItem } = this.state
@@ -52,7 +58,7 @@ class NavBar extends Component {
                           <Icon name='setting'/>
                           Ustawienia
                       </Dropdown.Item>
-                      <Dropdown.Item>
+                      <Dropdown.Item onClick={this.logOut}>
                           <Icon name='sign out'/>
                           Wyloguj się
                       </Dropdown.Item>
@@ -79,4 +85,10 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps)(NavBar)
+const mapDispatchToProps = dispatch => {
+  return {
+      logoutUser: () => dispatch(logoutUser())
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(NavBar)
