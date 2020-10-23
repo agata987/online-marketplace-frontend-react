@@ -8,7 +8,8 @@ const translateErrors = function(err) {
         'do username': 'do nazwy użytkownika',
         user: "użytkownik",
         password: "hasło",
-        '.,': '. '
+        '.,': '. ',
+        'Istnieje już użytkownik z tą wartością pola email': 'Ten e-mail został już zarejestrowany' 
     }
     
     for(const key in translatons) {
