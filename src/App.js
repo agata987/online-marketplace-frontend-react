@@ -9,6 +9,7 @@ import NavBar from './components/NavBar'
 
 import LoginView from './views/authentication/LoginView'
 import RegisterView from './views/authentication/RegisterView'
+import AccountCreatedView from './views/authentication/AccountCreatedView'
 import FavouritesView from './views/FavouritesView'
 import JobsView from './views/JobsView'
 import MessagesView from './views/MessagesView'
@@ -26,6 +27,7 @@ function App() {
         <Switch>
           <Route path='/login' exact component={LoginView} />
           <Route path='/register' exact component={RegisterView} />
+          <Route path='/created' exact component={AccountCreatedView} />
           <Route path='/favourites' exact component={FavouritesView} />
           <Route path='/jobs' exact component={JobsView} />
           <Route path='/messages' exact component={MessagesView} />

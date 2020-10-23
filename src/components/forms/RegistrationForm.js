@@ -6,13 +6,17 @@ import { FormField } from './FormField'
 
 class RegisterForm extends React.Component {
 
-    state = {
-        username: '',
-        email: '',
-        password: '',
-        password2: '',
+    constructor(props) {
+        super(props)
 
-        passwords_match: true
+        this.state = {
+            username: '',
+            email: '',
+            password: '',
+            password2: '',
+    
+            passwords_match: true,
+        }
     }
 
     onChange = e => {
@@ -20,7 +24,7 @@ class RegisterForm extends React.Component {
         this.setState({[e.target.name]: e.target.value})
     }
 
-    onSubmit = e => {
+    onSubmit = e => {     
         e.preventDefault()
 
         // to clear the errors
@@ -30,10 +34,9 @@ class RegisterForm extends React.Component {
         this.setState({passwords_match: (this.state.password.trim() === this.state.password2.trim())})
 
         // no empty fields
-        if (this.state.passwords_match && this.state.username.trim() !== '' &&  this.state.email.trim() !== '' && this.state.password.trim() !== '') {
+        if (this.state.passwords_match && this.state.username.trim() !== '' &&  this.state.email.trim() !== '' && this.state.password.trim() !== '')
             this.props.signUpUser(this.state)
-        }
-
+        
     }
 
     render() {
