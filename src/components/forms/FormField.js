@@ -1,11 +1,11 @@
 import React from 'react'
 import { Form } from 'semantic-ui-react'
 
-export default FormField = props => {
+export const FormField = props => {
 
     if (props.fieldError) {
         const err = {
-            content: props.fieldError.content,
+            content: props.content,
             pointing: 'below'
         }
         return (
@@ -20,6 +20,7 @@ export default FormField = props => {
         )
     } else {
         return <Form.Field>
+            <label>{props.label}</label>
             {props.children}
         </Form.Field>
     }

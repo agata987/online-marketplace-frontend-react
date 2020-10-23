@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Button, Form, Icon, Input } from 'semantic-ui-react'
 import { signUpUser } from '../../redux/actions/userActions'
+import { FormField } from './FormField'
 
 class RegisterForm extends React.Component {
 
@@ -41,43 +42,46 @@ class RegisterForm extends React.Component {
                 </button>
                 <Form onSubmit={this.onSubmit}>
                     <h2>Tworzenie nowego konta</h2>
-                    <Form.Field 
-                        id='form-input-control-error-email'
-                        error={{
-                            content: 'Please enter a valid email address',
-                            pointing: 'below',
-                        }} 
-            
+                    <FormField 
+                        fieldError={this.props.userReducer.registerErrors ? this.props.userReducer.registerErrors.username ? true : false : false}
+                        content={this.props.userReducer.registerErrors ? this.props.userReducer.registerErrors.username ? this.props.userReducer.registerErrors.username : '' : ''}
                         control={Input}
-                        label='Nazwa użytkownika'
+                        label={'Nazwa użytkownika'}
                     >
-                        
                         <input 
                             name='username'
                             value={this.state.username}
                             onChange={this.onChange}
                             placeholder='Nazwa użytkownika'
                         />
-                    </Form.Field>
-                    <Form.Field >
-                        <label>Adres e-mail</label>
+                    </FormField>
+                    <FormField 
+                        fieldError={this.props.userReducer.registerErrors ? this.props.userReducer.registerErrors.email ? true : false : false}
+                        content={this.props.userReducer.registerErrors ? this.props.userReducer.registerErrors.email ? this.props.userReducer.registerErrors.email : '' : ''}
+                        control={Input}
+                        label={'Adres e-mail'}
+                    >
                         <input 
                             name='email'
                             value={this.state.email}
                             onChange={this.onChange}
                             placeholder='Adres e-mail'
                         />
-                    </Form.Field>
-                    <Form.Field>
-                        <label>Hasło</label>
-                        <input 
-                            type='password'
+                    </FormField>
+                    <FormField 
+                        fieldError={this.props.userReducer.registerErrors ? this.props.userReducer.registerErrors.password ? true : false : false}
+                        content={this.props.userReducer.registerErrors ? this.props.userReducer.registerErrors.password ? this.props.userReducer.registerErrors.password : '' : ''}
+                        control={Input}
+                        label={'Hasło'}
+                    >
+                        <input
+                            type='password' 
                             name='password'
                             value={this.state.password}
                             onChange={this.onChange}
                             placeholder='Hasło'
                         />
-                    </Form.Field>
+                    </FormField>
                     <Form.Field>
                         <label>Powtórz hasło</label>
                         <input 
@@ -98,7 +102,7 @@ class RegisterForm extends React.Component {
 
 const mapStateToProps = state => {
     return {
-        userReducer: state.userReduce
+        userReducer: state.userReducer
     }
 }
 
