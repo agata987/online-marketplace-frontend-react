@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Button, Form, Icon, Input, Message } from 'semantic-ui-react'
-import { signUpUser } from '../../redux/actions/userActions'
+import { signUpUser, logoutUser } from '../../redux/actions/userActions'
 import { FormField } from './FormField'
 
 class RegisterForm extends React.Component {
@@ -22,6 +22,9 @@ class RegisterForm extends React.Component {
 
     onSubmit = e => {
         e.preventDefault()
+
+        // to clear the errors
+        this.props.logoutUser()
 
         // password1 == password2
         this.setState({passwords_match: (this.state.password.trim() === this.state.password2.trim())})
@@ -121,7 +124,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        signUpUser: userInfo => dispatch(signUpUser(userInfo))
+        signUpUser: userInfo => dispatch(signUpUser(userInfo)),
+        logoutUser: () => dispatch(logoutUser())
     }
 }
 

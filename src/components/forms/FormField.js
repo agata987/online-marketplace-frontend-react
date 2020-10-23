@@ -1,13 +1,35 @@
 import React from 'react'
 import { Form } from 'semantic-ui-react'
 
+const translateErrors = function(err) {
+
+    const translatons = {
+        'Istnieje już user z tą wartością pola username' : 'Ta nazwa użytkownika jest już zajęta',
+        'do username': 'do nazwy użytkownika',
+        user: "użytkownik",
+        password: "hasło",
+        '.,': '. '
+    }
+    
+    for(const key in translatons) {
+        console.log(err.toString())
+        err = err.toString().replace(key.toString(), translatons[key])
+    }
+    console.log(`po zamianie: ${err}`)
+    return err
+}
+
 export const FormField = props => {
 
     if (props.fieldError) {
+
+        const translatedContent = translateErrors(props.content)
+
         const err = {
-            content: props.content,
+            content: translatedContent,
             pointing: 'below'
         }
+
         return (
             <Form.Field
             id='form-input-control-error-email'
