@@ -46,7 +46,8 @@ class RegisterForm extends React.Component {
                         error={{
                             content: 'Please enter a valid email address',
                             pointing: 'below',
-                        }}
+                        }} 
+            
                         control={Input}
                         label='Nazwa użytkownika'
                     >
