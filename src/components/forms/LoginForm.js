@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Button, Form, Message, Icon } from 'semantic-ui-react'
 import { fetchUser, logoutUser } from '../../redux/actions/userActions'
+import { NegativeMessage } from './NegativeMessage'
 
 class LoginForm extends React.Component {
 
@@ -14,6 +15,7 @@ class LoginForm extends React.Component {
         this.state = {
             username_or_email: '',
             password: '',
+            showMessage: false
         }
     }
 
@@ -27,6 +29,10 @@ class LoginForm extends React.Component {
 
         if (this.state.username_or_email.trim() !== '' && this.state.password.trim() !== '')
         this.props.fetchUser(this.state)
+        
+        this.setState({showMessage: true})
+
+        this.props.logoutUser()
     }
 
     render() {
@@ -35,10 +41,15 @@ class LoginForm extends React.Component {
                 <Form onSubmit={this.onSubmit}>
                     <h2>Logowanie</h2>
                     { this.props.userReducer.error ? 
-                    <Message negative>
-                    <p>Niepoprawna nazwa użytkownika/ adres e-mail lub hasło.</p>
-                    </Message> 
-                    : null }
+                    <NegativeMessage message='Niepoprawna nazwa użytkownika/ adres e-mail lub hasło.'/>
+                    : (this.state.showMessage && this.state.username_or_email.trim() === '' && this.state.password.trim() === '') ? 
+                    <NegativeMessage message='Nie podano nazwy użytkownika/ adresu e-mail ani hasła.'/>
+                    : this.state.showMessage &&  this.state.username_or_email.trim() === '' ? 
+                    <NegativeMessage message='Nie podano nazwy użytkownika ani adresu e-mail.'/>
+                    : this.state.showMessage &&  this.state.password.trim() === '' ?
+                    <NegativeMessage message='Nie podano hasła.'/>
+                    : null
+                    }
                     <label>Nazwa użytkownika / adres e-mail</label>
                     <Form.Field >
                         <input 
