@@ -1,4 +1,4 @@
-import { BACKEND_URL } from '../../config'
+import { BACKEND_URL } from '../../const/config'
 
 // action creators (return an action object)
 

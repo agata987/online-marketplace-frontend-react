@@ -34,7 +34,6 @@ class NavBar extends Component {
               name='Oferty pracy'
               active={activeItem === 'Oferty pracy'}
               onClick={this.handleItemClick}
-              link='/jobs'
             />
             <Menu.Menu position='right'>
                 <Menu.Item
@@ -44,7 +43,6 @@ class NavBar extends Component {
                     icon='envelope'
                     active={activeItem === ''}
                     onClick={this.handleItemClick}
-                    link='messages/'
                 />
                 {
                   this.props.loggedIn ?
