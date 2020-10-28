@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import CategoriesMenu from '../components/CategoriesMenu'
 import Offers from '../components/Offers'
@@ -11,12 +11,30 @@ import SearchInput from '../components/SearchInput'
 
 class OffersView extends React.Component {
 
-    state = {
-        cityMenu_text: 'Wybierz miasto',
+    constructor(props){
+        super(props)
+
+        this.state = {
+            cityName: 'Wybierz miasto',
+            prevCityId: 0,
+        }
+    }
+
+    componentDidUpdate(){
+        if(this.state.cityId === this.state.prevCityId)
+        return
+
+        this.setState({...this.state, prevCityId: this.state.cityId})
+        this.search()
+    }
+
+    search = () => {
+        this.props.fetchOffers(this.state.searchValue, this.state.cityId)
     }
 
     // categories menu
-    handleCategoriesMenuItemClick = (e, { name }) => {this.setState({ ...this.state, category: name })
+    handleCategoriesMenuItemClick = (e, { name }) => {
+        this.setState({ ...this.state, category: name })
     }
 
     componentDidMount(){
@@ -27,11 +45,16 @@ class OffersView extends React.Component {
 
     onSearchSubmit = e => {
         e.preventDefault()
-        this.props.fetchOffers(this.state.searchValue)
+        this.search()
     }
 
     onSearchValueChange = e => {
         this.setState({...this.state, searchValue: e.target.value})
+    }
+
+    onClickCity = (e,cityId, cityName) => {
+        e.preventDefault()
+        this.setState({...this.state, cityId: cityId, cityName: cityName})
     }
 
     render() {
@@ -47,7 +70,7 @@ class OffersView extends React.Component {
                     <SearchInput onSubmit={this.onSearchSubmit} onChange={this.onSearchValueChange}/>
                 </div>
                 <h3>Filtry</h3>
-                {this.props.cities.fetched ? <CityMenu city={this.state.cityMenu_text}  voivodeships={this.props.cities.voivodeships}/> : null}
+                {this.props.cities.fetched ? <CityMenu city={this.state.cityName}  voivodeships={this.props.cities.voivodeships} onClick={this.onClickCity}/> : null}
                 
                 <div>{ this.props.offers.offers_fetched ? <Offers items={this.props.offers.offers}/> : null}</div>
             </div>

@@ -11,7 +11,7 @@ class CityMenu extends React.Component {
             let cities = voivodeships_cities[key].cities
             let cities_names = [<Menu.Header>Miasta</Menu.Header>,]
             for(const key2 in cities){
-                cities_names.push(<Dropdown.Item>{cities[key2].name}</Dropdown.Item>)
+                cities_names.push(<Dropdown.Item onClick={(e) => this.props.onClick(e,cities[key2].id, cities[key2].name) }>{cities[key2].name}</Dropdown.Item>)
             }
             menuItems.push(
                 <Dropdown item text={voivodeships_cities[key].name}>
