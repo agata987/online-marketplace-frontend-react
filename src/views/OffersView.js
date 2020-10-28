@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import CategoriesMenu from '../components/CategoriesMenu'
+import Offers from '../components/Offers'
 import { fetchOffers } from '../redux/actions/offers/offersActions'
 import { fetchCategories } from '../redux/actions/offers/offerCategoriesActions'
 
@@ -22,7 +23,7 @@ class OffersView extends React.Component {
         return (
             <div>
                 <div>{ this.props.categories.categories_fetched ? <CategoriesMenu categories={this.props.categories.categories} handleItemClick={this.handleCategoriesMenuItemClick} activeItem={this.state.category} /> : null}</div>
-                <div>{ this.props.offers.offers_fetched ? <span>oferty pobrane</span> : null}</div>
+                <div>{ this.props.offers.offers_fetched ? <Offers items={this.props.offers.offers}/> : null}</div>
             </div>
         );
     }
