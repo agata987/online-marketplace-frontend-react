@@ -4,6 +4,8 @@ import CategoriesMenu from '../components/CategoriesMenu'
 import Offers from '../components/Offers'
 import { fetchOffers } from '../redux/actions/offers/offersActions'
 import { fetchCategories } from '../redux/actions/offers/offerCategoriesActions'
+import { Button } from 'semantic-ui-react'
+import CityMenu from '../components/CityMenu'
 
 class OffersView extends React.Component {
 
@@ -23,6 +25,12 @@ class OffersView extends React.Component {
         return (
             <div>
                 <div>{ this.props.categories.categories_fetched ? <CategoriesMenu categories={this.props.categories.categories} handleItemClick={this.handleCategoriesMenuItemClick} activeItem={this.state.category} /> : null}</div>
+                <h3>Filtry</h3>
+                <div>
+                    <CityMenu />
+                    <Button>Dodaj ofertę</Button>
+                </div>
+                
                 <div>{ this.props.offers.offers_fetched ? <Offers items={this.props.offers.offers}/> : null}</div>
             </div>
         );
