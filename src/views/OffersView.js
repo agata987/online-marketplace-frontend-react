@@ -5,7 +5,7 @@ import Offers from '../components/Offers'
 import { fetchOffers } from '../redux/actions/offers/offersActions'
 import { fetchCategories } from '../redux/actions/offers/offerCategoriesActions'
 import { fetchCities } from '../redux/actions/citiesActions'
-import { Button } from 'semantic-ui-react'
+import { Button, Icon } from 'semantic-ui-react'
 import CityMenu from '../components/CityMenu'
 import SearchInput from '../components/SearchInput'
 
