@@ -1,3 +1,5 @@
+// dummy data, the app uses data from mongo db
+// only an example
 export const OffersCategories = [
    {
     name: 'Elektronika',

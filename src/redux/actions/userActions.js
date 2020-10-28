@@ -50,3 +50,27 @@ export const signUpUser = userInfo => dispatch => {
         dispatch(setUserError(err.response.data))   // set register errors
     })    
 }
+
+// login user if there is a valid token in storage
+export const autoLogin = () => dispatch => {
+    axios({method: 'GET', url: `${BACKEND_URL}api/current-user/`, headers: {Authorization: `JWT ${localStorage.getItem("token")}`}})
+    .then( res => {
+        dispatch(setUser(res.data))
+    })
+    .catch( () => {
+        dispatch(logOut())    // set login error
+    })
+}
+
+// get new token
+export const getToken = userInfo => dispatch => {
+    axios.post(`${BACKEND_URL}api/auth/token/`, {
+        ...userInfo
+    })
+    .then( res => {
+        localStorage.setItem('token', res.data.token)
+    })
+    .catch( () => {
+        dispatch(logOut())
+    })
+}

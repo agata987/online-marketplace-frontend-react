@@ -2,12 +2,17 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { Dropdown, Icon, Menu } from 'semantic-ui-react'
-import { logoutUser } from '../redux/actions/userActions'
+import { autoLogin, logoutUser } from '../redux/actions/userActions'
 
 class NavBar extends Component {
-    state = { 
-      activeItem: 'Ogłoszenia',
-    }  
+    constructor(props) {
+      super(props)
+      this.props.autoLogin()
+
+      this.state={ 
+        activeItem: 'Ogłoszenia',
+      }
+    }
   
     handleItemClick = (e, { name }) => this.setState({ activeItem: name })
 
@@ -85,7 +90,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-      logoutUser: () => dispatch(logoutUser())
+      logoutUser: () => dispatch(logoutUser()),
+      autoLogin: () => dispatch(autoLogin())
   }
 }
 
