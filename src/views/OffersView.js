@@ -5,14 +5,21 @@ import { fetchCategories } from '../redux/actions/offersActions'
 
 class OffersView extends React.Component {
 
+    state = {}
+
+    // categories menu
+    handleCategoriesMenuItemClick = (e, { name }) => {this.setState({ ...this.state, category: name })
+    }
+
     componentDidMount(){
         this.props.fetchCategories()
     }
 
     render() {
+        
         return (
             <div>
-                { this.props.offers.categories_fetched ? <CategoriesMenu categories={this.props.offers.categories} /> : null}
+                { this.props.offers.categories_fetched ? <CategoriesMenu categories={this.props.offers.categories} handleItemClick={this.handleCategoriesMenuItemClick} activeItem={this.state.category} /> : null}
             </div>
         );
     }

@@ -1,5 +1,6 @@
 const defaultState = {
-    categories_fetched: false
+    categories_fetched: false,
+    offers_fetched: false,
 }
 
 const offersReducer = (state = defaultState, action) => {
@@ -9,6 +10,12 @@ const offersReducer = (state = defaultState, action) => {
                 ...defaultState,
                 categories_fetched: true,
                 categories: action.payload
+            }
+        case 'SET_OFFERS':
+            return {
+                ...defaultState,
+                offers_fetched: true,
+                offers: action.payload
             }
         default: return state
     }
