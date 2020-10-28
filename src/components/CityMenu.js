@@ -1,16 +1,37 @@
 import React from 'react'
-import { Dropdown, Menu } from 'semantic-ui-react'
+import { Dropdown, Menu, MenuHeader } from 'semantic-ui-react'
 
-const MenuExampleDropdownItem = () => (
-  <Menu vertical>
-    <Dropdown item text='Categories'>
-      <Dropdown.Menu>
-        <Dropdown.Item>Electronics</Dropdown.Item>
-        <Dropdown.Item>Automotive</Dropdown.Item>
-        <Dropdown.Item>Home</Dropdown.Item>
-      </Dropdown.Menu>
-    </Dropdown>
-  </Menu>
-)
+class CityMenu extends React.Component {
 
-export default MenuExampleDropdownItem
+    render(){
+        const voivodeships_cities = this.props.voivodeships
+
+        const menuItems = [<Menu.Header>Województwa</Menu.Header>,]
+        for (const key in voivodeships_cities){
+            let cities = voivodeships_cities[key].cities
+            let cities_names = [<Menu.Header>Miasta</Menu.Header>,]
+            for(const key2 in cities){
+                cities_names.push(<Dropdown.Item>{cities[key2].name}</Dropdown.Item>)
+            }
+            menuItems.push(
+                <Dropdown item text={voivodeships_cities[key].name}>
+                    <Dropdown.Menu direction='right' style={{overflow: 'auto', maxHeight: 400 }}>
+                    {cities_names}
+                    </Dropdown.Menu>
+                </Dropdown>
+            )
+        }
+
+        return(
+            <Menu vertical stackable>
+                <Dropdown item text={this.props.city} direction='right' fluid>
+                    <Dropdown.Menu direction='right'>
+                    {menuItems}
+                    </Dropdown.Menu>
+                </Dropdown>
+            </Menu>
+        )
+    }
+}
+
+export default CityMenu

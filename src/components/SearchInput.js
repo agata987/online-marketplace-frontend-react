@@ -1,11 +1,12 @@
 import React from 'react'
-import { Icon, Input, Form } from 'semantic-ui-react'
+import { Input, Form } from 'semantic-ui-react'
 
 class SearchInput extends React.Component {
     render () {
         return(
-            <Form onSubmit={this.props.onSubmit}>
+            <Form onSubmit={this.props.onSubmit} style={{width:'100%'}}>
                 <Input
+                    onChange={this.props.onChange}
                     placeholder='Szukaj ofert...'
                     size='large'
                     action={{
@@ -14,6 +15,7 @@ class SearchInput extends React.Component {
                         icon: 'search',
                         content: 'Szukaj',
                       }}
+                    style={{maxWidth:'60%', height: '100%'}}
                 />
             </Form>
         )
