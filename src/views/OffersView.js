@@ -1,7 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import CategoriesMenu from '../components/CategoriesMenu'
-import { fetchCategories } from '../redux/actions/offersActions'
+import { fetchOffers } from '../redux/actions/offers/offersActions'
+import { fetchCategories } from '../redux/actions/offers/offerCategoriesActions'
 
 class OffersView extends React.Component {
 
@@ -13,13 +14,15 @@ class OffersView extends React.Component {
 
     componentDidMount(){
         this.props.fetchCategories()
+        this.props.fetchOffers()
     }
 
     render() {
         
         return (
             <div>
-                { this.props.offers.categories_fetched ? <CategoriesMenu categories={this.props.offers.categories} handleItemClick={this.handleCategoriesMenuItemClick} activeItem={this.state.category} /> : null}
+                <div>{ this.props.categories.categories_fetched ? <CategoriesMenu categories={this.props.categories.categories} handleItemClick={this.handleCategoriesMenuItemClick} activeItem={this.state.category} /> : null}</div>
+                <div>{ this.props.offers.offers_fetched ? <span>oferty pobrane</span> : null}</div>
             </div>
         );
     }
@@ -27,7 +30,8 @@ class OffersView extends React.Component {
 
 const mapStateToProps = state => {
     return {
-      offers: state.offersReducer
+      offers: state.offersReducer,
+      categories: state.offerCategoriesReducer,
     }
   }
   
@@ -35,6 +39,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         fetchCategories: () => dispatch(fetchCategories()),
+        fetchOffers: () => dispatch(fetchOffers()),
     }
   }
 

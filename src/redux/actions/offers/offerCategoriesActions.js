@@ -1,4 +1,4 @@
-import { BACKEND_URL } from '../../const/config'
+import { BACKEND_URL } from '../../../const/config'
 
 const setCategories = payload => ({ type: 'SET_CATEGORIES', payload })
 
