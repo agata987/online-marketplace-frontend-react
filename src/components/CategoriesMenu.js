@@ -8,9 +8,9 @@ export default class OffersCategoriesMenu extends Component {
       <Menu compact icon='labeled' style={{overflow: 'auto', maxWidth: '100%' }}>
         {this.props.categories.map(categorie => 
           <Menu.Item 
-            key={categorie.name}
-            name={categorie.name}
-            active={this.props.activeItem === categorie.name}
+            key={categorie.id}
+            name={categorie.id}
+            active={this.props.activeItem === categorie.id}
             onClick={this.props.handleItemClick}
           >
             <Icon name={categorie.icon}/>

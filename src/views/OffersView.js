@@ -5,9 +5,16 @@ import Offers from '../components/Offers'
 import { fetchOffers } from '../redux/actions/offers/offersActions'
 import { fetchCategories } from '../redux/actions/offers/offerCategoriesActions'
 import { fetchCities } from '../redux/actions/citiesActions'
-import { Button, Icon } from 'semantic-ui-react'
+import { Button } from 'semantic-ui-react'
 import CityMenu from '../components/CityMenu'
 import SearchInput from '../components/SearchInput'
+
+const Observer = props => {
+    useEffect(() => {
+        props.function()
+    }, [...props.args])
+    return null
+}
 
 class OffersView extends React.Component {
 
@@ -16,25 +23,16 @@ class OffersView extends React.Component {
 
         this.state = {
             cityName: 'Wybierz miasto',
-            prevCityId: 0,
         }
     }
 
-    componentDidUpdate(){
-        if(this.state.cityId === this.state.prevCityId)
-        return
-
-        this.setState({...this.state, prevCityId: this.state.cityId})
-        this.search()
-    }
-
     search = () => {
-        this.props.fetchOffers(this.state.searchValue, this.state.cityId)
+        this.props.fetchOffers(this.state.searchValue, this.state.cityId, this.state.categoryId)
     }
 
     // categories menu
-    handleCategoriesMenuItemClick = (e, { name }) => {
-        this.setState({ ...this.state, category: name })
+    handleCategoriesMenuItemClick = (e, {name}) => {
+        this.setState({ ...this.state, categoryId: name })
     }
 
     componentDidMount(){
@@ -61,17 +59,21 @@ class OffersView extends React.Component {
         
         return (
             <div>
-                <div>{ this.props.categories.categories_fetched ? <CategoriesMenu categories={this.props.categories.categories} handleItemClick={this.handleCategoriesMenuItemClick} activeItem={this.state.category} /> : null}</div>
+                <Observer function={this.search} args={[this.state.cityName, this.state.categoryId]}/>
+                <div>{ this.props.categories.categories_fetched ? <CategoriesMenu categories={this.props.categories.categories} handleItemClick={this.handleCategoriesMenuItemClick} activeItem={this.state.categoryId} /> : null}</div>
 
                 <div style={{display: 'flex', flexDirection: 'row', marginTop: '20px', width:'100%'}}>
                     <Button
-                    color='grey'
+                    color='linkedin'
                     >Dodaj ofertę</Button>
                     <SearchInput onSubmit={this.onSearchSubmit} onChange={this.onSearchValueChange}/>
                 </div>
                 <h3>Filtry</h3>
-                {this.props.cities.fetched ? <CityMenu city={this.state.cityName}  voivodeships={this.props.cities.voivodeships} onClick={this.onClickCity}/> : null}
-                
+                <div style={{display: 'flex', flexDirection: 'row', marginBottom: '20px'}}>
+                    {this.props.cities.fetched ? <CityMenu city={this.state.cityName}  voivodeships={this.props.cities.voivodeships} onClick={this.onClickCity}/> : null}
+                </div>
+                <Button onClick={(e) => {e.preventDefault(); this.setState({cityName: 'Wybierz miasto', cityId: '', categoryId: ''});this.props.fetchOffers()}}>Wszystkie oferty</Button>
+            
                 <div>{ this.props.offers.offers_fetched ? <Offers items={this.props.offers.offers}/> : null}</div>
             </div>
         );
