@@ -28,7 +28,9 @@ class OffersView extends React.Component {
                 <div>{ this.props.categories.categories_fetched ? <CategoriesMenu categories={this.props.categories.categories} handleItemClick={this.handleCategoriesMenuItemClick} activeItem={this.state.category} /> : null}</div>
 
                 <div style={{display: 'flex', flexDirection: 'row', marginTop: '20px'}}>
-                    <Button>Dodaj ofertę</Button>
+                    <Button
+                    color='grey'
+                    >Dodaj ofertę</Button>
                     <SearchInput/>
                 </div>
                 <h3>Filtry</h3>
