@@ -11,7 +11,7 @@ import CityMenu from '../components/CityMenu'
 import SearchInput from '../components/SearchInput'
 import { Icon } from 'semantic-ui-react'
 import { Loader } from 'semantic-ui-react'
-import CreateOfferModal from '../components/forms/CreateOfferModal'
+import LoginInfoModal from '../components/LoginInfoModal'
 
 const Observer = props => {
     useEffect(() => {
@@ -40,6 +40,11 @@ class OffersView extends React.Component {
         order = 'creation_date'
 
         this.props.fetchOffers(this.state.searchValue, this.state.cityId, this.state.categoryId, order)
+    }
+
+    showMustLoginInfo = () => {
+        if (!this.props.loggedIn)
+        this.setState({...this.state, modalIsOpen: true})
     }
 
     // categories menu
@@ -75,7 +80,7 @@ class OffersView extends React.Component {
         this.setState({...this.state, filter: choice})
     }
 
-    // create offer modal
+    // login info modal
     closeModal() {
         this.setState({...this.state, modalIsOpen: false})
     }
@@ -84,22 +89,21 @@ class OffersView extends React.Component {
         this.closeModal()
     }
 
-    infoClose = () => {
-        this.closeModal()
-    }
-
     render() {
         
         return (
             <div>
                 <Observer function={this.search} args={[this.state.cityName, this.state.categoryId, this.state.filter]}/>
-                <CreateOfferModal infoClose={this.infoClose} isLoggedIn={this.props.loggedIn} isOpen={this.state.modalIsOpen} onRequestClose={this.onRequestClose} />
+                <LoginInfoModal onClick={this.onRequestClose} isOpen={this.state.modalIsOpen} onRequestClose={this.onRequestClose} />
                 <div>{ this.props.categories.categories_fetched ? <CategoriesMenu categories={this.props.categories.categories} handleItemClick={this.handleCategoriesMenuItemClick} activeItem={this.state.categoryId} /> : null}</div>
                 <div style={{display: 'flex', flexDirection: 'row', marginTop: '20px', width:'100%'}}>
-                    <Button
-                    color='linkedin'
-                    onClick={() => {this.setState({...this.state, modalIsOpen: true})}}
-                    >Dodaj ofertę</Button>
+                    {
+                        this.props.loggedIn ?
+                        <a href='/create-offer'>
+                            <Button color='linkedin'>Dodaj ofertę</Button> 
+                        </a> :
+                        <Button color='linkedin' onClick={this.showMustLoginInfo}>Dodaj ofertę</Button>
+                    }
                     <SearchInput onSubmit={this.onSearchSubmit} onChange={this.onSearchValueChange}/>
                 </div>
                 <h3>Filtry</h3>

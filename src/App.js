@@ -15,6 +15,7 @@ import JobsView from './views/JobsView'
 import MessagesView from './views/MessagesView'
 import OffersView from './views/OffersView'
 import SettingsView from './views/SettingsView'
+import CreateOfferView from './views/CreateOfferView'
 
 import 'semantic-ui-css/semantic.min.css'
 import './sass/main.scss'
@@ -33,6 +34,7 @@ function App() {
           <Route path='/messages' exact component={MessagesView} />
           <Route path='/' exact component={OffersView} />
           <Route path='/settings' exact component={SettingsView} />
+          <Route path='/create-offer' exact component={CreateOfferView} />
           <Route />
         </Switch>
       </Router>
