@@ -9,7 +9,8 @@ import SimpleDropdownFilter from '../components/SimpleDropdownFilter'
 import { Button } from 'semantic-ui-react'
 import CityMenu from '../components/CityMenu'
 import SearchInput from '../components/SearchInput'
-import { Icon, Pagination } from 'semantic-ui-react'
+import { Icon } from 'semantic-ui-react'
+import { Loader } from 'semantic-ui-react'
 
 const Observer = props => {
     useEffect(() => {
@@ -96,7 +97,7 @@ class OffersView extends React.Component {
                 </div>
                 <Button onClick={(e) => {e.preventDefault(); this.setState({cityName: 'Wybierz miasto', cityId: '', categoryId: '', filter: 'Sortuj według'});this.props.fetchOffers()}}>Wszystkie oferty</Button>
             
-                <div>{ this.props.offers.offers_fetched ? <Offers items={this.props.offers.offers}/> : null}</div>
+                <div>{ this.props.offers.offers_fetched ? <Offers items={this.props.offers.offers}/> : <div style={{width: '100%', padding: '60px', display: 'flex', justifyContent: 'center'}}><Loader active inline /></div>}</div>
                 <div style={{width: '100%', display: 'flex',justifyContent: 'center', padding: '20px'}}>
                     <Button disabled={this.props.offers.previousPage ? false : true} onClick={() => {this.props.fetchPageOffers(this.props.offers.previousPage)}}><Icon name='angle left' /></Button>
                     <Button disabled={this.props.offers.nextPage ? false : true} onClick={() => {this.props.fetchPageOffers(this.props.offers.nextPage)}}><Icon name='angle right' /></Button>

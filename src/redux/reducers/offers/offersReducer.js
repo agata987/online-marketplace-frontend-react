@@ -11,6 +11,10 @@ const offersReducer = (state = defaultState, action) => {
                 previousPage: action.payload.previous,
                 nextPage: action.payload.next,
             }
+        case 'RESET':
+            return {
+                offers_fetched: false,
+            }
         default: return state
     }
 }
