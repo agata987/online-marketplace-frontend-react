@@ -13,7 +13,6 @@ const translateErrors = function(err) {
     }
     
     for(const key in translatons) {
-        console.log(err.toString())
         err = err.toString().replace(key.toString(), translatons[key])
     }
     console.log(`po zamianie: ${err}`)
