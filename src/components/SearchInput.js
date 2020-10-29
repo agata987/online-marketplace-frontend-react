@@ -4,7 +4,7 @@ import { Input, Form } from 'semantic-ui-react'
 class SearchInput extends React.Component {
     render () {
         return(
-            <Form onSubmit={this.props.onSubmit} style={{width:'100%'}}>
+            <Form onSubmit={this.props.onSubmit} style={{width:'100%', marginLeft: '10px'}}>
                 <Input
                     onChange={this.props.onChange}
                     placeholder='Szukaj ofert...'

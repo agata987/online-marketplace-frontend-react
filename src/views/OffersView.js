@@ -5,6 +5,7 @@ import Offers from '../components/Offers'
 import { fetchOffers } from '../redux/actions/offers/offersActions'
 import { fetchCategories } from '../redux/actions/offers/offerCategoriesActions'
 import { fetchCities } from '../redux/actions/citiesActions'
+import SimpleDropdownFilter from '../components/SimpleDropdownFilter'
 import { Button } from 'semantic-ui-react'
 import CityMenu from '../components/CityMenu'
 import SearchInput from '../components/SearchInput'
@@ -22,12 +23,19 @@ class OffersView extends React.Component {
         super(props)
 
         this.state = {
+            filter: 'Sortuj według',
             cityName: 'Wybierz miasto',
         }
     }
 
     search = () => {
-        this.props.fetchOffers(this.state.searchValue, this.state.cityId, this.state.categoryId)
+        let order = 'price'
+        if (this.state.filter === 'Najdroższe')
+        order = '-price'
+        else if (this.state.filter === 'Najnowsze')
+        order = 'creation_date'
+
+        this.props.fetchOffers(this.state.searchValue, this.state.cityId, this.state.categoryId, order)
     }
 
     // categories menu
@@ -41,25 +49,33 @@ class OffersView extends React.Component {
         this.props.fetchCities()
     }
 
+    // search bar
     onSearchSubmit = e => {
         e.preventDefault()
         this.search()
     }
 
+    // search bar
     onSearchValueChange = e => {
         this.setState({...this.state, searchValue: e.target.value})
     }
 
+    // dropdown menu
     onClickCity = (e,cityId, cityName) => {
         e.preventDefault()
         this.setState({...this.state, cityId: cityId, cityName: cityName})
+    }
+
+    simpleFilterClick = (e, choice) => {
+        e.preventDefault()
+        this.setState({...this.state, filter: choice})
     }
 
     render() {
         
         return (
             <div>
-                <Observer function={this.search} args={[this.state.cityName, this.state.categoryId]}/>
+                <Observer function={this.search} args={[this.state.cityName, this.state.categoryId, this.state.filter]}/>
                 <div>{ this.props.categories.categories_fetched ? <CategoriesMenu categories={this.props.categories.categories} handleItemClick={this.handleCategoriesMenuItemClick} activeItem={this.state.categoryId} /> : null}</div>
 
                 <div style={{display: 'flex', flexDirection: 'row', marginTop: '20px', width:'100%'}}>
@@ -70,7 +86,12 @@ class OffersView extends React.Component {
                 </div>
                 <h3>Filtry</h3>
                 <div style={{display: 'flex', flexDirection: 'row', marginBottom: '20px'}}>
-                    {this.props.cities.fetched ? <CityMenu city={this.state.cityName}  voivodeships={this.props.cities.voivodeships} onClick={this.onClickCity}/> : null}
+                    <div>
+                        {this.props.cities.fetched ? <CityMenu city={this.state.cityName}  voivodeships={this.props.cities.voivodeships} onClick={this.onClickCity}/> : null}
+                    </div>
+                    <div style={{ marginLeft: '10px'}}>
+                        <SimpleDropdownFilter title={this.state.filter} choices={['Najtańsze', 'Najdroższe', 'Najnowsze']} onClick={this.simpleFilterClick}/>
+                    </div>
                 </div>
                 <Button onClick={(e) => {e.preventDefault(); this.setState({cityName: 'Wybierz miasto', cityId: '', categoryId: ''});this.props.fetchOffers()}}>Wszystkie oferty</Button>
             
