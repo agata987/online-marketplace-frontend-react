@@ -93,7 +93,7 @@ class OffersView extends React.Component {
                         <SimpleDropdownFilter title={this.state.filter} choices={['Najtańsze', 'Najdroższe', 'Najnowsze']} onClick={this.simpleFilterClick}/>
                     </div>
                 </div>
-                <Button onClick={(e) => {e.preventDefault(); this.setState({cityName: 'Wybierz miasto', cityId: '', categoryId: ''});this.props.fetchOffers()}}>Wszystkie oferty</Button>
+                <Button onClick={(e) => {e.preventDefault(); this.setState({cityName: 'Wybierz miasto', cityId: '', categoryId: '', filter: 'Sortuj według'});this.props.fetchOffers()}}>Wszystkie oferty</Button>
             
                 <div>{ this.props.offers.offers_fetched ? <Offers items={this.props.offers.offers}/> : null}</div>
             </div>
