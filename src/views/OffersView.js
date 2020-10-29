@@ -11,6 +11,7 @@ import CityMenu from '../components/CityMenu'
 import SearchInput from '../components/SearchInput'
 import { Icon } from 'semantic-ui-react'
 import { Loader } from 'semantic-ui-react'
+import CreateOfferModal from '../components/forms/CreateOfferModal'
 
 const Observer = props => {
     useEffect(() => {
@@ -27,6 +28,7 @@ class OffersView extends React.Component {
         this.state = {
             filter: 'Sortuj według',
             cityName: 'Wybierz miasto',
+            modalIsOpen: false,
         }
     }
 
@@ -73,16 +75,30 @@ class OffersView extends React.Component {
         this.setState({...this.state, filter: choice})
     }
 
+    // create offer modal
+    closeModal() {
+        this.setState({...this.state, modalIsOpen: false})
+    }
+
+    onRequestClose = () =>{
+        this.closeModal()
+    }
+
+    infoClose = () => {
+        this.closeModal()
+    }
+
     render() {
         
         return (
             <div>
                 <Observer function={this.search} args={[this.state.cityName, this.state.categoryId, this.state.filter]}/>
+                <CreateOfferModal infoClose={this.infoClose} isLoggedIn={this.props.loggedIn} isOpen={this.state.modalIsOpen} onRequestClose={this.onRequestClose} />
                 <div>{ this.props.categories.categories_fetched ? <CategoriesMenu categories={this.props.categories.categories} handleItemClick={this.handleCategoriesMenuItemClick} activeItem={this.state.categoryId} /> : null}</div>
-
                 <div style={{display: 'flex', flexDirection: 'row', marginTop: '20px', width:'100%'}}>
                     <Button
                     color='linkedin'
+                    onClick={() => {this.setState({...this.state, modalIsOpen: true})}}
                     >Dodaj ofertę</Button>
                     <SearchInput onSubmit={this.onSearchSubmit} onChange={this.onSearchValueChange}/>
                 </div>
@@ -112,6 +128,7 @@ const mapStateToProps = state => {
       offers: state.offersReducer,
       categories: state.offerCategoriesReducer,
       cities: state.citiesReducer,
+      loggedIn: state.userReducer.loggedIn,
     }
   }
   

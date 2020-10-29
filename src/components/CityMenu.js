@@ -1,5 +1,5 @@
 import React from 'react'
-import { Dropdown, Menu, MenuHeader } from 'semantic-ui-react'
+import { Dropdown, Menu } from 'semantic-ui-react'
 
 class CityMenu extends React.Component {
 
@@ -15,7 +15,7 @@ class CityMenu extends React.Component {
             }
             menuItems.push(
                 <Dropdown item text={voivodeships_cities[key].name}>
-                    <Dropdown.Menu direction='right' style={{overflow: 'auto', maxHeight: 400 }}>
+                    <Dropdown.Menu direction='right' style={{overflow: 'auto', maxHeight: 200 }}>
                     {cities_names}
                     </Dropdown.Menu>
                 </Dropdown>
