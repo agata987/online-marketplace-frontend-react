@@ -2,13 +2,14 @@ import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import CategoriesMenu from '../components/CategoriesMenu'
 import Offers from '../components/Offers'
-import { fetchOffers } from '../redux/actions/offers/offersActions'
+import { fetchOffers, fetchPageOffers } from '../redux/actions/offers/offersActions'
 import { fetchCategories } from '../redux/actions/offers/offerCategoriesActions'
 import { fetchCities } from '../redux/actions/citiesActions'
 import SimpleDropdownFilter from '../components/SimpleDropdownFilter'
 import { Button } from 'semantic-ui-react'
 import CityMenu from '../components/CityMenu'
 import SearchInput from '../components/SearchInput'
+import { Icon, Pagination } from 'semantic-ui-react'
 
 const Observer = props => {
     useEffect(() => {
@@ -96,6 +97,10 @@ class OffersView extends React.Component {
                 <Button onClick={(e) => {e.preventDefault(); this.setState({cityName: 'Wybierz miasto', cityId: '', categoryId: '', filter: 'Sortuj według'});this.props.fetchOffers()}}>Wszystkie oferty</Button>
             
                 <div>{ this.props.offers.offers_fetched ? <Offers items={this.props.offers.offers}/> : null}</div>
+                <div style={{width: '100%', display: 'flex',justifyContent: 'center', padding: '20px'}}>
+                    <Button disabled={this.props.offers.previousPage ? false : true} onClick={() => {this.props.fetchPageOffers(this.props.offers.previousPage)}}><Icon name='angle left' /></Button>
+                    <Button disabled={this.props.offers.nextPage ? false : true} onClick={() => {this.props.fetchPageOffers(this.props.offers.nextPage)}}><Icon name='angle right' /></Button>
+                </div>
             </div>
         );
     }
@@ -114,6 +119,7 @@ const mapDispatchToProps = dispatch => {
     return {
         fetchCategories: () => dispatch(fetchCategories()),
         fetchOffers: (...args) => dispatch(fetchOffers(...args)),
+        fetchPageOffers: (link) => dispatch(fetchPageOffers(link)),
         fetchCities: () => dispatch(fetchCities()),
     }
   }

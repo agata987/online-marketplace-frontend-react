@@ -7,7 +7,9 @@ const offersReducer = (state = defaultState, action) => {
         case 'SET_OFFERS':
             return {
                 offers_fetched: true,
-                offers: action.payload
+                offers: action.payload.results,
+                previousPage: action.payload.previous,
+                nextPage: action.payload.next,
             }
         default: return state
     }
