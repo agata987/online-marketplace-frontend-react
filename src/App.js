@@ -4,6 +4,8 @@ import {
   Switch,
   Route,
 } from 'react-router-dom';
+import {connect} from 'react-redux'
+import {fetchCurrentUserData} from './redux/actions/authActions'
 
 import NavBar from './components/NavBar'
 
@@ -20,11 +22,14 @@ import CreateOfferView from './views/CreateOfferView'
 import 'semantic-ui-css/semantic.min.css'
 import './sass/main.scss'
 
-function App() {
+function App(props) {
+  if (localStorage.getItem('access') && localStorage.getItem('refresh'))
+  props.autoLogin()
+
   return (
     <div>
       <Router>
-        <NavBar />
+        <NavBar loggedIn={props.loggedIn}/>
         <Switch>
           <Route path='/login' exact component={LoginView} />
           <Route path='/register' exact component={RegisterView} />
@@ -42,4 +47,17 @@ function App() {
   );
 }
 
-export default App;
+const mapStateToProps = state => {
+  return {
+    loggedIn: state.authReducer.tokensFetched,
+  }
+}
+
+
+const mapDispatchToProps = dispatch => {
+  return {
+    autoLogin: () => dispatch(fetchCurrentUserData())
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
