@@ -57,7 +57,7 @@ class OffersView extends React.Component {
         // this.props.fetchCategories()
         // this.props.fetchOffers()
         // this.props.fetchCities()
-        this.props.getTokens({email: 'agata.szczypinska@gmail.com', password: 'Kielekk123'})
+        //this.props.getTokens({email: 'agata.szczypinska@gmail.com', password: 'Kielekk123'})
         this.props.fetchUser()
         console.log('offers view sent a request')
     }

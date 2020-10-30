@@ -21,7 +21,7 @@ const API_Handler = async (auth, request) => {
         if (err.response.status === 401 && auth) {
             const refreshToken = localStorage.getItem('refresh')
             try {
-                const refreshTokenResponse = await axiosInstance({method: 'post', url: 'auth/token/refresh/', data: {refresh: refreshToken}, auth: false})
+                const refreshTokenResponse = await axiosInstance({method: 'post', url: 'auth/token/refresh/', data: {refresh: refreshToken}})
                 localStorage.setItem('access', refreshTokenResponse.data.access)
                 request = setAuthHeader(request)
                 return await axiosInstance(request)
