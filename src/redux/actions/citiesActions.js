@@ -1,13 +1,12 @@
-// import { BACKEND_URL } from '../../const/config'
+import API_Handler from '../../API_Handler'
 
-// const setCities = payload => ({ type: 'SET_CITIES', payload })
+const setCities = payload => ({ type: 'SET_CITIES', payload })
 
-// const axios = require('axios')
-
-// export const fetchCities = () => dispatch => {
-//     axios.get(`${BACKEND_URL}api/voivodeships_cities_list/`)
-//     .then(res => {
-//         dispatch(setCities(res.data))
-//     })
-//     .catch(() => {})
-// }
+// fetch list of voivodeships and cities
+export const fetchCities = () => dispatch => {
+    API_Handler(false, {method: 'get', url: 'voivodeships_cities_list/'})
+    .then(res => {
+        dispatch(setCities(res.data))
+    })
+    .catch(() => {})
+}

@@ -5,7 +5,7 @@ import {
   Route,
 } from 'react-router-dom';
 
-// import NavBar from './components/NavBar'
+import NavBar from './components/NavBar'
 
 import LoginView from './views/authentication/LoginView'
 import RegisterView from './views/authentication/RegisterView'
@@ -24,7 +24,7 @@ function App() {
   return (
     <div>
       <Router>
-        {/* <NavBar /> */}
+        <NavBar />
         <Switch>
           <Route path='/login' exact component={LoginView} />
           <Route path='/register' exact component={RegisterView} />
