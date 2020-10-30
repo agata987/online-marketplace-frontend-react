@@ -6,7 +6,7 @@ const CreateOfferForm = props => {
     return(
         <Form>
             <h2>Tworzenie nowego ogłoszenia</h2>
-                   
+            
         </Form>
     )
     
