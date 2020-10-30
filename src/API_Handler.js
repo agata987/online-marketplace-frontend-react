@@ -5,30 +5,30 @@ const axiosInstance = axios.create({
     baseURL: BACKEND_API_URL,
 })
 
-axiosInstance.interceptors.request.use(request => {
-    if (request.auth) {
-        const accessToken = localStorage.getItem('access')
-        request.headers['Authorization'] = `Bearer ${accessToken}`
-    }
-    return request
-})
+const setAuthHeader = request => {
+    const accessToken = localStorage.getItem('access')
+    return {...request, headers: {Authorization: `Bearer ${accessToken}`}}
+}
 
 // send the request again if 401 response status
 const API_Handler = async (auth, request) => {
     if (auth)
-        request = {...request, auth: true}
+        request = setAuthHeader(request)
     
-    const requestResponse = await axiosInstance(request)
-    if (requestResponse.status === 401 && auth) {
-        const refreshToken = localStorage.getItem('refresh')
-        const refreshTokenResponse = await axiosInstance({method: 'post', url: 'auth/token/refresh/', data: {refresh: refreshToken}, auth: false})
-        if (refreshTokenResponse.ok) {
-            localStorage.setItem('access', refreshTokenResponse.data.access)
-            const finalResponse = await axiosInstance(request)
-            return finalResponse
-        }
+    try {
+        return await axiosInstance(request)
+    } catch (err) {
+        if (err.response.status === 401 && auth) {
+            const refreshToken = localStorage.getItem('refresh')
+            try {
+                const refreshTokenResponse = await axiosInstance({method: 'post', url: 'auth/token/refresh/', data: {refresh: refreshToken}, auth: false})
+                localStorage.setItem('access', refreshTokenResponse.data.access)
+                request = setAuthHeader(request)
+                return await axiosInstance(request)
+            } catch(err) {return Promise.reject(err)}
+        } 
+        return Promise.reject(err)
     }
-    return requestResponse
 }    
 
 export default API_Handler

@@ -12,7 +12,7 @@ import SearchInput from '../components/SearchInput'
 import { Icon } from 'semantic-ui-react'
 import { Loader } from 'semantic-ui-react'
 import LoginInfoModal from '../components/LoginInfoModal'
-import { getTokens } from '../redux/actions/authActions'
+import { getTokens, fetchCurrentUserData } from '../redux/actions/authActions'
 
 const Observer = props => {
     useEffect(() => {
@@ -58,6 +58,7 @@ class OffersView extends React.Component {
         // this.props.fetchOffers()
         // this.props.fetchCities()
         this.props.getTokens({email: 'agata.szczypinska@gmail.com', password: 'Kielekk123'})
+        this.props.fetchUser()
         console.log('offers view sent a request')
     }
 
@@ -147,7 +148,8 @@ const mapDispatchToProps = dispatch => {
         // fetchOffers: (...args) => dispatch(fetchOffers(...args)),
         // fetchPageOffers: (link) => dispatch(fetchPageOffers(link)),
         // fetchCities: () => dispatch(fetchCities()),
-        getTokens: (...args) => dispatch(getTokens(...args))
+        getTokens: (...args) => dispatch(getTokens(...args)),
+        fetchUser: () => dispatch(fetchCurrentUserData())
     }
   }
 
