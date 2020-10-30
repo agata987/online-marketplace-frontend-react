@@ -1,52 +1,34 @@
 import axios from 'axios'
-const BACKEND_URL = 'http://127.0.0.1:8000/'
+const BACKEND_API_URL = 'http://127.0.0.1:8000/api/'
 
 const axiosInstance = axios.create({
-    baseURL: BACKEND_URL,
+    baseURL: BACKEND_API_URL,
 })
 
-// to check if the global handler should be used or not
-const isHandlerEnabled = (config={}) => {
-    return config.hasOwnProperty('handlerEnabled') && !config.handlerEnabled ? false : true
-}
-
-/*
-handler disable example:
-axiosInstance.get('/v2/api-endpoint', { handlerEnabled: false })
-*/
-
-// request interceptor
-const requestHandler = request => {
-    if (isHandlerEnabled(request)) {
+axiosInstance.interceptors.request.use(request => {
+    if (request.auth) {
         const accessToken = localStorage.getItem('access')
         request.headers['Authorization'] = `Bearer ${accessToken}`
     }
-}
+    return request
+})
 
-axiosInstance.interceptors.request.use(request => requestHandler(request))
-
-// 401 response handler, refreash access token
-const errorHandler = error => {
-    if (isHandlerEnabled(error.config) && error.response.status === 401) {
+// send the request again if 401 response status
+const API_Handler = async (auth, request) => {
+    if (auth)
+        request = {...request, auth: true}
+    
+    const requestResponse = await axiosInstance(request)
+    if (requestResponse.status === 401 && auth) {
         const refreshToken = localStorage.getItem('refresh')
-        axios.post(`${BACKEND_URL}api/auth/token/refresh/`, {refresh: refreshToken})
-        .then(res => {
-            localStorage.setItem('access', res.data.access)
-        })
-        .catch(() => {})
+        const refreshTokenResponse = await axiosInstance({method: 'post', url: 'auth/token/refresh/', data: {refresh: refreshToken}, auth: false})
+        if (refreshTokenResponse.ok) {
+            localStorage.setItem('access', refreshTokenResponse.data.access)
+            const finalResponse = await axiosInstance(request)
+            return finalResponse
+        }
     }
-    return Promise.reject({...error})
-}
-
-axiosInstance.interceptors.response.use(
-    response => (response),
-    error => errorHandler(error)
-)
-
-const API_Handler = (request, success, error) => {
-    axiosInstance(request)
-    .then(res => success(res))
-    .catch(err => error(err))
-}
+    return requestResponse
+}    
 
 export default API_Handler
