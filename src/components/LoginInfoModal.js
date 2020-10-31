@@ -22,7 +22,7 @@ const LoginInfoModal = props => {
         >
             <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
                 <h3>Aby utworzyć nową ofertę <a href='/login'>zaloguj się</a>.</h3>
-                <Button onClick={props.onClick}>OK</Button>
+                <Button onClick={props.onRequestClose}>OK</Button>
             </div>
         </Modal>
     )

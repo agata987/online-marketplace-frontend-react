@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
   BrowserRouter as Router,
   Switch,
@@ -23,8 +23,11 @@ import 'semantic-ui-css/semantic.min.css'
 import './sass/main.scss'
 
 function App(props) {
-  if (localStorage.getItem('access') && localStorage.getItem('refresh'))
-  props.autoLogin()
+
+  useEffect(() => {
+    if (localStorage.getItem('access') && localStorage.getItem('refresh'))
+    props.autoLogin()
+  }, [])
 
   return (
     <div>
@@ -37,7 +40,7 @@ function App(props) {
           <Route path='/favourites' exact component={FavouritesView} />
           <Route path='/jobs' exact component={JobsView} />
           <Route path='/messages' exact component={MessagesView} />
-          <Route path='/' exact component={OffersView} />
+          <Route path='/' loggedIn={props.loggedIn} exact component={OffersView} />
           <Route path='/settings' exact component={SettingsView} />
           <Route path='/create-offer' exact component={CreateOfferView} />
           <Route />
