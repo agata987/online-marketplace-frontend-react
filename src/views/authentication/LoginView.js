@@ -1,18 +1,9 @@
-import React, {useEffect} from 'react'
-import { Redirect } from "react-router-dom";
+import React from 'react'
 import LoginForm from '../../components/forms/LoginForm'
 
 const LoginView = props => {
-    useEffect(() => {
-        props.fetchUserData()
-    }, [props.loggedIn])
-
-    if (props.loggedIn) 
-        return <Redirect to='/' />
     return (
-        <div>
-            <LoginForm />
-        </div>
+        <LoginForm />
     )
 }
 

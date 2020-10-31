@@ -1,21 +1,16 @@
 const defaultState = {
     tokensFetched: false,
-    user: {}
+    user: null
 }
 
 const authReducer = (state = defaultState, action) => {
     switch(action.type) {
         // tokens
-        case 'SET_TOKENS':
-            return {
-                tokensFetched: true,
-                user: {}
-            }
         case 'CLEAR_TOKENS':
             localStorage.clear()
             return {
                 tokensFetched: false,
-                user: {}
+                user: null
             }
         // current user info
         case 'SET_CURRENT_USER':
@@ -27,7 +22,7 @@ const authReducer = (state = defaultState, action) => {
         case 'SET_LOGIN_REGISTER_ERRORS':
             return {
                 tokensFetched: false,
-                user: {},
+                user: null,
                 loginErrors: true,
                 registerErrors: {...action.payload}
             }

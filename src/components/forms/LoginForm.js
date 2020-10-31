@@ -1,83 +1,79 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
+import { Redirect } from 'react-router-dom';
 import {connect} from 'react-redux'
-import {getTokens, clearTokens} from '../../redux/actions/authActions'
+import {getTokens_fetchCurrentUserData, clearTokens} from '../../redux/actions/authActions'
 import { Button, Form, Message, Icon } from 'semantic-ui-react'
 import { NegativeMessage } from './NegativeMessage'
 
-class LoginForm extends React.Component {
+const LoginForm = props => {
 
-    constructor(props) {
-        super(props)
+    // to clear register form errors if user comes back to login form
+    useEffect(() => {
+        props.clearTokens()
+    },[])
 
-        // to clear register form errors if user comes back to login form
-        this.props.logout()
+    const [loginData, setLoginData] = useState({
+        email: '',
+        password: '',
+    })
 
-        this.state = {
-            email: '',
-            password: '',
-            showMessage: false
-        }
+    const [showLoginError, setShowLoginError] = useState(false)
+
+
+    const onChange = e => {
+        setLoginData({...loginData, [e.target.name]: e.target.value})
     }
 
-    onChange = e => {
-        e.persist();
-        this.setState({[e.target.name]: e.target.value})
+    const onSubmit = () => {
+        if (loginData.email.trim() !== '' && loginData.password.trim() !== '')
+            props.login(loginData)
+            
+        setShowLoginError(true)
     }
 
-    onSubmit = e => {
-        e.preventDefault()
-
-        if (this.state.email.trim() !== '' && this.state.password.trim() !== '')
-        this.props.login(this.state)
-        
-        this.setState({showMessage: true})
-
-        this.props.logout()
-    }
-
-    render() {
-        return(
-            <div>
-                <Form onSubmit={this.onSubmit}>
-                    <h2>Logowanie</h2>
-                    { this.props.authReducer.loginErrors ? 
-                    <NegativeMessage message='Niepoprawny adres e-mail lub hasło.'/>
-                    : (this.state.showMessage && this.state.email.trim() === '' && this.state.password.trim() === '') ? 
-                    <NegativeMessage message='Nie podano adresu e-mail ani hasła.'/>
-                    : this.state.showMessage &&  this.state.email.trim() === '' ? 
-                    <NegativeMessage message='Nie adresu e-mail.'/>
-                    : this.state.showMessage &&  this.state.password.trim() === '' ?
-                    <NegativeMessage message='Nie podano hasła.'/>
-                    : null
-                    }
-                    <label>Adres e-mail</label>
-                    <Form.Field >
-                        <input 
-                            name='email'
-                            value={this.state.email}
-                            onChange={this.onChange}
-                            placeholder='Nazwa użytkownika/ adres e-mail'
-                        />
-                    </Form.Field>
-                    <label>Hasło</label>
-                    <Form.Field>
-                        <input 
-                            type='password'
-                            name='password'
-                            value={this.state.password}
-                            onChange={this.onChange}
-                            placeholder='Hasło'
-                        />
-                    </Form.Field>
-                    <Button type='submit' size='large' >Zaloguj się</Button>
-                </Form>
-                <Message warning>
-                <Icon name='arrow alternate circle right' />
+    return(
+        <div>
+            {props.authReducer.user ?  <Redirect to='' /> : null}
+            <Form onSubmit={onSubmit}>
+                <h2>Logowanie</h2>
+                { props.authReducer.loginErrors ? 
+                <NegativeMessage message='Niepoprawny adres e-mail lub hasło.'/>
+                : (showLoginError && loginData.email.trim() === '' && loginData.password.trim() === '') ? 
+                <NegativeMessage message='Nie podano adresu e-mail ani hasła.'/>
+                : showLoginError && loginData.email.trim() === '' ? 
+                <NegativeMessage message='Nie adresu e-mail.'/>
+                : showLoginError && loginData.password.trim() === '' ?
+                <NegativeMessage message='Nie podano hasła.'/>
+                : null
+                }
+                <label>Adres e-mail</label>
+                <Form.Field >
+                    <input 
+                        name='email'
+                        value={loginData.email}
+                        onChange={onChange}
+                        placeholder='Nazwa użytkownika/ adres e-mail'
+                    />
+                </Form.Field>
+                <label>Hasło</label>
+                <Form.Field>
+                    <input 
+                        type='password'
+                        name='password'
+                        value={loginData.password}
+                        onChange={onChange}
+                        placeholder='Hasło'
+                    />
+                </Form.Field>
+                <Button type='submit' size='large'>Zaloguj się</Button>
+            </Form>
+            <Message warning>
+            <Icon name='arrow alternate circle right' />
                 Nie posiadasz konta użytkownika? &nbsp;<a href='/register'>Zarejestruj się</a>&nbsp;.
-                </Message>
-            </div>
-        )
-    }
+            </Message>
+        </div>
+    )
+    
 }
 
 const mapStateToProps = state => {
@@ -88,8 +84,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        login: loginData => dispatch(getTokens(loginData)),
-        logout: () => dispatch(clearTokens())
+        login: loginData => dispatch(getTokens_fetchCurrentUserData(loginData)),
+        clearTokens: () => dispatch(clearTokens()),
     }
 }
 

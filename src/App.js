@@ -52,7 +52,7 @@ function App(props) {
 
 const mapStateToProps = state => {
   return {
-    loggedIn: state.authReducer.tokensFetched,
+    loggedIn: state.authReducer.user,
   }
 }
 

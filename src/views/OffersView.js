@@ -102,7 +102,7 @@ const OffersView = props => {
                 <div style={{ marginLeft: '10px'}}><SimpleDropdownFilter title={filtersValues.order} choices={['Najtańsze', 'Najdroższe', 'Najnowsze']} onClick={simpleFilterClick}/></div>
             </div>
 
-            <Button onClick={(e) => {
+            <Button onClick={() => {
                 setSearchValues({...searchValues, categoryId: '', cityId: ''})
                 setFiltersValues({order: 'Sortuj według', cityName: 'Wybierz miasto'})
                 props.fetchOffers()
@@ -128,9 +128,8 @@ const mapStateToProps = state => {
       offers: state.offersReducer,
       categories: state.offerCategoriesReducer,
       cities: state.citiesReducer,
-      loggedIn: state.authReducer.tokensFetched,
     }
-  }
+}
   
 
 const mapDispatchToProps = dispatch => {
