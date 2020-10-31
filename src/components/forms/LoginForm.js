@@ -1,9 +1,9 @@
 import React, {useState, useEffect} from 'react'
-import { Redirect } from 'react-router-dom';
+import {Redirect} from 'react-router-dom';
 import {connect} from 'react-redux'
 import {getTokens_fetchCurrentUserData, clearTokens} from '../../redux/actions/authActions'
-import { Button, Form, Message, Icon } from 'semantic-ui-react'
-import { NegativeMessage } from './NegativeMessage'
+import {Button, Form, Message, Icon} from 'semantic-ui-react'
+import {NegativeMessage} from './NegativeMessage'
 
 const LoginForm = props => {
 
