@@ -16,7 +16,6 @@ import {
   Button, 
   Icon, 
   Loader, 
-  Search
 } from 'semantic-ui-react'
 
 const OffersView = props => {

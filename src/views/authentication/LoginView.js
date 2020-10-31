@@ -1,26 +1,19 @@
-import React from 'react'
-import { connect } from 'react-redux'
+import React, {useEffect} from 'react'
 import { Redirect } from "react-router-dom";
 import LoginForm from '../../components/forms/LoginForm'
 
-class LoginView extends React.Component {
+const LoginView = props => {
+    useEffect(() => {
+        props.fetchUserData()
+    }, [props.loggedIn])
 
-    render() {
-        if (this.props.loggedIn) {
-            return <Redirect to='' />
-        }
-        return (
-            <div>
-                 <LoginForm />
-            </div>
-        );
-    }
+    if (props.loggedIn) 
+        return <Redirect to='/' />
+    return (
+        <div>
+            <LoginForm />
+        </div>
+    )
 }
 
-const mapStateToProps = state => {
-    return {
-      loggedIn: state.userReducer.loggedIn
-    }
-}
-
-export default connect(mapStateToProps)(LoginView)
+export default LoginView

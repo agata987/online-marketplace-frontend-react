@@ -9,8 +9,8 @@ const NavBar = props => {
     const [activeItem, setActiveItem] = useState('Ogłoszenia')
     const handleItemClick = (e, {name}) => setActiveItem(name)
 
-    const logOut = () => {
-      props.logoutUser()
+    const logout = () => {
+      props.logout()
       alert('Zostałeś wylogowany.')
     }
 
@@ -51,7 +51,7 @@ const NavBar = props => {
                         <Icon name='setting'/>
                         Ustawienia
                     </Dropdown.Item>
-                    <Dropdown.Item onClick={logOut}>
+                    <Dropdown.Item onClick={logout}>
                         <Icon name='sign out'/>
                         Wyloguj się
                     </Dropdown.Item>
@@ -72,7 +72,7 @@ const NavBar = props => {
 
 const mapDispatchToProps = dispatch => {
   return {
-      logoutUser: () => dispatch(clearTokens()),
+      logout: () => dispatch(clearTokens()),
   }
 }
 

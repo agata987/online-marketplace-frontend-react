@@ -6,7 +6,7 @@ class AccountCreatedView extends React.Component {
     render() {
         return(
             <div>
-                Twoje konto zostało utworzone. Zostałeś automatycznie zalogowany.
+                Twoje konto zostało utworzone. Możesz się zalogować.
             </div>
         )
     }

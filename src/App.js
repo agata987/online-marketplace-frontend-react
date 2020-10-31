@@ -34,7 +34,7 @@ function App(props) {
       <Router>
         <NavBar loggedIn={props.loggedIn}/>
         <Switch>
-          <Route path='/login' exact component={LoginView} />
+          <Route path='/login' loggedIn={props.loggedIn} exact component={LoginView} />
           <Route path='/register' exact component={RegisterView} />
           <Route path='/created' exact component={AccountCreatedView} />
           <Route path='/favourites' exact component={FavouritesView} />
