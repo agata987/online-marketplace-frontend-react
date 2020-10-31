@@ -33,5 +33,8 @@ export const fetchCurrentUserData = () => dispatch => {
 
 export const registerUser = registerData => dispatch => {
     API_Handler(false, {method: 'post', url: 'auth/register/', data: registerData})
+    .then(() => {
+        dispatch(getTokens_fetchCurrentUserData({email: registerData.email, password: registerData.password}))
+    })
     .catch(err => dispatch(setLoginRegisterErrors(err.response.data)))
 }
