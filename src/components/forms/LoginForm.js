@@ -21,6 +21,7 @@ const LoginForm = props => {
 
 
     const onChange = e => {
+        e.persist();
         setLoginData({...loginData, [e.target.name]: e.target.value})
     }
 

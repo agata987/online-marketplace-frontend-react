@@ -24,7 +24,7 @@ export const clearTokens = () => dispatch => {
 
 // user
 export const fetchCurrentUserData = () => dispatch => {
-    API_Handler(true, {method: 'get', url: 'current-user/'})
+    API_Handler(true, {method: 'get', url: 'users/current/'})
     .then(res => {
         dispatch(setCurrentUser(res.data))
     })
@@ -32,7 +32,7 @@ export const fetchCurrentUserData = () => dispatch => {
 }
 
 export const registerUser = registerData => dispatch => {
-    API_Handler(false, {method: 'post', url: 'auth/register/', data: registerData})
+    API_Handler(false, {method: 'post', url: 'users/', data: registerData})
     .then(() => {
         dispatch(getTokens_fetchCurrentUserData({email: registerData.email, password: registerData.password}))
     })

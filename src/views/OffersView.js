@@ -69,6 +69,7 @@ const OffersView = props => {
 
     // search bar
     const onSearchValueChange = e => {
+        e.persist();
         setSearchValues({...searchValues, searchValue: e.target.value})
     }
 
