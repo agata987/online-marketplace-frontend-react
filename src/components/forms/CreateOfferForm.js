@@ -21,9 +21,9 @@ const CreateOfferForm = props => {
         user_id: props.user_id,
         city_id: null,
         category_id: null,
-        name: null,
+        name: '',
         price: null,
-        description: null,
+        description: '',
     })
 
     const [filterValues, setFilterValues] = useState({
