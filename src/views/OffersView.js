@@ -129,6 +129,7 @@ const mapStateToProps = state => {
       offers: state.offersReducer,
       categories: state.offerCategoriesReducer,
       cities: state.citiesReducer,
+      loggedIn: state.authReducer.user,
     }
 }
   

@@ -5,7 +5,6 @@ import {Link} from 'react-router-dom'
 import {Dropdown, Icon, Menu} from 'semantic-ui-react'
 
 const NavBar = props => {
-
     const [activeItem, setActiveItem] = useState('Ogłoszenia')
     const handleItemClick = (e, {name}) => setActiveItem(name)
 
