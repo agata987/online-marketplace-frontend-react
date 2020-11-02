@@ -3,6 +3,8 @@ import {connect} from 'react-redux'
 import {createOffer} from '../../redux/actions/offers/createOfferActions'
 import { fetchCategories } from '../../redux/actions/offers/offerCategoriesActions'
 import { fetchCities } from '../../redux/actions/citiesActions'
+import CityMenu from '../CityMenu'
+import CategoriesMenu from '../CategoriesMenu'
 import { Button, Form} from 'semantic-ui-react'
 
 const CreateOfferForm = props => {
@@ -15,7 +17,7 @@ const CreateOfferForm = props => {
     },[])
 
     const [offerData, setOfferData] = useState({
-        user_id: props.user.id,
+        user_id: props.id,
         city_id: null,
         category_id: null,
         name: null,
@@ -34,7 +36,9 @@ const CreateOfferForm = props => {
         <Form onSubmit={onSubmit}>
             <h2>Tworzenie nowego ogłoszenia</h2>
 
-            <Button type='submit' size='large'>Utwórz ofertę</Button>
+
+
+            <Button type='submit' size='large'>Utwórz ogłoszenie</Button>
         </Form>
     )
     
