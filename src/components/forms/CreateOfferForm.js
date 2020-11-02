@@ -18,7 +18,7 @@ const CreateOfferForm = props => {
     },[])
 
     const [offerData, setOfferData] = useState({
-        user_id: props.id,
+        user_id: props.user_id,
         city_id: null,
         category_id: null,
         name: null,
@@ -134,7 +134,6 @@ const mapStateToProps = state => {
         offer: state.createOfferReducer,
         categories: state.offerCategoriesReducer,
         cities: state.citiesReducer,
-        user: state.authReducer.user,
     }
 }
 
