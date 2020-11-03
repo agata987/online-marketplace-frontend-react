@@ -29,7 +29,8 @@ const OfferView = props => {
                 {props.city ? <h3>{props.city.name}</h3> : null}
                 <label>{props.offer.creation_date}</label> 
                 <h3>Cena: {props.offer.price} zł</h3>
-                <h3>Opis:</h3> {props.offer.description}
+                <h3>Opis:</h3> 
+                <label>{props.offer.description}</label>
                 
                 <Button style={{marginTop: '10px'}} onClick={props.onRequestClose}>Zamknij</Button>
             </div>

@@ -25,7 +25,7 @@ const Offers = props => {
 
           <Item.Content verticalAlign='middle'>
           <Item.Header>{item.name}</Item.Header>
-            <Item.Description>{`cena: ${item.price} zł`}</Item.Description>
+            {item.price ? <Item.Description>{`cena: ${item.price} zł`}</Item.Description> : null}
             <Item.Description>{`${item.creation_date}`}</Item.Description>
             <Item.Description>
               <Button onClick={() => showOfferHandle(item)}>Sprawdź ofertę</Button>
