@@ -8,7 +8,7 @@ export default class Offers extends Component {
       <Item.Group relaxed>
       {this.props.items.map(item => 
         <Item>
-          <Item.Image size='small' src='https://react.semantic-ui.com/images/wireframe/image.png' />
+          <Item.Image size='small' src={item.image ? item.image : 'https://react.semantic-ui.com/images/wireframe/image.png'} />
     
           <Item.Content verticalAlign='middle'>
           <Item.Header>{item.name}</Item.Header>
