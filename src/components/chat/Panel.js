@@ -1,5 +1,7 @@
 import React, {useState} from 'react'
 import { Grid, Menu, Segment } from 'semantic-ui-react'
+import Chat from './Chat'
+import {Loader} from 'semantic-ui-react'
 
 const  Panel = props => {
 
@@ -38,7 +40,7 @@ const  Panel = props => {
 
       <Grid.Column stretched width={12}>
         <Segment>
-          WIADOMOSCI
+          {activeChatId && props.user_id ? <Chat chatId={activeChatId} userId={props.user_id}/> : null}
         </Segment>
       </Grid.Column>
     </Grid>
