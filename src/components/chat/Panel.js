@@ -1,20 +1,59 @@
-import React, {useState} from 'react'
-import { Grid, Menu, Segment } from 'semantic-ui-react'
+import React, {useState, useEffect} from 'react'
+import { Grid, Menu, Button, Image, Modal } from 'semantic-ui-react'
 import Chat from './Chat'
+import Hoc from '../Hoc'
 
 const  Panel = props => {
 
   const chats = []
+  const [openModal, setOpenModal] = useState(false)
+
+  useEffect(() => {
+    if (props.newContact) {
+      setOpenModal(true)
+    }
+  },[props.newContact])
 
   const [activeChat, setactiveChat] = useState({
     id: null,
     participantName: null
   })
+
   const handleOpenChat = (id, participantName) => {
     setactiveChat({id: id, participantName: participantName})
   }
 
   return (
+    <Hoc>
+      <Modal 
+        onClose={() => setOpenModal(false)}
+        open={openModal}
+    >
+        <Modal.Header>Chcesz napisać wiadomość do użytkownika <span style={{color: 'green'}}>{props.newContact}</span>?</Modal.Header>
+        <Modal.Content image>
+            <Image size='small' src='https://react.semantic-ui.com/images/avatar/large/rachel.png' wrapped />
+            <Modal.Description>   
+                <div style={{fontSize: '2rem', marginBottom: '20px'}}>
+                    Czy chcesz dodać użytkownika {props.newContact} do listy kontaktów?
+                </div>
+                <div style={{fontSize: '1.5rem'}}>
+                    Żeby wysłać wiadomość w sprawie ogłoszenia lub oferty pracy dodaj <span style={{color: 'green'}}>{props.newContact}</span> do kontaktów.
+                </div>
+            </Modal.Description>
+        </Modal.Content>
+        <Modal.Actions>
+            <Button color='black' onClick={() => setOpenModal(false)}>
+            Nie
+            </Button>
+            <Button
+            content="Tak, dodaj"
+            labelPosition='right'
+            icon='checkmark'
+            onClick={() => setOpenModal(false)}
+            positive
+            />
+        </Modal.Actions>
+    </Modal>
     <Grid>
       <Grid.Column width={4}>
         {props.chats ?
@@ -46,7 +85,8 @@ const  Panel = props => {
           {activeChat.id && props.user_id ? <Chat chatId={activeChat.id} userId={props.user_id} participantName={activeChat.participantName}/> : null}
         </div>
       </Grid.Column>
-    </Grid>
+      </Grid>
+    </Hoc>
   )
 
 }
