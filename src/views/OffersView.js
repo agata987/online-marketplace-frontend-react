@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from 'react'
-
 import { connect } from 'react-redux'
 import { fetchOffers, fetchPageOffers } from '../redux/actions/offers/offersActions'
 import { fetchCategories } from '../redux/actions/offers/offerCategoriesActions'

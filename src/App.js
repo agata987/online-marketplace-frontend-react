@@ -43,6 +43,7 @@ function App(props) {
           <Route path='/' exact component={OffersView} />
           <Route path='/settings' exact component={SettingsView} />
           <Route path='/create-offer' exact component={CreateOfferView} />
+          <Route path='/messages' exact component={MessagesView} />
           <Route />
         </Switch>
       </Router>

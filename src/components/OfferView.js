@@ -1,6 +1,6 @@
 import React from 'react'
-import Modal from 'react-modal'
-import {Button, Loader, Image} from 'semantic-ui-react'
+import {Button, Loader, Image, Modal, Icon} from 'semantic-ui-react'
+import Hoc from './Hoc'
 
 const customStyles = {
     content : {
@@ -15,29 +15,45 @@ const customStyles = {
 };
 
 const OfferView = props => {
-
-    return(
+    return (
         <Modal
-            isOpen={props.isOpen}
-            onRequestClose={props.onRequestClose}
-            style={customStyles}
-        >   
-        { props.offer ?
-            <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-                <h1>{props.offer.name}</h1> 
-                <Image src={props.offer.image}/>
-                {props.city ? <h3>{props.city.name}</h3> : null}
-                <label>{props.offer.creation_date}</label> 
-                <h3>Cena: {props.offer.price} zł</h3>
-                <h3>Opis:</h3> 
-                <label>{props.offer.description}</label>
-                
-                <Button style={{marginTop: '10px'}} onClick={props.onRequestClose}>Zamknij</Button>
-            </div>
-        : <div style={{width: '100%', padding: '60px', display: 'flex', justifyContent: 'center'}}><Loader active inline /></div>}
+            open={props.isOpen}
+            onClose={props.onRequestClose}
+            >  
+            {props.offer ? <Hoc>
+                <Modal.Header>{props.offer.name}</Modal.Header>
 
-        </Modal>
-    )
+                <Modal.Content image>
+                    <Image
+                        size="large"
+                        src={props.offer.image}
+                        wrapped
+                    />
+                    <Modal.Description>
+                        {props.city ? <h3>{props.city.name}</h3> : null}
+                        <label>{props.offer.creation_date}</label> 
+                        <h3>Cena:</h3>
+                        <label>{props.offer.price} zł</label>
+                        <h3>Opis:</h3> 
+                        <label>{props.offer.description}</label>
+                    </Modal.Description>
+                </Modal.Content>
+
+                <Modal.Actions>
+                    
+                    <Button onClick={() => {}} color='green' animated>
+                    <Button.Content visible>Wiadomość</Button.Content>
+                    <Button.Content hidden>
+                        <Icon name='arrow right' />
+                    </Button.Content>
+                    </Button>
+                    <Button onClick={props.onRequestClose}>
+                        Zamknij
+                    </Button>
+                </Modal.Actions> </Hoc>
+            : <div style={{width: '100%', padding: '60px', display: 'flex', justifyContent: 'center'}}><Loader active inline /></div>
+    }
+        </Modal>)
 }
 
 

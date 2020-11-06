@@ -28,7 +28,12 @@ const Offers = props => {
             {item.price ? <Item.Description>{`cena: ${item.price} zł`}</Item.Description> : null}
             <Item.Description>{`${item.creation_date}`}</Item.Description>
             <Item.Description>
-              <Button onClick={() => showOfferHandle(item)}>Sprawdź ofertę</Button>
+              <Button onClick={() => showOfferHandle(item)} animated='vertical'>
+              <Button.Content visible>Sprawdź ofertę</Button.Content>
+              <Button.Content hidden>
+                <Icon name='shop' />
+              </Button.Content>
+            </Button>
             </Item.Description>
             <Item.Extra>
               <a href='#' style={{float: "right"}}><Icon size='large' name='heart outline'/></a>
