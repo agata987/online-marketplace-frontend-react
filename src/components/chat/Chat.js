@@ -2,6 +2,7 @@ import React from 'react'
 import {connect} from "react-redux";
 import {setMessages, addMessage} from '../../redux/actions/chatActions'
 import WebSocketInstance from '../../WebSocketInstance'
+import { Message } from 'semantic-ui-react'
 
 class Chat extends React.Component {
     constructor(props) {
@@ -33,7 +34,12 @@ class Chat extends React.Component {
     }
 
     renderMessages = messages => {
-        console.log(messages)
+        return messages.map(message => <div style={message.author === this.props.userId ? {display: 'flex', flexDirection: 'row', justifyContent: 'right', margin: '5px'} : { margin: '5px'}}>
+            <Message floating style={message.author === this.props.userId ? {width: '45%', textAlign: 'right'} : { width: '45%'}}>
+                {message.author !== this.props.userId ? <p>{this.props.participantName}:</p> :  <p>ja:</p>}
+                <h5>{message.content}</h5>
+            </Message>
+        </div>)
     }
 
     render() {
