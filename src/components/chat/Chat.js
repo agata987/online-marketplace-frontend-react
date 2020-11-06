@@ -95,7 +95,7 @@ class Chat extends React.Component {
                 {this.props.messages ? this.renderMessages(this.props.messages) : null}
                 </Segment>
                 <div style={{display: 'flex', flexDirection: 'column'}}>
-                    <TextArea value={this.state.message} style={{width: '45%', margin: '5px 0 5px auto', padding: '5px'}} placeholder='Wiadomość...' onChange={this.messageChangeHandler}/>
+                    <TextArea value={this.state.message} style={{width: '45%', margin: '0 0 10px auto', padding: '5px'}} placeholder='Wiadomość...' onChange={this.messageChangeHandler}/>
                     <Button onClick={this.sendMessageHandler} color='teal' style={{width: '45%', marginRight: '0', marginLeft: 'auto'}}>Wyślij</Button>
                 </div>
             </div>
