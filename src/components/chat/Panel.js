@@ -41,10 +41,10 @@ const  Panel = props => {
         
       </Grid.Column>
 
-      <Grid.Column stretched width={12}>
-        <Segment>
+      <Grid.Column width={12}>
+        <div>
           {activeChat.id && props.user_id ? <Chat chatId={activeChat.id} userId={props.user_id} participantName={activeChat.participantName}/> : null}
-        </Segment>
+        </div>
       </Grid.Column>
     </Grid>
   )
