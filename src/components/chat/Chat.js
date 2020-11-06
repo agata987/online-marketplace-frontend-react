@@ -35,9 +35,9 @@ class Chat extends React.Component {
 
     renderMessages = messages => {
         return messages.map(message => <div style={message.author === this.props.userId ? {display: 'flex', flexDirection: 'row', justifyContent: 'right', margin: '5px'} : { margin: '5px'}}>
-            <Message floating style={message.author === this.props.userId ? {width: '45%', textAlign: 'right'} : { width: '45%'}}>
-                {message.author !== this.props.userId ? <p>{this.props.participantName}:</p> :  <p>ja:</p>}
-                <h5>{message.content}</h5>
+            <Message  color={message.author === this.props.userId ? 'teal' : null} style={message.author === this.props.userId ? {width: '45%', textAlign: 'right'} : { width: '45%'}}>
+                {message.author !== this.props.userId ? <Message.Header>{this.props.participantName}:</Message.Header> :  <Message.Header>ja:</Message.Header>}
+                <Message.Content>{message.content}</Message.Content>
             </Message>
         </div>)
     }
