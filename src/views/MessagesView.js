@@ -1,43 +1,22 @@
 import React, {useEffect, useState} from 'react'
 import {connect} from 'react-redux'
-import {addMessage, setMessages, getUserChats} from '../redux/actions/chatActions'
-import WebSocketInstance from '../WebSocketHandler'
+import {getUserChats} from '../redux/actions/chatActions'
 import Panel from '../components/chat/Panel'
+import {Loader} from 'semantic-ui-react'
 
 const MessagesView = props => {
 
-    const [loaded, setLoaded] = useState(false)
-
-    const getChats = () => {
-        setTimeout(() => {
-            if (!props.loggedIn || !props.chats) {
-                getChats()
-            } else {
-                props.getUserChats(props.loggedIn.id)}
-                setLoaded(true)
-        }, 50)
-    }
-
-    const socketHandler = WebSocketInstance.addCallbacks(
-        props.setMessages, 
-        props.addMessage
-    )
-
     useEffect(() => {
-        getChats()
-    }, [])
-
-    useEffect(() => {
-        if ((props.loggedIn || !props.chats) && loaded) {
+        if(props.loggedIn && !props.chats.fetched) {
             props.getUserChats(props.loggedIn.id)
-        }
-    })
-
-    const [activeChat, setActiveChat] = useState(null)
+        }          
+    },[props.loggedIn,])
 
     return (
         <div>
-            <Panel />
+            {props.loggedIn ? <Panel chats={props.chats} user_id={props.loggedIn.id}/> : 
+            <div style={{width: '100%', padding: '60px', display: 'flex', justifyContent: 'center'}}><Loader active inline /></div>
+            }
       </div>
     )
 }
@@ -52,8 +31,6 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        addMessage: message => dispatch(addMessage(message)),
-        setMessages: messages => dispatch(setMessages(messages)),
         getUserChats: user_id => dispatch(getUserChats(user_id))
     }
   }
