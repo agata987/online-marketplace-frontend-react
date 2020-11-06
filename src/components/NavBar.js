@@ -30,14 +30,19 @@ const NavBar = props => {
             onClick={handleItemClick}
           />
           <Menu.Menu position='right'>
-              <Menu.Item
+              {
+                props.loggedIn ?
+                <Menu.Item
                   as={Link} 
                   to='/messages'
                   name=''
                   icon='envelope'
                   active={activeItem === ''}
                   onClick={handleItemClick}
-              />
+               />
+               : null
+              }
+
               {
                 props.loggedIn ?
                 <Dropdown text='Moje konto' pointing className='link item' onClick={handleItemClick}>
