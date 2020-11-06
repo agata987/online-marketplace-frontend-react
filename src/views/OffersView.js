@@ -85,7 +85,7 @@ const OffersView = props => {
 
     return (
         <div>
-            <LoginInfoModal onRequestClose={() => {setModalOpen(false)}} isOpen={modalOpen} />
+            <LoginInfoModal onRequestClose={() => {setModalOpen(false)}} isOpen={modalOpen} text={<h2>Aby utworzyć nową ofertę <a href='/login'>zaloguj się</a>.</h2>}/>
             
             <div>{props.categories.categories_fetched ? <CategoriesMenu categories={props.categories.categories} handleItemClick={handleCategoriesMenuItemClick} activeItem={searchValues.categoryId} /> : null}</div>
             

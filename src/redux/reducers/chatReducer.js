@@ -20,7 +20,7 @@ const addMessage = (state, action) => {
   
   const setChats = (state, action) => {
     return updateObject(state, {
-      chats: action.chats,
+      chats: action.chats.reverse(),
       fetched: true,
     });
   };

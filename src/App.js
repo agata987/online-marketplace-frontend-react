@@ -39,7 +39,7 @@ function App(props) {
           <Route path='/created' exact component={AccountCreatedView} />
           <Route path='/favourites' exact component={FavouritesView} />
           <Route path='/jobs' exact component={JobsView} />
-          <Route path='/messages' exact component={MessagesView} />
+          <Route path='/messages/:username'  component={MessagesView} />
           <Route path='/' exact component={OffersView} />
           <Route path='/settings' exact component={SettingsView} />
           <Route path='/create-offer' exact component={CreateOfferView} />

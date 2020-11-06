@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Header, Icon, Modal, TextArea } from 'semantic-ui-react'
+import { Button, Header, Icon, Modal } from 'semantic-ui-react'
 
 const LoginInfoModal = props => {
     return(
@@ -14,7 +14,7 @@ const LoginInfoModal = props => {
         </Header>
         <Modal.Content >
           <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-            <h2>Aby utworzyć nową ofertę <a href='/login'>zaloguj się</a>.</h2>
+            {props.text}
             <div style={{marginTop: '20px'}}>
                 <Button size='big' color='green' inverted onClick={props.onRequestClose}>
                     <Icon name='checkmark' /> Ok
