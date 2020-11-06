@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react'
 import {connect} from 'react-redux'
 import {addMessage, setMessages, getUserChats} from '../redux/actions/chatActions'
 import WebSocketInstance from '../WebSocketHandler'
+import Panel from '../components/chat/Panel'
 
 const MessagesView = props => {
 
@@ -17,12 +18,13 @@ const MessagesView = props => {
         }, 50)
     }
 
+    const socketHandler = WebSocketInstance.addCallbacks(
+        props.setMessages, 
+        props.addMessage
+    )
+
     useEffect(() => {
         getChats()
-        WebSocketInstance.addCallbacks(
-            props.setMessages, 
-            props.addMessage
-        )
     }, [])
 
     useEffect(() => {
@@ -31,9 +33,11 @@ const MessagesView = props => {
         }
     })
 
+    const [activeChat, setActiveChat] = useState(null)
+
     return (
         <div>
-  
+            <Panel />
       </div>
     )
 }
