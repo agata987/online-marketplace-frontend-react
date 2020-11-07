@@ -114,7 +114,7 @@ const OffersView = props => {
                 : <div style={{width: '100%', padding: '60px', display: 'flex', justifyContent: 'center'}}><Loader active inline /></div>}
             </div>
 
-            <div style={{width: '100%', display: 'flex',justifyContent: 'center', padding: '20px'}}>
+            <div style={{width: '100%', display: 'flex',justifyContent: 'center', padding: '20px', maxWidth: '1050px'}}>
                 <Button disabled={props.offers.previousPage ? false : true} onClick={() => {props.fetchPageOffers(props.offers.previousPage)}}><Icon name='angle left' /></Button>
                 <Button disabled={props.offers.nextPage ? false : true} onClick={() => {props.fetchPageOffers(props.offers.nextPage)}}><Icon name='angle right' /></Button>
             </div>

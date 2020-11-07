@@ -62,16 +62,29 @@ const OfferView = props => {
                     </Modal.Content>
 
                     <Modal.Actions>
-                        
-                        <Button onClick={sendMessageHandle} color='green' animated>
-                        <Button.Content visible>Wiadomość</Button.Content>
-                        <Button.Content hidden>
-                            <Icon name='arrow right' />
-                        </Button.Content>
-                        </Button>
-                        <Button onClick={props.onRequestClose}>
-                            Zamknij
-                        </Button>
+                        <div style={{marginBottom: '5px'}}>
+                            <span style={{marginLeft: '5px'}}>
+                                <Button onClick={()=>{}} color='red' animated>
+                                    <Button.Content hidden>Dodaj</Button.Content>
+                                    <Button.Content visible>
+                                        <Icon name='heart' />
+                                    </Button.Content>
+                                </Button>
+                            </span>
+                            <span style={{marginLeft: '5px'}}>
+                                <Button onClick={sendMessageHandle} color='green'  animated>
+                                    <Button.Content visible>Wiadomość</Button.Content>
+                                    <Button.Content hidden>
+                                        <Icon name='arrow right' />
+                                    </Button.Content>
+                                </Button>
+                            </span>
+                            <span style={{marginLeft: '5px'}}>
+                                <Button onClick={props.onRequestClose}>
+                                    <Button.Content visible>Zamknij</Button.Content>
+                                </Button>
+                            </span>
+                        </div>
                     </Modal.Actions> </Hoc>
                 : <div style={{width: '100%', padding: '60px', display: 'flex', justifyContent: 'center'}}><Loader active inline /></div>}
             </Modal>

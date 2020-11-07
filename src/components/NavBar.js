@@ -14,7 +14,7 @@ const NavBar = props => {
     }
 
     return (
-        <Menu pointing secondary size='massive' color='blue'>
+        <Menu pointing secondary size='massive' color='violet'>
           <Menu.Item 
             as={Link} 
             to='/'
@@ -48,7 +48,7 @@ const NavBar = props => {
                 <Dropdown text='Moje konto' pointing className='link item' onClick={handleItemClick}>
                   <Dropdown.Menu>
                     <Dropdown.Item as={Link} to='/favourites'>
-                        <Icon name='star'/>
+                        <Icon name='heart'/>
                         Ulubione
                     </Dropdown.Item>
                     <Dropdown.Item as={Link} to='/settings'>
