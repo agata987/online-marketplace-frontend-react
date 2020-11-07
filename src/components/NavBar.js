@@ -51,6 +51,14 @@ const NavBar = props => {
                         <Icon name='heart'/>
                         Ulubione
                     </Dropdown.Item>
+                    <Dropdown.Item as={Link} to='/my-offers'>
+                        <Icon name='newspaper outline'/>
+                        Moje oferty
+                    </Dropdown.Item>
+                    <Dropdown.Item as={Link} to='/my-job-offers'>
+                        <Icon name='suitcase'/>
+                        Moje oferty pracy
+                    </Dropdown.Item>
                     <Dropdown.Item as={Link} to='/settings'>
                         <Icon name='setting'/>
                         Ustawienia

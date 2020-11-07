@@ -7,6 +7,7 @@ import CityMenu from '../CityMenu'
 import CategoriesSimpleMenu from '../CategoriesSimpleMenu'
 import {FormField} from './FormField'
 import {Button, Form, Input, TextArea} from 'semantic-ui-react'
+import {NegativeMessage} from './NegativeMessage'
 
 const CreateOfferForm = props => {
     useEffect(() => {
@@ -17,6 +18,12 @@ const CreateOfferForm = props => {
             props.fetchCities()
     },[])
 
+    useEffect(() => {
+        if (props.offer.done)
+            props.redirect()
+
+    }, [props.offer])
+
     const [offerData, setOfferData] = useState({
         user_id: props.user_id,
         city_id: null,
@@ -24,6 +31,7 @@ const CreateOfferForm = props => {
         name: '',
         price: null,
         description: '',
+        image: null,
     })
 
     const [filterValues, setFilterValues] = useState({
@@ -31,13 +39,29 @@ const CreateOfferForm = props => {
         categoryName: 'Wybierz kategorię'
     })
 
-    const [emptyFields, setEmptyFields] = useState(false)
+    const [emptyDropdownFields, setEmptyDropdownFields] = useState(false)
 
     const onSubmit = () => {
-        // jakies sprawdzanie czy pola te co trzeba są uzupełnione ?
-        // ...
+        if (!offerData.user_id || !offerData.city_id)
+            setEmptyDropdownFields(true)
+        else {
+            const uploadData = new FormData()
+            uploadData.append('user_id', offerData.user_id)
+            uploadData.append('city_id', offerData.city_id)
+            uploadData.append('category_id', offerData.category_id)
+            uploadData.append('name', offerData.name)
 
-        props.createOffer(offerData)
+            if (offerData.price !== null)
+                uploadData.append('price', offerData.price)
+            
+            if (offerData.description.trim() !== '')
+                uploadData.append('description', offerData.description)
+
+            if (offerData.image !== null)
+                uploadData.append('image', offerData.image)
+
+            props.createOffer(uploadData) 
+        }
     }
 
     // city menu
@@ -67,16 +91,26 @@ const CreateOfferForm = props => {
         setOfferData({...offerData, description: e.target.value})
     }
 
+    const uploadImageHandle = e => {
+        e.persist()
+        setOfferData({...offerData, image: e.target.files[0]})
+    }
+
     return(
         <Form onSubmit={onSubmit}>
             <h2>Tworzenie nowego ogłoszenia</h2>
+            {emptyDropdownFields ?(
+                !offerData.city_id && !offerData.category_id ? <NegativeMessage message='Wybierz kategorię i miasto.'/> :
+                !offerData.city_id ? <NegativeMessage message='Wybierz miasto.'/> :
+                !offerData.category_id ? <NegativeMessage message='Wybierz kategorię.'/> : null
+            ): null}
             <div style={{marginTop: '10px'}}>{props.cities.fetched ? <CityMenu city={filterValues.cityName}  voivodeships={props.cities.voivodeships} onClick={onClickCity}/> : <h3>Ładownaie miast...</h3>}</div>
             <div style={{margin: '10px 0 10px 0'}}>{props.categories.categories_fetched ? <CategoriesSimpleMenu categoryName={filterValues.categoryName}  categories={props.categories.categories} onClick={onClickCategory}/> : <h3>Ładownaie kategorii...</h3>}</div>
 
             <label>Tytuł oferty</label>
             <FormField 
-                fieldError={props.offer.errors ? (props.offer.errors.name ? true : false) : emptyFields && offerData.name.trim() === '' ? true : false}
-                content={props.offer.errors ? (props.offer.errors.name ? props.offer.errors.name : '') : emptyFields && offerData.name.trim() === '' ? 'To pole nie może być puste.' : ''}
+                fieldError={props.offer.errors ? (props.offer.errors.name ? true : false) : false}
+                content={props.offer.errors ? (props.offer.errors.name ? props.offer.errors.name : '') : ''}
                 control={Input}
             >
                 <input 
@@ -87,12 +121,15 @@ const CreateOfferForm = props => {
                 />
             </FormField>
 
+            <label>Zdjęcie (opcjonalne):</label>
+            <input onChange={uploadImageHandle} type='file' accept="image/*"/>
+
             { filterValues.categoryName !== 'Oddam za darmo' && filterValues.categoryName !== 'Zamienię' ?
                 <div>
-                <label>Cena</label>
+                <label>Cena (opcjonalne)</label>
                 <FormField
-                    fieldError={props.offer.errors ? (props.offer.errors.price ? true : false) : emptyFields && offerData.price.trim() === '' ? true : false}
-                    content={props.offer.errors ? (props.offer.errors.price ? props.offer.errors.price : '') : emptyFields && offerData.price.trim() === '' ? 'To pole nie może być puste.' : ''}
+                    fieldError={props.offer.errors ? (props.offer.errors.price ? true : false) : false}
+                    content={props.offer.errors ? (props.offer.errors.price ? props.offer.errors.price : '') : ''}
                     control={Input}
                 >
                     <div style={{display: 'flex', flexDirection: 'row'}}>
@@ -108,10 +145,10 @@ const CreateOfferForm = props => {
                 </div>
             : null}
 
-            <label>Opis</label>
+            <label>Opis (opcjonalne)</label>
             <FormField 
-                fieldError={props.offer.errors ? (props.offer.errors.description ? true : false) : emptyFields && offerData.description.trim() === '' ? true : false}
-                content={props.offer.errors ? (props.offer.errors.description ? props.offer.errors.description : '') : emptyFields && offerData.description.trim() === '' ? 'To pole nie może być puste.' : ''}
+                fieldError={props.offer.errors ? (props.offer.errors.description ? true : false) : false}
+                content={props.offer.errors ? (props.offer.errors.description ? props.offer.errors.description : '') : ''}
                 control={Input}
             >
                 <TextArea 

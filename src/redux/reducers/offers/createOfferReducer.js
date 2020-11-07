@@ -1,6 +1,7 @@
 const defaultState = {
     loading: false,
-    errors: null
+    errors: null,
+    done: false
 }
 
 const createOfferReducer = (state=defaultState, action) => {
@@ -8,17 +9,20 @@ const createOfferReducer = (state=defaultState, action) => {
         case 'LOADING':
             return {
                 loading: true,
-                errors: null
+                errors: null,
+                done: false
             }
         case 'DONE':
             return {
                 loading: false,
-                errors: null
+                errors: null,
+                done: true
             }
         case 'ERRORS':
             return {
                 loading: false,
-                errors: action.payload
+                errors: action.payload,
+                done: false
             }
         default: return state
     }
