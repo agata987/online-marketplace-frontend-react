@@ -1,4 +1,6 @@
 import React, {useState, useEffect} from 'react'
+import {connect} from 'react-redux'
+import {getUserChats} from '../../redux/actions/chatActions'
 import { Grid, Menu, Button, Image, Modal } from 'semantic-ui-react'
 import Chat from './Chat'
 import Hoc from '../Hoc'
@@ -10,10 +12,10 @@ const  Panel = props => {
   const [openModal, setOpenModal] = useState(false)
 
   useEffect(() => {
-    if (props.fetched) {
-      props.chats.map(chat => {
+    if (props.chats.fetched) {
+      props.chats.chats.map(chat => {
         const participants = chat.participants.map(part => JSON.parse(part)) // string object
-        const participant = participants.filter(obj => obj.id !== props.user_id)
+        const participant = participants.filter(obj => obj.id !== props.user.id)
         chats.push({
             chatId: chat.id,
             interlocutor: participant[0].id,
@@ -40,7 +42,7 @@ const  Panel = props => {
       }
     }
     
-  },[props.newContact, props.fetched])
+  },[props.newContact, props.chats.fetched])
 
   const [activeChat, setactiveChat] = useState({
     id: null,
@@ -53,13 +55,14 @@ const  Panel = props => {
 
   const handleCreateChat = () => {
     setOpenModal(false)
-    const participants = [props.user_id, props.newContact]
+    
+    const participants = [props.user.id, props.newContact]
 
     API_Handler(true, {method: 'post', url: 'chat/create/', data: {
       participants: participants
     }})
     .then(() => {
-      props.getUserChats(props.user_id)
+      props.getUserChats(props.user.id)
     })
     .catch(err => {
       console.log(err)
@@ -99,11 +102,11 @@ const  Panel = props => {
     </Modal>
     <Grid>
       <Grid.Column width={4}>
-        {props.chats ?
+        {props.chats.chats ?
         <Menu fluid vertical tabular>
-        {props.chats.map(chat => {
+        {props.chats.chats.map(chat => {
             const participants = chat.participants.map(part => JSON.parse(part)) // string object
-            const participant = participants.filter(obj => obj.id !== props.user_id)
+            const participant = participants.filter(obj => obj.id !== props.user.id)
             chats.push({
                 chatId: chat.id,
                 interlocutor: participant[0].id,
@@ -125,7 +128,7 @@ const  Panel = props => {
 
       <Grid.Column width={12}>
         <div>
-          {activeChat.id && props.user_id ? <Chat chatId={activeChat.id} userId={props.user_id} participantName={activeChat.participantName}/> : null}
+          {activeChat.id && props.user.id ? <Chat chatId={activeChat.id} userId={props.user.id} participantName={activeChat.participantName}/> : null}
         </div>
       </Grid.Column>
       </Grid>
@@ -134,4 +137,18 @@ const  Panel = props => {
 
 }
 
-export default Panel
+const mapStateToProps = state => {
+  return {
+    user: state.authReducer.user,
+    chats: state.chatReducer
+  }
+}
+
+
+const mapDispatchToProps = dispatch => {
+  return {
+      getUserChats: user_id => dispatch(getUserChats(user_id))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Panel)

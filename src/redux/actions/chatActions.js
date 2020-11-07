@@ -9,5 +9,9 @@ const getUserChatsSuccess = chats => ({type: 'GET_CHATS_SUCCESS', chats: chats})
 export const getUserChats = user_id => dispatch => {
     API_Handler(true, {method: 'get', url: `chat/?user_id=${user_id}`})
     .then(res => dispatch(getUserChatsSuccess(res.data)))
-    .catch(() => dispatch(getUserChatsSuccess([]))) // empty contact list
+    .catch(err => {
+        if (err.response.status === 404)// empty contact list
+            dispatch(getUserChatsSuccess([]))
+        else dispatch(clearMessages())
+    }) 
 }

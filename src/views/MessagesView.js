@@ -23,7 +23,7 @@ const MessagesView = props => {
 
     return (
         <div>
-            {props.loggedIn ? <Panel getUserChats={getUserChats} newContact={newContact} chats={props.chats.chats} fetched={props.chats.fetched} user_id={props.loggedIn.id}/> : 
+            {props.loggedIn ? <Panel newContact={newContact}/> : 
             <div style={{width: '100%', padding: '60px', display: 'flex', justifyContent: 'center'}}><Loader active inline /></div>
             }
       </div>
