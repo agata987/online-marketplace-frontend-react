@@ -27,7 +27,14 @@ const  Panel = props => {
       })
 
       if (props.newContact) {
-      
+        let exists = false
+        chats.forEach(chat => {
+          if(chat.participantName === props.newContact) {
+            exists = true
+          }
+        })
+        
+        if(!exists)
         setOpenModal(true)
       }
     }
