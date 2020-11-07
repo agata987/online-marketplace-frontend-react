@@ -5,14 +5,34 @@ import Hoc from '../Hoc'
 
 const  Panel = props => {
 
-  const chats = []
+  let chats = []
   const [openModal, setOpenModal] = useState(false)
 
   useEffect(() => {
-    if (props.newContact) {
-      setOpenModal(true)
+    if (props.fetched) {
+      props.chats.map(chat => {
+        const participants = chat.participants.map(part => JSON.parse(part)) // string object
+        const participant = participants.filter(obj => obj.id !== props.user_id)
+        chats.push({
+            chatId: chat.id,
+            interlocutor: participant[0].id,
+            participantName: participant[0].username
+        })
+      })
+
+      // filter duplicates
+      chats = Array.from(new Set(chats.map(chat => chat.chatId)))
+      .map(chatId => {
+        return chats.find(chat => chat.chatId === chatId)
+      })
+
+      if (props.newContact) {
+      
+        setOpenModal(true)
+      }
     }
-  },[props.newContact])
+    
+  },[props.newContact, props.fetched])
 
   const [activeChat, setactiveChat] = useState({
     id: null,

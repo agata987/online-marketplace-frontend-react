@@ -23,7 +23,7 @@ const MessagesView = props => {
 
     return (
         <div>
-            {props.loggedIn ? <Panel newContact={newContact} chats={props.chats} user_id={props.loggedIn.id}/> : 
+            {props.loggedIn ? <Panel newContact={newContact} chats={props.chats.chats} fetched={props.chats.fetched} user_id={props.loggedIn.id}/> : 
             <div style={{width: '100%', padding: '60px', display: 'flex', justifyContent: 'center'}}><Loader active inline /></div>
             }
       </div>
@@ -33,7 +33,7 @@ const MessagesView = props => {
 const mapStateToProps = state => {
     return {
       loggedIn: state.authReducer.user,
-      chats: state.chatReducer.chats
+      chats: state.chatReducer
     }
 }
   
