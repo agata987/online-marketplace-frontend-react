@@ -5,7 +5,7 @@ export default class OffersCategoriesMenu extends Component {
   
   render() {
     return (
-      <Menu compact icon='labeled' style={{overflow: 'auto', maxWidth: '100%' }}>
+      <Menu size='large' compact icon='labeled' style={{overflow: 'auto', maxWidth: '100%', backgroundColor: 'white'}}>
         {this.props.categories.map(categorie => 
           <Menu.Item 
             key={categorie.id}

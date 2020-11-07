@@ -14,7 +14,7 @@ const NavBar = props => {
     }
 
     return (
-        <Menu pointing secondary size='massive' color='violet'>
+        <Menu pointing secondary size='massive' color='blue'>
           <Menu.Item 
             as={Link} 
             to='/'

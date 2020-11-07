@@ -20,8 +20,8 @@ const Offers = props => {
 
       <Item.Group relaxed>
       {props.items.map(item => 
-        <Item style={{border: '1px solid', borderColor: '#d0d3d8', padding: '10px', borderRadius: '5px', boxShadow: '0 8px 6px -6px #474747', maxWidth: '1050px'}}>
-          <Item.Image size='small' src={item.image ? item.image : 'https://react.semantic-ui.com/images/wireframe/image.png'} />
+        <Item style={{border: '1px solid', borderColor: '#d0d3d8', padding: '20px', borderRadius: '5px', maxWidth: '800px', backgroundColor: 'white', borderRadius: '15px'}}>
+          <Item.Image size='small' style={{borderRadius: '15px'}} src={item.image ? item.image : 'https://react.semantic-ui.com/images/wireframe/image.png'} />
 
           <Item.Content verticalAlign='bottom'>
             <Item.Header style={{marginTop: '5px'}}>{item.name}</Item.Header>
