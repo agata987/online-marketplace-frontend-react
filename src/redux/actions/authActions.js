@@ -1,4 +1,5 @@
 import API_Handler from '../../API_Handler'
+import {clearMessages} from './chatActions'
 
 // action creators
 const clearTokens_ = () => ({type: 'CLEAR_TOKENS'})
@@ -20,6 +21,7 @@ export const getTokens_fetchCurrentUserData = loginData => dispatch => {
 
 export const clearTokens = () => dispatch => {
     dispatch(clearTokens_())
+    dispatch(clearMessages())
 }
 
 // user

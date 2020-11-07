@@ -34,6 +34,12 @@ const addMessage = (state, action) => {
         return setMessages(state, action);
       case 'GET_CHATS_SUCCESS':
         return setChats(state, action);
+      case 'CEAR_STATE':
+        return {
+          messages: [],
+          chats: [],
+          fetched: false,
+        }
       default:
         return state;
     }
