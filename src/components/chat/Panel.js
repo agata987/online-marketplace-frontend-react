@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react'
 import { Grid, Menu, Button, Image, Modal } from 'semantic-ui-react'
 import Chat from './Chat'
 import Hoc from '../Hoc'
+import API_Handler from '../../API_Handler'
 
 const  Panel = props => {
 
@@ -52,6 +53,17 @@ const  Panel = props => {
 
   const handleCreateChat = () => {
     setOpenModal(false)
+    const participants = [props.user_id, props.newContact]
+
+    API_Handler(true, {method: 'post', url: 'chat/create/', data: {
+      participants: participants
+    }})
+    .then(() => {
+      props.getUserChats(props.user_id)
+    })
+    .catch(err => {
+      console.log(err)
+    })
   }
 
   return (
