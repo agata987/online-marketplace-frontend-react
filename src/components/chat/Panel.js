@@ -50,6 +50,10 @@ const  Panel = props => {
     setactiveChat({id: id, participantName: participantName})
   }
 
+  const handleCreateChat = () => {
+    setOpenModal(false)
+  }
+
   return (
     <Hoc>
       <Modal 
@@ -76,7 +80,7 @@ const  Panel = props => {
             content="Tak, dodaj"
             labelPosition='right'
             icon='checkmark'
-            onClick={() => setOpenModal(false)}
+            onClick={handleCreateChat}
             positive
             />
         </Modal.Actions>
