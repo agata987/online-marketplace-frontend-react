@@ -53,7 +53,7 @@ const NavBar = props => {
                     </Dropdown.Item>
                     <Dropdown.Item as={Link} to='/my-offers'>
                         <Icon name='newspaper outline'/>
-                        Moje oferty
+                        Moje ogłoszenia
                     </Dropdown.Item>
                     <Dropdown.Item as={Link} to='/my-job-offers'>
                         <Icon name='suitcase'/>
