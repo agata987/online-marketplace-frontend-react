@@ -7,6 +7,7 @@ import offerCategoriesReducer from './offers/offerCategoriesReducer'
 import createOfferReducer from './offers/createOfferReducer'
 import checkCityReducer from './checkCityReducer'
 import chatReducer from './chatReducer'
+import userOffersReducer from './offers/userOffersReducer'
 
 const rootReducer = combineReducers({
     authReducer,
@@ -16,6 +17,7 @@ const rootReducer = combineReducers({
     createOfferReducer,
     checkCityReducer,
     chatReducer,
+    userOffersReducer,
 })
 
 export default rootReducer

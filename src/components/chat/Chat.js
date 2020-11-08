@@ -39,7 +39,7 @@ class Chat extends React.Component {
 
     renderMessages = messages => {
         return messages.map(message => <div style={message.author === this.props.userId ? {display: 'flex', flexDirection: 'row', justifyContent: 'right', margin: '5px'} : { margin: '5px'}}>
-            <Message  color={message.author === this.props.userId ? 'teal' : null} style={message.author === this.props.userId ? {width: '45%', textAlign: 'right'} : { width: '45%'}}>
+            <Message  color={message.author === this.props.userId ? 'blue' : null} style={message.author === this.props.userId ? {width: '45%', textAlign: 'right'} : { width: '45%'}}>
                 {message.author !== this.props.userId ? <Message.Header>{this.props.participantName}:</Message.Header> :  <Message.Header>ja:</Message.Header>}
                 <Message.Content style={{marginTop: '5px', marginBottom: '5px'}}>{message.content}</Message.Content>
                 <small>{this.renderTimestamp(message.timestamp)}</small>
@@ -96,7 +96,7 @@ class Chat extends React.Component {
                 </Segment>
                 <div style={{display: 'flex', flexDirection: 'column'}}>
                     <TextArea value={this.state.message} style={{width: '45%', margin: '0 0 10px auto', padding: '5px'}} placeholder='Wiadomość...' onChange={this.messageChangeHandler}/>
-                    <Button onClick={this.sendMessageHandler} color='teal' style={{width: '45%', marginRight: '0', marginLeft: 'auto'}}>Wyślij</Button>
+                    <Button onClick={this.sendMessageHandler} color='orange' style={{width: '45%', marginRight: '0', marginLeft: 'auto'}}>Wyślij</Button>
                 </div>
             </div>
         )

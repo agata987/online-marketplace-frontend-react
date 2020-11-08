@@ -1,14 +1,38 @@
-import React from 'react'
+import React, {useEffect} from 'react'
+import {connect} from 'react-redux'
+import {fetchUserOffers} from '../redux/actions/offers/userOffersActions'
+import MyOffers from '../components/MyOffers'
 
-class MyOffersView extends React.Component {
+const MyOffersView = props => {
 
-    render() {
-        return (
-            <div>
-                MyOffersView
-            </div>
-        );
-    }
+    useEffect(() => {
+        if (props.user && !props.offers.offers_fetched)
+            props.fetchUserOffers(props.user.id)
+
+    },[props.user])
+
+ 
+    return (
+        <div style={{marginTop: '20px'}}>
+            <h2>Oferty utworzone przez Ciebie: </h2>
+            {props.offers.offers_fetched ? <MyOffers items={props.offers.offers}/> : null}
+        </div>
+    );
+    
 }
 
-export default MyOffersView
+const mapStateToProps = state => {
+    return {
+      offers: state.userOffersReducer,
+      user: state.authReducer.user,
+    }
+}
+  
+
+const mapDispatchToProps = dispatch => {
+    return {
+        fetchUserOffers: user_id => dispatch(fetchUserOffers(user_id)),
+    }
+  }
+
+export default connect(mapStateToProps, mapDispatchToProps)(MyOffersView)

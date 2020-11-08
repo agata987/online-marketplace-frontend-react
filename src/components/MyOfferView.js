@@ -64,22 +64,6 @@ const OfferView = props => {
                     <Modal.Actions>
                         <div style={{marginBottom: '5px'}}>
                             <span style={{marginLeft: '5px'}}>
-                                <Button onClick={()=>{}} color='red' animated>
-                                    <Button.Content hidden>Dodaj</Button.Content>
-                                    <Button.Content visible>
-                                        <Icon name='heart' />
-                                    </Button.Content>
-                                </Button>
-                            </span>
-                            <span style={{marginLeft: '5px'}}>
-                                <Button onClick={sendMessageHandle} color='blue'  animated>
-                                    <Button.Content visible>Wiadomość</Button.Content>
-                                    <Button.Content hidden>
-                                        <Icon name='arrow right' />
-                                    </Button.Content>
-                                </Button>
-                            </span>
-                            <span style={{marginLeft: '5px'}}>
                                 <Button onClick={props.onRequestClose}>
                                     <Button.Content visible>Zamknij</Button.Content>
                                 </Button>
