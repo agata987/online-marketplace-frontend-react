@@ -15,8 +15,8 @@ const OfferView = props => {
 
     useEffect(() => {
         if (props.offer) {
-            if(props.offer.id) {
-                API_Handler(false, {method: 'get', url: `users/${props.offer.id}/`}).
+            if(props.offer.user_id) {
+                API_Handler(false, {method: 'get', url: `users/${props.offer.user_id}/`}).
                 then(res => {
                   setUserName(res.data.username)
                 })

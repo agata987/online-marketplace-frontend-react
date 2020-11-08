@@ -13,3 +13,13 @@ export const createOffer = offerData => dispatch => {
     })
     .catch(err => dispatch(setErrors(err.response.data)))
 }
+
+export const editOffer = (offerId, newOfferData) => dispatch => {
+    dispatch(setLoading())
+
+    API_Handler(true, {method: 'post', url: `offers/${offerId}/`, data: newOfferData})
+    .then(() => {
+        dispatch(setDone())
+    })
+    .catch(err => dispatch(setErrors(err.response.data)))
+}
