@@ -14,7 +14,6 @@ const CategoriesSimpleMenu = props =>{
                     >
                         {categorie.name}
                     </Dropdown.Item >)}
-                    <Dropdown.Item text='New' />
                 </Dropdown.Menu>
             </Dropdown>
         </Menu>

@@ -103,8 +103,19 @@ const CreateOfferForm = props => {
                 !offerData.city_id ? <NegativeMessage message='Wybierz miasto.'/> :
                 !offerData.category_id ? <NegativeMessage message='Wybierz kategorię.'/> : null
             ): null}
-            <div style={{marginTop: '10px'}}>{props.cities.fetched ? <CityMenu city={filterValues.cityName}  voivodeships={props.cities.voivodeships} onClick={onClickCity}/> : <h3>Ładownaie miast...</h3>}</div>
-            <div style={{margin: '10px 0 10px 0'}}>{props.categories.categories_fetched ? <CategoriesSimpleMenu categoryName={filterValues.categoryName}  categories={props.categories.categories} onClick={onClickCategory}/> : <h3>Ładownaie kategorii...</h3>}</div>
+            <div style={{marginTop: '10px'}}>
+                {props.cities.fetched ? 
+                    <CityMenu city={filterValues.cityName}  
+                        voivodeships={props.cities.voivodeships} 
+                        onClick={onClickCity}/> 
+                    : <h3>Ładownaie miast...</h3>}</div>
+            <div style={{margin: '10px 0 10px 0'}}>
+                {props.categories.categories_fetched ? 
+                    <CategoriesSimpleMenu 
+                        categoryName={filterValues.categoryName}  
+                        categories={props.categories.categories} 
+                        onClick={onClickCategory}/> 
+                    : <h3>Ładownaie kategorii...</h3>}</div>
 
             <label>Tytuł oferty:</label>
             <FormField 

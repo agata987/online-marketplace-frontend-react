@@ -8,7 +8,8 @@ import createOfferReducer from './offers/createOfferReducer'
 import checkCityReducer from './checkCityReducer'
 import chatReducer from './chatReducer'
 import userOffersReducer from './offers/userOffersReducer'
-import JobOffersReducer from './jobs/jobOffersReducer'
+import jobOffersReducer from './jobs/jobOffersReducer'
+import jobOfferCategoriesReducer from './jobs/jobOffersCategoriesReducer'
 
 const rootReducer = combineReducers({
     authReducer,
@@ -19,7 +20,8 @@ const rootReducer = combineReducers({
     checkCityReducer,
     chatReducer,
     userOffersReducer,
-    JobOffersReducer,
+    jobOffersReducer,
+    jobOfferCategoriesReducer,
 })
 
 export default rootReducer

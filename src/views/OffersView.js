@@ -1,6 +1,12 @@
-import React, {useState, useEffect} from 'react'
+import React, {
+    useState, 
+    useEffect
+} from 'react'
 import { connect } from 'react-redux'
-import { fetchOffers, fetchPageOffers } from '../redux/actions/offers/offersActions'
+import { 
+    fetchOffers, 
+    fetchPageOffers 
+} from '../redux/actions/offers/offersActions'
 import { fetchCategories } from '../redux/actions/offers/offerCategoriesActions'
 import { fetchCities } from '../redux/actions/citiesActions'
 
@@ -53,7 +59,12 @@ const OffersView = props => {
         else if (filtersValues.order === 'Najnowsze')
             ordering = 'creation_date'
 
-        props.fetchOffers(searchValues.searchValue, searchValues.cityId, searchValues.categoryId, ordering)
+        props.fetchOffers(
+            searchValues.searchValue, 
+            searchValues.cityId, 
+            searchValues.categoryId, 
+            ordering
+        )
     }
 
     const showMustLoginInfo = () => {
@@ -85,9 +96,20 @@ const OffersView = props => {
 
     return (
         <div>
-            <LoginInfoModal onRequestClose={() => {setModalOpen(false)}} isOpen={modalOpen} text={<h2>Aby utworzyć nową ofertę <a href='/login'>zaloguj się</a>.</h2>}/>
+            <LoginInfoModal 
+                onRequestClose={() => {setModalOpen(false)}} 
+                isOpen={modalOpen} 
+                text={<h2>Aby utworzyć nową ofertę <a href='/login'>zaloguj się</a>.</h2>}
+            />
             
-            <div>{props.categories.categories_fetched ? <CategoriesMenu categories={props.categories.categories} handleItemClick={handleCategoriesMenuItemClick} activeItem={searchValues.categoryId} /> : null}</div>
+            <div>
+                {props.categories.categories_fetched ? 
+                    <CategoriesMenu 
+                        categories={props.categories.categories} 
+                        handleItemClick={handleCategoriesMenuItemClick} 
+                        activeItem={searchValues.categoryId} /> 
+                : null}
+            </div>
             
             <div style={{display: 'flex', flexDirection: 'row', marginTop: '20px', width:'100%'}}>
                 {props.loggedIn ? 
@@ -98,8 +120,22 @@ const OffersView = props => {
 
             <h3>Filtry</h3>
             <div style={{display: 'flex', flexDirection: 'row', marginBottom: '20px'}}>
-                <div>{props.cities.fetched ? <CityMenu city={filtersValues.cityName}  voivodeships={props.cities.voivodeships} onClick={onClickCity}/> : null}</div>
-                <div style={{ marginLeft: '10px'}}><SimpleDropdownFilter title={filtersValues.order} choices={['Najtańsze', 'Najdroższe', 'Najnowsze']} onClick={simpleFilterClick}/></div>
+                <div>
+                    {props.cities.fetched ? 
+                        <CityMenu 
+                            city={filtersValues.cityName}  
+                            voivodeships={props.cities.voivodeships} 
+                            onClick={onClickCity}
+                        /> 
+                        : null}
+                </div>
+                <div style={{ marginLeft: '10px'}}>
+                    <SimpleDropdownFilter 
+                        title={filtersValues.order} 
+                        choices={['Najtańsze', 'Najdroższe', 'Najnowsze']} 
+                        onClick={simpleFilterClick}
+                    />
+                </div>
             </div>
 
             <Button onClick={() => {
@@ -111,12 +147,26 @@ const OffersView = props => {
             <div>
                 {props.offers.offers_fetched && props.categories.categories_fetched && props.cities.fetched ? 
                 <Offers items={props.offers.offers}/> 
-                : <div style={{width: '100%', padding: '60px', display: 'flex', justifyContent: 'center'}}><Loader active inline /></div>}
+                : <div style={{width: '100%', padding: '60px', display: 'flex', justifyContent: 'center'}}>
+                    <Loader active inline />
+                </div>}
             </div>
 
             <div style={{width: '100%', display: 'flex',justifyContent: 'center', padding: '20px', maxWidth: '800px'}}>
-                <Button color='linkedin' disabled={props.offers.previousPage ? false : true} onClick={() => {props.fetchPageOffers(props.offers.previousPage)}}><Icon name='angle left' /></Button>
-                <Button color='linkedin' disabled={props.offers.nextPage ? false : true} onClick={() => {props.fetchPageOffers(props.offers.nextPage)}}><Icon name='angle right' /></Button>
+                <Button 
+                    color='linkedin' 
+                    disabled={props.offers.previousPage ? false : true} 
+                    onClick={() => {props.fetchPageOffers(props.offers.previousPage)}}
+                >
+                        <Icon name='angle left' />
+                </Button>
+                <Button 
+                    color='linkedin' 
+                    disabled={props.offers.nextPage ? false : true} 
+                    onClick={() => {props.fetchPageOffers(props.offers.nextPage)}}
+                >
+                    <Icon name='angle right' />
+                </Button>
             </div>
         </div>
     );
