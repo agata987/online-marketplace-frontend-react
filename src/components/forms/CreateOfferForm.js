@@ -98,7 +98,6 @@ const CreateOfferForm = props => {
 
     return(
         <Form onSubmit={onSubmit}>
-            <h2>Tworzenie nowego ogłoszenia</h2>
             {emptyDropdownFields ?(
                 !offerData.city_id && !offerData.category_id ? <NegativeMessage message='Wybierz kategorię i miasto.'/> :
                 !offerData.city_id ? <NegativeMessage message='Wybierz miasto.'/> :

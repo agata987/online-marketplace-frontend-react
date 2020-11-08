@@ -13,9 +13,9 @@ const CreateOfferView = props => {
 
     return (
         <div>
-            <h2>Tworzenie nowego ogłoszenia</h2>
+            <h2>Edytowanie ogłoszenia</h2>
             {redirect ?  <Redirect to={'/my-offers'} /> : null}
-            {props.user ? <CreateOfferForm redirect={goToMyOffers} user_id={props.user.id}/> :  <div style={{width: '100%', padding: '60px', display: 'flex', justifyContent: 'center'}}><Loader active inline /></div>}
+            {/* {props.user ? <CreateOfferForm redirect={goToMyOffers} user_id={props.user.id}/> :  <div style={{width: '100%', padding: '60px', display: 'flex', justifyContent: 'center'}}><Loader active inline /></div>} */}
         </div>
     );
 
