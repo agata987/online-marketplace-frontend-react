@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import {Redirect} from 'react-router-dom';
-import CreateOfferForm from '../components/forms/CreateOfferForm'
+import OfferForm from '../components/forms/OfferForm'
 import {connect} from 'react-redux'
 import {Loader} from 'semantic-ui-react'
 
@@ -15,7 +15,7 @@ const CreateOfferView = props => {
         <div>
             <h2>Edytowanie ogłoszenia</h2>
             {redirect ?  <Redirect to={'/my-offers'} /> : null}
-            {/* {props.user ? <CreateOfferForm redirect={goToMyOffers} user_id={props.user.id}/> :  <div style={{width: '100%', padding: '60px', display: 'flex', justifyContent: 'center'}}><Loader active inline /></div>} */}
+            {/* {props.user ? <OfferForm redirect={goToMyOffers} user_id={props.user.id}/> :  <div style={{width: '100%', padding: '60px', display: 'flex', justifyContent: 'center'}}><Loader active inline /></div>} */}
         </div>
     );
 
