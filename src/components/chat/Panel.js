@@ -118,6 +118,7 @@ const  Panel = props => {
                   id={chat.id}
                   active={activeChat.id === chat.id}
                   onClick={() => handleOpenChat(chat.id, participant[0].username)}
+                  style={{backgroundColor: '#cdd9e5'}}
                 />)
           })}
           {chats.length > 0 && activeChat.id === null ? setactiveChat({id: chats[0].chatId, participantName: chats[0].participantName}) : null}

@@ -91,7 +91,7 @@ class Chat extends React.Component {
 
         return(
             <div>
-                <Segment style={{overflow: 'auto', height: '550px'}}>
+                <Segment style={{overflow: 'auto', height: '550px', backgroundColor: '#cdd9e5'}}>
                 {this.props.messages ? this.renderMessages(this.props.messages) : null}
                 </Segment>
                 <div style={{display: 'flex', flexDirection: 'column'}}>
