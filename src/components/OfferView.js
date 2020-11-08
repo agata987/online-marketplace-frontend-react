@@ -34,7 +34,11 @@ const OfferView = props => {
     return (
         <Hoc>
             {redirect ?  <Redirect to={`/messages/${userName}`} /> : null}
-            <LoginInfoModal onRequestClose={() => {setInfoModalOpen(false)}} isOpen={infoModalOpen} text={<h2>Aby wysłać wiadomość <a href='/login'>zaloguj się</a>.</h2>}></LoginInfoModal>
+            <LoginInfoModal 
+                onRequestClose={() => {setInfoModalOpen(false)}} 
+                isOpen={infoModalOpen} 
+                text={<h2>Aby wysłać wiadomość <a href='/login'>zaloguj się</a>.</h2>}>
+            </LoginInfoModal>
             <Modal
                 open={props.isOpen}
                 onClose={props.onRequestClose}

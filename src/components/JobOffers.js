@@ -6,22 +6,22 @@ import {
     Button, 
     Icon
 } from 'semantic-ui-react'
-// import JobOfferView from './JobOfferView'
+import JobOfferView from './JobOfferView'
 
 
 const JobOffers = props => {
-    // const [showOffer, setShowOffer] = useState(false)
-    // const [currentOffer, setCurrentOffer] = useState(null)
+    const [showOffer, setShowOffer] = useState(false)
+    const [currentOffer, setCurrentOffer] = useState(null)
 
     const showOfferHandle = item => {
-        // setCurrentOffer({...item})
-        // props.getCity(item.city_id)
-        // setShowOffer(true)
+        setCurrentOffer({...item})
+        props.getCity(item.city_id)
+        setShowOffer(true)
     }
 
     return (
     <div>
-        {/* <JobOfferView offer={currentOffer} city={props.city} onRequestClose={() => setShowOffer(false)} isOpen={showOffer}/> */}
+        <JobOfferView offer={currentOffer} city={props.city} onRequestClose={() => setShowOffer(false)} isOpen={showOffer}/>
         <Item.Group relaxed>
         {props.items.map(item=> (
         <Item style={{border: '5px solid #cdd9e5', padding: '20px', maxWidth: '800px', backgroundColor: 'white', borderRadius: '15px'}}>
@@ -38,7 +38,7 @@ const JobOffers = props => {
                     <div className='stay'>{item.creation_date}</div>
                 </Item.Meta>
                 <Item.Description style={{display: 'flex', flexDirection: 'row', justifyContent: 'right'}}>
-                    <Button onClick={() => showOfferHandle(item)} color='orange' animated='vertical' size='medium'>
+                    <Button onClick={() => showOfferHandle(item)} color='orange' animated='horizontal' size='medium'>
                     <Button.Content visible>Sprawdź</Button.Content>
                     <Button.Content hidden>
                         <Icon name='angle double right'/>
