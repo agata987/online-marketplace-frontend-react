@@ -18,9 +18,9 @@ const Offers = props => {
     <div>
       <OfferView offer={currentOffer} city={props.city} onRequestClose={() => setShowOffer(false)} isOpen={showOffer}/>
 
-      <Item.Group relaxed c>
+      <Item.Group relaxed>
       {props.items.map(item => 
-        <Item style={{border: '5px solid', borderColor: '#cdd9e5', padding: '20px', borderRadius: '5px', maxWidth: '800px', backgroundColor: 'white', borderRadius: '15px'}}>
+        <Item style={{border: '5px solid #cdd9e5', padding: '20px', maxWidth: '800px', backgroundColor: 'white', borderRadius: '15px'}}>
           <Item.Image size='small' style={{borderRadius: '15px'}} src={item.image ? item.image : 'https://react.semantic-ui.com/images/wireframe/image.png'} />
 
           <Item.Content verticalAlign='bottom'>

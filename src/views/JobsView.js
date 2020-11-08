@@ -14,6 +14,13 @@ import CategoriesSimpleMenu from '../components/CategoriesSimpleMenu'
 import CityMenu from '../components/CityMenu'
 import SimpleDropdownFilter from '../components/SimpleDropdownFilter'
 import LoginInfoModal from '../components/LoginInfoModal'
+import JobOffers from '../components/JobOffers'
+
+import {
+    Button, 
+    Icon, 
+    Loader, 
+  } from 'semantic-ui-react'
 
 const JobsView = props => {
 
@@ -100,6 +107,15 @@ const JobsView = props => {
                         onClick={simpleFilterClick}
                     />
                 </div>
+            </div>
+
+            <div>
+            {props.offers.fetched && props.categories.categories_fetched && props.cities.fetched ? 
+                <JobOffers items={props.offers.offers}/> 
+                : <div style={{width: '100%', padding: '60px', display: 'flex', justifyContent: 'center'}}>
+                    <Loader active inline />
+                </div>
+            }
             </div>
         </div>
     );
