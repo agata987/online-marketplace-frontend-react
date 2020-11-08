@@ -1,11 +1,17 @@
 import React, {useState, useEffect} from 'react'
+import {connect} from 'react-redux'
 import {Redirect} from 'react-router-dom';
+import {reset} from '../redux/actions/offers/createOfferActions'
 import EditOfferForm from '../components/forms/EditOfferForm'
 import API_Handler from '../API_Handler'
 import {Loader} from 'semantic-ui-react'
 
-const CreateOfferView = props => {
+const EditOfferView = props => {
     const [redirect, setRedirect] = useState(false)
+
+    useEffect(() => {
+        props.reset()
+    },[])
 
     const [oldData, setOldData] = useState({
         price: null,
@@ -48,7 +54,12 @@ const CreateOfferView = props => {
         </div>
     );
 
-}
+} 
 
+const mapDispatchToProps = dispatch => {
+    return {
+        reset: () => dispatch(reset())
+    }
+  }
 
-export default CreateOfferView
+export default connect(null, mapDispatchToProps)(EditOfferView)

@@ -24,6 +24,12 @@ const createOfferReducer = (state=defaultState, action) => {
                 errors: action.payload,
                 done: false
             }
+        case 'CREATE EDIT RESET':
+            return {
+                loading: false,
+                errors: null,
+                done: false
+            }
         default: return state
     }
 }

@@ -106,7 +106,7 @@ const CreateOfferForm = props => {
             <div style={{marginTop: '10px'}}>{props.cities.fetched ? <CityMenu city={filterValues.cityName}  voivodeships={props.cities.voivodeships} onClick={onClickCity}/> : <h3>Ładownaie miast...</h3>}</div>
             <div style={{margin: '10px 0 10px 0'}}>{props.categories.categories_fetched ? <CategoriesSimpleMenu categoryName={filterValues.categoryName}  categories={props.categories.categories} onClick={onClickCategory}/> : <h3>Ładownaie kategorii...</h3>}</div>
 
-            <label>Tytuł oferty</label>
+            <label>Tytuł oferty:</label>
             <FormField 
                 fieldError={props.offer.errors ? (props.offer.errors.name ? true : false) : false}
                 content={props.offer.errors ? (props.offer.errors.name ? props.offer.errors.name : '') : ''}
@@ -125,7 +125,7 @@ const CreateOfferForm = props => {
 
             { filterValues.categoryName !== 'Oddam za darmo' && filterValues.categoryName !== 'Zamienię' ?
                 <div>
-                <label>Cena (opcjonalne)</label>
+                <label>Cena (opcjonalne):</label>
                 <FormField
                     fieldError={props.offer.errors ? (props.offer.errors.price ? true : false) : false}
                     content={props.offer.errors ? (props.offer.errors.price ? props.offer.errors.price : '') : ''}
@@ -144,7 +144,7 @@ const CreateOfferForm = props => {
                 </div>
             : null}
 
-            <label>Opis (opcjonalne)</label>
+            <label>Opis (opcjonalne):</label>
             <FormField 
                 fieldError={props.offer.errors ? (props.offer.errors.description ? true : false) : false}
                 content={props.offer.errors ? (props.offer.errors.description ? props.offer.errors.description : '') : ''}
