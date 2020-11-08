@@ -31,7 +31,7 @@ const Offers = props => {
 
   return (
     <div>
-    {goToEditOffer ? <Redirect to={`/edit-offer/:${editOfferId}`} /> : null}
+    {goToEditOffer ? <Redirect to={`/edit-offer/${editOfferId}`} /> : null}
       <MyOfferView offer={currentOffer} city={props.city} onRequestClose={() => setShowOffer(false)} isOpen={showOffer}/>
 
       <Item.Group relaxed>
