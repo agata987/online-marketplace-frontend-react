@@ -42,7 +42,7 @@ const CreateOfferForm = props => {
     const [emptyDropdownFields, setEmptyDropdownFields] = useState(false)
 
     const onSubmit = () => {
-        if (!offerData.category_id || !offerData.city_id)
+        if (!offerData.user_id || !offerData.city_id)
             setEmptyDropdownFields(true)
         else {
             const uploadData = new FormData()
@@ -131,29 +131,7 @@ const CreateOfferForm = props => {
                 />
             </FormField>
 
-            <label>Zdjęcie (opcjonalne):</label>
-            <input onChange={uploadImageHandle} type='file' accept="image/*"/>
-
-            { filterValues.categoryName !== 'Oddam za darmo' && filterValues.categoryName !== 'Zamienię' ?
-                <div>
-                <label>Cena (opcjonalne):</label>
-                <FormField
-                    fieldError={props.offer.errors ? (props.offer.errors.price ? true : false) : false}
-                    content={props.offer.errors ? (props.offer.errors.price ? props.offer.errors.price : '') : ''}
-                    control={Input}
-                >
-                    <div style={{display: 'flex', flexDirection: 'row'}}>
-                        <input 
-                            name='price'
-                            value={offerData.price}
-                            onChange={onChangeOfferPrice}
-                            placeholder='np. 27,50'
-                        />
-                        <h5 style={{marginLeft: '10px'}}>zł</h5>
-                    </div>
-                </FormField>
-                </div>
-            : null}
+           
 
             <label>Opis (opcjonalne):</label>
             <FormField 

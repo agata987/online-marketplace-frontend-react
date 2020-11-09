@@ -152,7 +152,7 @@ const JobsView = props => {
 
             <div style={{display: 'flex', flexDirection: 'row', marginTop: '25px', width:'100%'}}>
                 {props.loggedIn ? 
-                    <a href='/create-offer'><Button color='linkedin'>Dodaj ofertę</Button></a> 
+                    <a href='/create-joboffer'><Button color='linkedin'>Dodaj ofertę</Button></a> 
                  : <Button color='linkedin' onClick={showMustLoginInfo}>Dodaj ofertę</Button>}
                 <SearchInput onSubmit={search} onChange={onSearchValueChange}/>
             </div>
