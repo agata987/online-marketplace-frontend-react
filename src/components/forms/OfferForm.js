@@ -1,4 +1,7 @@
-import React, {useEffect, useState} from 'react'
+import React, {
+    useEffect, 
+    useState
+} from 'react'
 import {connect} from 'react-redux'
 import {createOffer} from '../../redux/actions/offers/createOfferActions'
 import {fetchCategories} from '../../redux/actions/offers/offerCategoriesActions'
@@ -6,7 +9,12 @@ import {fetchCities} from '../../redux/actions/citiesActions'
 import CityMenu from '../CityMenu'
 import CategoriesSimpleMenu from '../CategoriesSimpleMenu'
 import {FormField} from './FormField'
-import {Button, Form, Input, TextArea} from 'semantic-ui-react'
+import {
+    Button, 
+    Form, 
+    Input, 
+    TextArea,
+} from 'semantic-ui-react'
 import {NegativeMessage} from './NegativeMessage'
 
 const CreateOfferForm = props => {

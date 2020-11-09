@@ -7,7 +7,7 @@ const resetOffers = () => ({ type: 'RESET_JOB_OFFERS' })
 export const fetchOffers = (search='', city_id='',  category_id='', ordering='creation_date', remote='',user_id='') => dispatch => {
     dispatch(resetOffers())
 
-    API_Handler(false, {method: 'get', url: `joboffers/?limit=10&offset=0&search=${search}&ordering=${ordering}&city_id=${city_id}&user_id=${user_id}&category_id=${category_id}&remote=${remote}`})
+    API_Handler(false, {method: 'get', url: `joboffers/?limit=4&offset=0&search=${search}&ordering=${ordering}&city_id=${city_id}&user_id=${user_id}&category_id=${category_id}&remote=${remote}`})
     .then(res => {
         dispatch(setOffers(res.data))
     })

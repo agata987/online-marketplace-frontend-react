@@ -1,4 +1,7 @@
-import React, {useEffect, useState} from 'react'
+import React, {
+    useEffect, 
+    useState
+} from 'react'
 import {connect} from 'react-redux'
 import {createJobOffer} from '../../redux/actions/jobs/createJobOfferActions'
 import {fetchJobCategories} from '../../redux/actions/jobs/jobOffersCategoriesActions'
@@ -6,7 +9,13 @@ import {fetchCities} from '../../redux/actions/citiesActions'
 import CityMenu from '../CityMenu'
 import CategoriesSimpleMenu from '../CategoriesSimpleMenu'
 import {FormField} from './FormField'
-import {Button, Form, Input, TextArea} from 'semantic-ui-react'
+import {
+    Button, 
+    Form, 
+    Input, 
+    TextArea,
+    Radio
+} from 'semantic-ui-react'
 import {NegativeMessage} from './NegativeMessage'
 
 const CreateOfferForm = props => {
@@ -45,7 +54,14 @@ const CreateOfferForm = props => {
 
     const onSubmit = () => {
         offerData.min_salary = offerData.min_salary.replace(',', '.')
-        offerData.max_salary = offerData.max_salary.replace(',', '.')
+
+        if (offerData.max_salary !== null) {
+            offerData.max_salary = offerData.max_salary.replace(',', '.')
+
+            if (offerData.max_salary.trim() === '') // for backend validation
+            offerData.max_salary = null
+        }
+  
 
         if (!offerData.category_id || !offerData.city_id)
             setEmptyDropdownFields(true)
@@ -77,6 +93,20 @@ const CreateOfferForm = props => {
     const onChangeMinSalary = e => {
         e.persist();
         setOfferData({...offerData, min_salary: e.target.value})
+    }
+
+    const onChangeMaxSalary = e => {
+        e.persist();
+        setOfferData({...offerData, max_salary: e.target.value})
+    }
+
+    const onChangeCompanyName = e => {
+        e.persist();
+        setOfferData({...offerData, company: e.target.value})
+    }
+
+    const remoteHandle = () => {
+        setOfferData({...offerData, remote: !offerData.remote})
     }
 
     return(
@@ -128,6 +158,39 @@ const CreateOfferForm = props => {
                 />
             </FormField>
 
+            <label>Wynagrodzenie maksymalne (opcjonalne):</label>
+            <FormField 
+                fieldError={props.offer.errors ? (props.offer.errors.max_salary ? true : false) : false}
+                content={props.offer.errors ? (props.offer.errors.max_salary ? props.offer.errors.max_salary : '') : ''}
+                control={Input}
+            >
+
+                <input 
+                    name='max_salary'
+                    value={offerData.max_salary}
+                    onChange={onChangeMaxSalary}
+                    placeholder='Wynagrodzenie maksymalne'
+                />
+            </FormField>
+
+            <label>Nazwa firmy (opcjonalne):</label>
+            <FormField 
+                fieldError={props.offer.errors ? (props.offer.errors.company ? true : false) : false}
+                content={props.offer.errors ? (props.offer.errors.company ? props.offer.errors.company : '') : ''}
+                control={Input}
+            >
+
+                <input 
+                    name='company'
+                    value={offerData.company}
+                    onChange={onChangeCompanyName}
+                    placeholder='Nazwa firmy'
+                />
+            </FormField>
+            
+            <div style={{marginBottom: '10px'}}>
+                <Radio onClick={remoteHandle} checked={offerData.remote} label='Praca zdalna' onChange={remoteHandle} /> 
+            </div>
            
 
             <label>Opis (opcjonalne):</label>
