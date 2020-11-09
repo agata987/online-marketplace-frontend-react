@@ -6,11 +6,13 @@ import {
     Modal,
     Loader,
     Icon,
-    Container
+    Container,
+    Image
 } from 'semantic-ui-react'
 import API_Handler from '../API_Handler'
 import LoginInfoModal from './LoginInfoModal'
 import Hoc from './Hoc'
+import WorkImage from '../resources/work.svg'
 
 const JobOfferView = props => {
 
@@ -54,7 +56,13 @@ const JobOfferView = props => {
                     <Modal.Header>
                         <span>{props.offer.name} <small>/ {props.offer.creation_date} </small>{userName !== '' ? <small> / {userName}</small> : null}   </span>       
                     </Modal.Header>
-                    <Modal.Content>
+                    <Modal.Content image>
+                        <Image
+                            style={{marginRight: '20px'}}
+                            size="large"
+                            src={WorkImage}
+                            wrapped
+                        />
                         <Modal.Description>
                             {props.city ? <h3>Miejsce pracy: {props.city.name}</h3> : null}
                             {props.offer.company ? <h3>Firma: {props.offer.company}</h3> : null}

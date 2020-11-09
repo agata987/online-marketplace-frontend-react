@@ -7,6 +7,7 @@ import {
     Container
 } from 'semantic-ui-react'
 import Hoc from './Hoc'
+import EmptyImage from '../resources/empty.svg'
 
 
 const OfferView = props => {
@@ -26,7 +27,7 @@ const OfferView = props => {
                     <Image
                         style={{marginBottom: '20px'}}
                         size="large"
-                        src={props.offer.image ? props.offer.image : 'https://react.semantic-ui.com/images/wireframe/image.png'}
+                        src={props.offer.image ? props.offer.image : EmptyImage}
                         wrapped
                     />
                     <Modal.Description>

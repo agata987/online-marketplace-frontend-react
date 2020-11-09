@@ -5,6 +5,7 @@ import {getCity} from '../redux/actions/checkCityActions'
 import {deleteOffer} from '../redux/actions/offers/userOffersActions'
 import {Item, Button} from 'semantic-ui-react'
 import MyOfferView from './MyOfferView'
+import BoxImage from '../resources/box.svg'
 
 const Offers = props => {
   const [showOffer, setShowOffer] = useState(false)
@@ -37,7 +38,7 @@ const Offers = props => {
       <Item.Group relaxed>
       {props.items.map(item => 
         <Item style={{border: '5px solid', borderColor: '#cdd9e5', padding: '20px', borderRadius: '5px', maxWidth: '800px', backgroundColor: 'white', borderRadius: '15px'}}>
-          <Item.Image size='small' style={{borderRadius: '15px'}} src={item.image ? item.image : 'https://react.semantic-ui.com/images/wireframe/image.png'} />
+          <Item.Image size='small' style={{borderRadius: '15px'}} src={item.image ? item.image : BoxImage} />
 
           <Item.Content verticalAlign='bottom'>
             <Item.Header style={{marginTop: '5px'}}>{item.name}</Item.Header>

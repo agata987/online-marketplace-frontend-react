@@ -28,7 +28,7 @@ const JobOffers = props => {
             <Item.Content>
                 <Item.Header style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
                     <div>
-                        {item.name}
+                        <span><Icon name='file alternate outline'/>{`   ${item.name}`}</span>
                     </div>
                     <div>
                         <div>{item.min_salary}{item.max_salary ? <span> - {item.max_salary}</span> : null} zł</div>
