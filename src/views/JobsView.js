@@ -21,7 +21,7 @@ import {
     Button, 
     Icon, 
     Loader, 
-    Checkbox,
+    Radio,
     Input,
     Message
   } from 'semantic-ui-react'
@@ -96,7 +96,7 @@ const JobsView = props => {
     // minimum salary input
     const minSalayHandle = e => {
         e.persist();
-        const re = /^[0-9\b]+$/
+        const re = /^[0-9\b]+$/ // accept only numbers
 
         if (e.target.value === '' || re.test(e.target.value)){
             setSearchValues({...searchValues, minSalary: e.target.value})
@@ -104,7 +104,7 @@ const JobsView = props => {
         } else setOnlyNumbersWarning(true)
     }
 
-    // remote intpu
+    // remote input
     const remoteHandle = () => {
         setSearchValues({...searchValues, remote: !searchValues.remote})
     }
@@ -125,7 +125,7 @@ const JobsView = props => {
             </div>
 
             <h3>Filtry</h3>
-            <div style={{display: 'flex', flexDirection: 'row', marginBottom: '20px', flexWrap: 'wrap'}}>
+            <div style={{display: 'flex', flexDirection: 'row', marginBottom: '10px', flexWrap: 'wrap'}}>
                 <div style={{marginRight: '10px', marginBottom: '10px'}}>{props.categories.categories_fetched ? 
                     <CategoriesSimpleMenu  
                         categories={props.categories.categories} 
@@ -153,10 +153,24 @@ const JobsView = props => {
             </div>
             <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', marginBottom: '20px', flexWrap: 'wrap'}}>
                 <Input label='min. wynagrodzenie' onChange={minSalayHandle} placeholder='6 000' style={{marginRight: '10px'}} />
-                <Checkbox label='Tylko praca zdalna.' onChange={remoteHandle} /> 
+                <Radio checked={searchValues.remote} label='Tylko praca zdalna.' onChange={remoteHandle} /> 
             </div>
 
             {onlyNumbersWarning ? <Message style={{display: 'inline-block', marginTop: 0, marginBottom: '5px'}} negative>Minimalne wynagrodzenie musi być liczbą całkowitą.</Message> : null}
+
+            <Button onClick={() => {
+                setSearchValues({...searchValues,
+                    categoryId: '',
+                    cityId: '',
+                    minSalary: '',
+                    remote: false,
+                })
+                setFilterValues({
+                    cityName: 'Wybierz miasto',
+                    categoryName: 'Wybierz kategorię',
+                })
+
+            }}>Wszystkie oferty</Button>
 
             <div>
             {props.offers.fetched && props.categories.categories_fetched && props.cities.fetched ? 
