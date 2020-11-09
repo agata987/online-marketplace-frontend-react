@@ -22,7 +22,8 @@ import {
     Icon, 
     Loader, 
     Checkbox,
-    Input
+    Input,
+    Message
   } from 'semantic-ui-react'
 
 const JobsView = props => {
@@ -90,10 +91,17 @@ const JobsView = props => {
         setSearchValues({...searchValues, searchValue: e.target.value})
     }
 
+    const [onlyNumbersWarning, setOnlyNumbersWarning] = useState(false)
+
     // minimum salary input
     const minSalayHandle = e => {
         e.persist();
-        setSearchValues({...searchValues, minSalary: e.target.value})
+        const re = /^[0-9\b]+$/
+
+        if (e.target.value === '' || re.test(e.target.value)){
+            setSearchValues({...searchValues, minSalary: e.target.value})
+            setOnlyNumbersWarning(false)
+        } else setOnlyNumbersWarning(true)
     }
 
     // remote intpu
@@ -138,7 +146,7 @@ const JobsView = props => {
                 <div style={{marginRight: '10px'}}>
                     <SimpleDropdownFilter 
                         title={filterValues.order} 
-                        choices={['Najwyższe wynagrodzenie', 'Najnowsze']} 
+                        choices={['Najwyższe wynagrodzenie', 'Najnowsze oferty']} 
                         onClick={simpleFilterClick}
                     />
                 </div>
@@ -147,6 +155,8 @@ const JobsView = props => {
                 <Input label='min. wynagrodzenie' onChange={minSalayHandle} placeholder='6 000' style={{marginRight: '10px'}} />
                 <Checkbox label='Tylko praca zdalna.' onChange={remoteHandle} /> 
             </div>
+
+            {onlyNumbersWarning ? <Message style={{display: 'inline-block', marginTop: 0, marginBottom: '5px'}} negative>Minimalne wynagrodzenie musi być liczbą całkowitą.</Message> : null}
 
             <div>
             {props.offers.fetched && props.categories.categories_fetched && props.cities.fetched ? 
