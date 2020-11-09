@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import {connect} from 'react-redux'
-import {createOffer} from '../../redux/actions/offers/createOfferActions'
-import {fetchCategories} from '../../redux/actions/offers/offerCategoriesActions'
+import {createJobOffer} from '../../redux/actions/jobs/createJobOfferActions'
+import {fetchJobCategories} from '../../redux/actions/jobs/jobOffersCategoriesActions'
 import {fetchCities} from '../../redux/actions/citiesActions'
 import CityMenu from '../CityMenu'
 import CategoriesSimpleMenu from '../CategoriesSimpleMenu'
@@ -29,9 +29,11 @@ const CreateOfferForm = props => {
         city_id: null,
         category_id: null,
         name: '',
-        price: null,
+        min_salary: '',
+        max_salary: '',
         description: '',
-        image: null,
+        company: '',
+        remote: false,
     })
 
     const [filterValues, setFilterValues] = useState({
@@ -42,26 +44,12 @@ const CreateOfferForm = props => {
     const [emptyDropdownFields, setEmptyDropdownFields] = useState(false)
 
     const onSubmit = () => {
-        if (!offerData.user_id || !offerData.city_id)
+        offerData.min_salary = offerData.min_salary.replace(',', '.')
+        offerData.max_salary = offerData.max_salary.replace(',', '.')
+
+        if (!offerData.category_id || !offerData.city_id)
             setEmptyDropdownFields(true)
-        else {
-            const uploadData = new FormData()
-            uploadData.append('user_id', offerData.user_id)
-            uploadData.append('city_id', offerData.city_id)
-            uploadData.append('category_id', offerData.category_id)
-            uploadData.append('name', offerData.name)
-
-            if (offerData.price !== null)
-                uploadData.append('price', offerData.price)
-            
-            if (offerData.description.trim() !== '')
-                uploadData.append('description', offerData.description)
-
-            if (offerData.image !== null)
-                uploadData.append('image', offerData.image)
-
-            props.createOffer(uploadData) 
-        }
+        else props.createOffer(offerData)
     }
 
     // city menu
@@ -81,19 +69,14 @@ const CreateOfferForm = props => {
         setOfferData({...offerData, name: e.target.value})
     }
 
-    const onChangeOfferPrice = e => {
-        e.persist();
-        setOfferData({...offerData, price: e.target.value})
-    }
-
     const onChangeOfferDescription = e => {
         e.persist();
         setOfferData({...offerData, description: e.target.value})
     }
 
-    const uploadImageHandle = e => {
-        e.persist()
-        setOfferData({...offerData, image: e.target.files[0]})
+    const onChangeMinSalary = e => {
+        e.persist();
+        setOfferData({...offerData, min_salary: e.target.value})
     }
 
     return(
@@ -131,6 +114,20 @@ const CreateOfferForm = props => {
                 />
             </FormField>
 
+            <label>Wynagrodzenie minimalne:</label>
+            <FormField 
+                fieldError={props.offer.errors ? (props.offer.errors.min_salary ? true : false) : false}
+                content={props.offer.errors ? (props.offer.errors.min_salary ? props.offer.errors.min_salary : '') : ''}
+                control={Input}
+            >
+                <input 
+                    name='min_salary'
+                    value={offerData.min_salary}
+                    onChange={onChangeMinSalary}
+                    placeholder='Wynagrodzenie minimalne'
+                />
+            </FormField>
+
            
 
             <label>Opis (opcjonalne):</label>
@@ -156,16 +153,16 @@ const CreateOfferForm = props => {
 
 const mapStateToProps = state => {
     return {
-        offer: state.createOfferReducer,
-        categories: state.offerCategoriesReducer,
+        offer: state.createJobOfferReducer,
+        categories: state.jobOfferCategoriesReducer,
         cities: state.citiesReducer,
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        createOffer: offerData => dispatch(createOffer(offerData)),
-        fetchCategories: () => dispatch(fetchCategories()),
+        createOffer: offerData => dispatch(createJobOffer(offerData)),
+        fetchCategories: () => dispatch(fetchJobCategories()),
         fetchCities: () => dispatch(fetchCities()),
     }
 }

@@ -51,8 +51,11 @@ const CreateOfferForm = props => {
             uploadData.append('category_id', offerData.category_id)
             uploadData.append('name', offerData.name)
 
-            if (offerData.price !== null)
+            if (offerData.price !== null) {
+                offerData.price = offerData.price.replace(',', '.')
                 uploadData.append('price', offerData.price)
+            }
+                
             
             if (offerData.description.trim() !== '')
                 uploadData.append('description', offerData.description)

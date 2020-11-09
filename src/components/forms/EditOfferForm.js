@@ -21,9 +21,11 @@ const EditOfferForm = props => {
     const onSubmit = () => {
         const uploadData = new FormData()
 
-        if (offerData.price !== null)
+        if (offerData.price !== null) {
+            offerData.price = offerData.price.replace(',', '.')
             uploadData.append('price', offerData.price)
-        
+        }
+            
         if (offerData.description.trim() !== '')
             uploadData.append('description', offerData.description)
 
@@ -108,7 +110,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        editOffer: offerData => dispatch(editOffer(offerData)),
+        editOffer: (offerId, offerData) => dispatch(editOffer(offerId, offerData)),
     }
 }
 

@@ -1,14 +1,14 @@
 import API_Handler from '../../../API_Handler'
 
-const setLoading = () => ({type: 'LOADING'})
-const setDone = () => ({type: 'DONE'})
-const setErrors = payload => ({type: 'ERRORS', payload})
-const createEditReset = () => ({type: 'CREATE EDIT RESET'})
+const setLoading = () => ({type: 'LOADING_'})
+const setDone = () => ({type: 'DONE_'})
+const setErrors = payload => ({type: 'ERRORS_', payload})
+const createEditReset = () => ({type: 'CREATE EDIT RESET_'})
 
-export const createOffer = offerData => dispatch => {
+export const createJobOffer = jobOfferData => dispatch => {
     dispatch(setLoading())
 
-    API_Handler(true, {method: 'post', url: 'offers/', data: offerData})
+    API_Handler(true, {method: 'post', url: 'joboffers/', data: jobOfferData})
     .then(() => {
         dispatch(setDone())
     })
@@ -18,9 +18,7 @@ export const createOffer = offerData => dispatch => {
 export const editOffer = (offerId, newOfferData) => dispatch => {
     dispatch(setLoading())
 
-    console.log('DANE', newOfferData)
-
-    API_Handler(true, {method: 'patch', url: `offers/${offerId}/`, data: newOfferData})
+    API_Handler(true, {method: 'patch', url: `joboffers/${offerId}/`, data: newOfferData})
     .then(() => {
         dispatch(setDone())
     })
