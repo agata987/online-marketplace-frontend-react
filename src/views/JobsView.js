@@ -117,7 +117,7 @@ const JobsView = props => {
                 text={<h2>Aby utworzyć nową ofertę <a href='/login'>zaloguj się</a>.</h2>}
             />
 
-            <div style={{display: 'flex', flexDirection: 'row', marginTop: '20px', width:'100%'}}>
+            <div style={{display: 'flex', flexDirection: 'row', marginTop: '25px', width:'100%'}}>
                 {props.loggedIn ? 
                     <a href='/create-offer'><Button color='linkedin'>Dodaj ofertę</Button></a> 
                  : <Button color='linkedin' onClick={showMustLoginInfo}>Dodaj ofertę</Button>}
