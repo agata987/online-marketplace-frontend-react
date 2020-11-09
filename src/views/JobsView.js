@@ -23,7 +23,8 @@ import {
     Loader, 
     Radio,
     Input,
-    Message
+    Message,
+    Form
   } from 'semantic-ui-react'
 
 const JobsView = props => {
@@ -76,6 +77,7 @@ const JobsView = props => {
             searchValues.cityId, 
             searchValues.categoryId, 
             ordering,
+            searchValues.minSalary,
             remote_val,
         )
     }
@@ -126,18 +128,8 @@ const JobsView = props => {
         setSearchValues({...searchValues, remote: !searchValues.remote})
     }
 
-    const filterOffers = () =>{
-        if (searchValues.minSalary !== '') {
-            try {
-                const minSaly = parseInt(searchValues.minSalary)
-                return props.offers.offers.filter(offer => parseInt(offer.min_salary) >= minSaly)
-            }
-            catch(e){
-                setSearchValues({...searchValues, minSalary: ''})
-                return props.offers.offers
-            }
-            
-        } else return props.offers.offers
+    const minSalarySubmitHandle = () =>{
+        search()
     }
 
     return (
@@ -182,9 +174,15 @@ const JobsView = props => {
                     />
                 </div>
             </div>
-            <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', marginBottom: '20px', flexWrap: 'wrap'}}>
-                <Input label='min. wynagrodzenie' onChange={minSalayHandle} placeholder='6 000' style={{marginRight: '10px'}} />
-                <Radio onClick={remoteHandle} checked={searchValues.remote} label='Tylko praca zdalna.' onChange={remoteHandle} /> 
+            <div style={{display: 'flex', flexDirection: 'column', marginBottom: '20px'}}>
+                <div>
+                <Form onSubmit={minSalarySubmitHandle} style={{maxWidth: '200px'}}>
+                    <Input label='min. wynagrodzenie' onChange={minSalayHandle} placeholder='6 000' style={{marginRight: '10px'}} />
+                </Form>
+                </div>
+                <div style={{marginTop: '20px'}}>
+                    <Radio onClick={remoteHandle} checked={searchValues.remote} label='Tylko praca zdalna.' onChange={remoteHandle} /> 
+                </div>
             </div>
 
             <Button onClick={() => {
@@ -207,7 +205,7 @@ const JobsView = props => {
 
             <div>
             {props.offers.fetched && props.categories.categories_fetched && props.cities.fetched ? 
-                <JobOffers items={filterOffers()}/> 
+                <JobOffers items={props.offers.offers}/> 
                 : <div style={{width: '100%', padding: '60px', display: 'flex', justifyContent: 'center'}}>
                     <Loader active inline />
                 </div>

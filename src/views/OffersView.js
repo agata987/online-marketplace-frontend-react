@@ -54,9 +54,7 @@ const OffersView = props => {
     const search = () => {
         let ordering = '-creation_date'
 
-        if (filtersValues.order === 'Najdroższe')
-            ordering = 'price'
-        else if (filtersValues.order === 'Najtańsze')
+        if (filtersValues.order === 'Najtańsze')
             ordering = '-price'
 
         props.fetchOffers(
@@ -132,7 +130,7 @@ const OffersView = props => {
                 <div style={{ marginLeft: '10px'}}>
                     <SimpleDropdownFilter 
                         title={filtersValues.order} 
-                        choices={['Najtańsze', 'Najdroższe', 'Najnowsze']} 
+                        choices={['Najtańsze', 'Najnowsze']} 
                         onClick={simpleFilterClick}
                     />
                 </div>

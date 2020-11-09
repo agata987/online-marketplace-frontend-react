@@ -36,7 +36,7 @@ const OfferView = props => {
                         <h3>Cena:</h3>
                         <label>{props.offer.price} zł</label>
                         <h3>Opis:</h3> 
-                        <Container text style={{whiteSpace: 'pre-line'}}>{props.offer.description}</Container>
+                        <Container text style={{whiteSpace: 'pre-line', overflowWrap: 'break-word'}}>{props.offer.description}</Container>
                     </Modal.Description>
                 </Modal.Content>
 

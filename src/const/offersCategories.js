@@ -45,4 +45,8 @@ export const OffersCategories = [
     name: 'Zamienię',
     icon: 'exchange'
    },
+   {
+      name: 'Inne',
+      icom: 'th large'
+   }
 ]

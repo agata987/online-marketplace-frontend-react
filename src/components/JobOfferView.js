@@ -69,7 +69,7 @@ const JobOfferView = props => {
                             {props.offer.remote ? <h3>Praca zdalna.</h3>: null}
                             {props.offer.min_salary ? <h3>Zarobki: {props.offer.min_salary}{props.offer.max_salary ? <span> - {props.offer.max_salary}</span> : null} zł</h3> : null}
                             
-                            {props.offer.description ? <hoc><h3>Opis:</h3> <Container style={{whiteSpace: 'pre-line'}} text>{props.offer.description}</Container></hoc> : null}
+                            {props.offer.description ? <hoc><h3>Opis:</h3> <Container style={{whiteSpace: 'pre-line', overflowWrap: 'break-word'}} text>{props.offer.description}</Container></hoc> : null}
                         </Modal.Description>
                     </Modal.Content>
 
