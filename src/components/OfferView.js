@@ -43,7 +43,7 @@ const OfferView = props => {
                 open={props.isOpen}
                 onClose={props.onRequestClose}
                 >  
-                {props.offer ? <Hoc>
+                {props.offer && userName ? <Hoc>
                     <Modal.Header>
                         <span>{props.offer.name} {userName !== '' ? <small>/ {userName}</small> : null}</span>       
                     </Modal.Header>

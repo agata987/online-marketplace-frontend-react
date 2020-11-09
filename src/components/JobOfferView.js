@@ -49,7 +49,7 @@ const JobOfferView = props => {
                 open={props.isOpen}
                 onClose={props.onRequestClose}
             >
-                {props.offer ? 
+                {props.offer && userName ? 
                 <Hoc>
                     <Modal.Header>
                         <span>{props.offer.name} <small>/ {props.offer.creation_date} </small>{userName !== '' ? <small> / {userName}</small> : null}   </span>       
