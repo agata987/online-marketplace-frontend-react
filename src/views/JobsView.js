@@ -13,6 +13,7 @@ import {fetchCities} from '../redux/actions/citiesActions'
 import CategoriesSimpleMenu from '../components/CategoriesSimpleMenu'
 import CityMenu from '../components/CityMenu'
 import SimpleDropdownFilter from '../components/SimpleDropdownFilter'
+import SearchInput from '../components/SearchInput'
 import LoginInfoModal from '../components/LoginInfoModal'
 import JobOffers from '../components/JobOffers'
 
@@ -20,6 +21,8 @@ import {
     Button, 
     Icon, 
     Loader, 
+    Checkbox,
+    Input
   } from 'semantic-ui-react'
 
 const JobsView = props => {
@@ -35,6 +38,8 @@ const JobsView = props => {
         searchValue: '',
         categoryId: '',
         cityId: '',
+        minSalary: '',
+        remote: false,
     })
 
     // show this values to user
@@ -79,8 +84,38 @@ const JobsView = props => {
         setFilterValues({...filterValues, order: choice})
     }
 
+    // search bar
+    const onSearchValueChange = e => {
+        e.persist();
+        setSearchValues({...searchValues, searchValue: e.target.value})
+    }
+
+    // minimum salary input
+    const minSalayHandle = e => {
+        e.persist();
+        setSearchValues({...searchValues, minSalary: e.target.value})
+    }
+
+    // remote intpu
+    const remoteHandle = () => {
+        setSearchValues({...searchValues, remote: !searchValues.remote})
+    }
+
     return (
         <div>
+            <LoginInfoModal 
+                onRequestClose={() => {setModalOpen(false)}} 
+                isOpen={modalOpen} 
+                text={<h2>Aby utworzyć nową ofertę <a href='/login'>zaloguj się</a>.</h2>}
+            />
+
+            <div style={{display: 'flex', flexDirection: 'row', marginTop: '20px', width:'100%'}}>
+                {props.loggedIn ? 
+                    <a href='/create-offer'><Button color='linkedin'>Dodaj ofertę</Button></a> 
+                 : <Button color='linkedin' onClick={showMustLoginInfo}>Dodaj ofertę</Button>}
+                <SearchInput onSubmit={search} onChange={onSearchValueChange}/>
+            </div>
+
             <h3>Filtry</h3>
             <div style={{display: 'flex', flexDirection: 'row', marginBottom: '20px', flexWrap: 'wrap'}}>
                 <div style={{marginRight: '10px', marginBottom: '10px'}}>{props.categories.categories_fetched ? 
@@ -91,7 +126,7 @@ const JobsView = props => {
                     /> 
                     : null}
                 </div>
-                <div style={{marginRight: '10px'}}>
+                <div style={{marginRight: '10px', marginBottom: '10px'}}>
                     {props.cities.fetched ? 
                     <CityMenu 
                         city={filterValues.cityName}  
@@ -100,13 +135,17 @@ const JobsView = props => {
                     /> 
                     : null}
                 </div>
-                <div>
+                <div style={{marginRight: '10px'}}>
                     <SimpleDropdownFilter 
                         title={filterValues.order} 
                         choices={['Najwyższe wynagrodzenie', 'Najnowsze']} 
                         onClick={simpleFilterClick}
                     />
                 </div>
+            </div>
+            <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', marginBottom: '20px', flexWrap: 'wrap'}}>
+                <Input label='min. wynagrodzenie' onChange={minSalayHandle} placeholder='6 000' style={{marginRight: '10px'}} />
+                <Checkbox label='Tylko praca zdalna.' onChange={remoteHandle} /> 
             </div>
 
             <div>
@@ -116,6 +155,22 @@ const JobsView = props => {
                     <Loader active inline />
                 </div>
             }
+            </div>
+            <div style={{width: '100%', display: 'flex',justifyContent: 'center', padding: '20px', maxWidth: '800px'}}>
+                <Button 
+                    color='linkedin' 
+                    disabled={props.offers.previousPage ? false : true} 
+                    onClick={() => {props.fetchPageOffers(props.offers.previousPage)}}
+                >
+                        <Icon name='angle left' />
+                </Button>
+                <Button 
+                    color='linkedin' 
+                    disabled={props.offers.nextPage ? false : true} 
+                    onClick={() => {props.fetchPageOffers(props.offers.nextPage)}}
+                >
+                    <Icon name='angle right' />
+                </Button>
             </div>
         </div>
     );
