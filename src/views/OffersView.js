@@ -57,7 +57,7 @@ const OffersView = props => {
         if (filtersValues.order === 'Najdroższe')
             ordering = '-price'
         else if (filtersValues.order === 'Najnowsze')
-            ordering = 'creation_date'
+            ordering = '-creation_date'
 
         props.fetchOffers(
             searchValues.searchValue, 

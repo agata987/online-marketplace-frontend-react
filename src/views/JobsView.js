@@ -59,12 +59,10 @@ const JobsView = props => {
     }
 
     const search = () => {
-        let ordering = ''
+        let ordering = '-creation_date'
 
         if (filterValues.order === 'Największe wynagrodzenie')
             ordering = '-max_salary'
-        else if (filterValues.order === 'Najnowsze oferty')
-            ordering = 'creation_date'
 
         let remote_val = ''
 

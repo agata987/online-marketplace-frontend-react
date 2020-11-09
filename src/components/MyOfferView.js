@@ -1,5 +1,11 @@
 import React from 'react'
-import {Button, Loader, Image, Modal} from 'semantic-ui-react'
+import {
+    Button, 
+    Loader, 
+    Image, 
+    Modal,
+    Container
+} from 'semantic-ui-react'
 import Hoc from './Hoc'
 
 
@@ -29,7 +35,7 @@ const OfferView = props => {
                         <h3>Cena:</h3>
                         <label>{props.offer.price} zł</label>
                         <h3>Opis:</h3> 
-                        <label>{props.offer.description}</label>
+                        <Container text style={{whiteSpace: 'pre-line'}}>{props.offer.description}</Container>
                     </Modal.Description>
                 </Modal.Content>
 

@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import {connect} from 'react-redux'
+import {fetchUserOffers} from '../../redux/actions/offers/userOffersActions'
 import {editOffer} from '../../redux/actions/offers/createOfferActions'
 import {FormField} from './FormField'
 import {Button, Form, Input, TextArea} from 'semantic-ui-react'
@@ -7,8 +8,13 @@ import {Button, Form, Input, TextArea} from 'semantic-ui-react'
 const EditOfferForm = props => {
 
     useEffect(() => {
-        if (props.offer_red.done)
+        if (props.offer_red.done) {
+            if (props.user) {
+                props.fetchUserOffers(props.user.id)
+            }
             props.redirect()
+        }
+            
     
     }, [props.offer_red])
 
@@ -105,12 +111,14 @@ const EditOfferForm = props => {
 const mapStateToProps = state => {
     return {
         offer_red: state.createOfferReducer,
+        user: state.authReducer.user,
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
         editOffer: (offerId, offerData) => dispatch(editOffer(offerId, offerData)),
+        fetchUserOffers: user_id => dispatch(fetchUserOffers(user_id)),
     }
 }
 
