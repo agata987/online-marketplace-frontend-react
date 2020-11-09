@@ -15,7 +15,7 @@ class CityMenu extends React.Component {
             }
             menuItems.push(
                 <Dropdown item text={voivodeships_cities[key].name}>
-                    <Dropdown.Menu direction='right' style={{overflow: 'auto', maxHeight: 200 }}>
+                    <Dropdown.Menu  style={{overflow: 'auto', maxHeight: 200 }}>
                     {cities_names}
                     </Dropdown.Menu>
                 </Dropdown>
@@ -24,8 +24,8 @@ class CityMenu extends React.Component {
 
         return(
             <Menu vertical stackable>
-                <Dropdown item text={this.props.city} direction='right' fluid>
-                    <Dropdown.Menu direction='right'>
+                <Dropdown item text={this.props.city} fluid>
+                    <Dropdown.Menu >
                     {menuItems}
                     </Dropdown.Menu>
                 </Dropdown>

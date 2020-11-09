@@ -11,6 +11,7 @@ import userOffersReducer from './offers/userOffersReducer'
 import jobOffersReducer from './jobs/jobOffersReducer'
 import jobOfferCategoriesReducer from './jobs/jobOffersCategoriesReducer'
 import createJobOfferReducer from './jobs/createJobOfferReducer'
+import userJobOffersReducer from './jobs/userJobOffersReducer'
 
 const rootReducer = combineReducers({
     authReducer,
@@ -24,6 +25,7 @@ const rootReducer = combineReducers({
     jobOffersReducer,
     jobOfferCategoriesReducer,
     createJobOfferReducer,
+    userJobOffersReducer,
 })
 
 export default rootReducer

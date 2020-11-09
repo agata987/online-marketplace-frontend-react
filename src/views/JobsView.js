@@ -61,7 +61,7 @@ const JobsView = props => {
     const search = () => {
         let ordering = '-creation_date'
 
-        if (filterValues.order === 'Największe wynagrodzenie')
+        if (filterValues.order === 'Max. wynagrodzenie')
             ordering = '-max_salary'
 
         let remote_val = ''
@@ -157,14 +157,6 @@ const JobsView = props => {
 
             <h3>Filtry</h3>
             <div style={{display: 'flex', flexDirection: 'row', marginBottom: '10px', flexWrap: 'wrap'}}>
-                <div style={{marginRight: '10px', marginBottom: '10px'}}>{props.categories.categories_fetched ? 
-                    <CategoriesSimpleMenu  
-                        categories={props.categories.categories} 
-                        onClick={onClickCategory} 
-                        categoryName={filterValues.categoryName}
-                    /> 
-                    : null}
-                </div>
                 <div style={{marginRight: '10px', marginBottom: '10px'}}>
                     {props.cities.fetched ? 
                     <CityMenu 
@@ -174,10 +166,18 @@ const JobsView = props => {
                     /> 
                     : null}
                 </div>
+                <div style={{marginRight: '10px', marginBottom: '10px'}}>{props.categories.categories_fetched ? 
+                    <CategoriesSimpleMenu  
+                        categories={props.categories.categories} 
+                        onClick={onClickCategory} 
+                        categoryName={filterValues.categoryName}
+                    /> 
+                    : null}
+                </div>
                 <div style={{marginRight: '10px'}}>
                     <SimpleDropdownFilter 
                         title={filterValues.order} 
-                        choices={['Największe wynagrodzenie', 'Najnowsze oferty']} 
+                        choices={['Max. wynagrodzenie', 'Najnowsze oferty']} 
                         onClick={simpleFilterClick}
                     />
                 </div>
