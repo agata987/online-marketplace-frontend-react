@@ -59,13 +59,32 @@ const JobsView = props => {
     }
 
     const search = () => {
-        // sprawdzanie wartosci
-        props.fetchOffers()
+        let ordering = ''
+
+        if (filterValues.order === 'Największe wynagrodzenie')
+            ordering = '-max_salary'
+        else if (filterValues.order === 'Najnowsze oferty')
+            ordering = 'creation_date'
+
+        let remote_val = ''
+
+        if (searchValues.remote)
+            remote_val='True'
+        
+
+
+        props.fetchOffers(
+            searchValues.searchValue, 
+            searchValues.cityId, 
+            searchValues.categoryId, 
+            ordering,
+            remote_val,
+        )
     }
 
     useEffect(() => {
         search()
-    }, [filterValues])
+    }, [filterValues, searchValues.remote])
 
 
     // categories menu
@@ -109,6 +128,20 @@ const JobsView = props => {
         setSearchValues({...searchValues, remote: !searchValues.remote})
     }
 
+    const filterOffers = () =>{
+        if (searchValues.minSalary !== '') {
+            try {
+                const minSaly = parseInt(searchValues.minSalary)
+                return props.offers.offers.filter(offer => parseInt(offer.min_salary) >= minSaly)
+            }
+            catch(e){
+                setSearchValues({...searchValues, minSalary: ''})
+                return props.offers.offers
+            }
+            
+        } else return props.offers.offers
+    }
+
     return (
         <div>
             <LoginInfoModal 
@@ -146,17 +179,15 @@ const JobsView = props => {
                 <div style={{marginRight: '10px'}}>
                     <SimpleDropdownFilter 
                         title={filterValues.order} 
-                        choices={['Najwyższe wynagrodzenie', 'Najnowsze oferty']} 
+                        choices={['Największe wynagrodzenie', 'Najnowsze oferty']} 
                         onClick={simpleFilterClick}
                     />
                 </div>
             </div>
             <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', marginBottom: '20px', flexWrap: 'wrap'}}>
                 <Input label='min. wynagrodzenie' onChange={minSalayHandle} placeholder='6 000' style={{marginRight: '10px'}} />
-                <Radio checked={searchValues.remote} label='Tylko praca zdalna.' onChange={remoteHandle} /> 
+                <Radio onClick={remoteHandle} checked={searchValues.remote} label='Tylko praca zdalna.' onChange={remoteHandle} /> 
             </div>
-
-            {onlyNumbersWarning ? <Message style={{display: 'inline-block', marginTop: 0, marginBottom: '5px'}} negative>Minimalne wynagrodzenie musi być liczbą całkowitą.</Message> : null}
 
             <Button onClick={() => {
                 setSearchValues({...searchValues,
@@ -168,13 +199,17 @@ const JobsView = props => {
                 setFilterValues({
                     cityName: 'Wybierz miasto',
                     categoryName: 'Wybierz kategorię',
+                    order: 'Sortuj według',
                 })
 
             }}>Wszystkie oferty</Button>
 
+            {onlyNumbersWarning ? <div><Message style={{display: 'inline-block', marginTop: 0, marginTop: '20px'}} negative>Minimalne wynagrodzenie musi być liczbą całkowitą.</Message></div> : null}
+
+
             <div>
             {props.offers.fetched && props.categories.categories_fetched && props.cities.fetched ? 
-                <JobOffers items={props.offers.offers}/> 
+                <JobOffers items={filterOffers()}/> 
                 : <div style={{width: '100%', padding: '60px', display: 'flex', justifyContent: 'center'}}>
                     <Loader active inline />
                 </div>
