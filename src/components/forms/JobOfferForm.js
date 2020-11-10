@@ -39,7 +39,7 @@ const CreateOfferForm = props => {
         category_id: null,
         name: '',
         min_salary: '',
-        max_salary: '',
+        max_salary: null,
         description: '',
         company: '',
         remote: false,
@@ -53,15 +53,6 @@ const CreateOfferForm = props => {
     const [emptyDropdownFields, setEmptyDropdownFields] = useState(false)
 
     const onSubmit = () => {
-        offerData.min_salary = offerData.min_salary.replace(',', '.')
-
-        if (offerData.max_salary !== null) {
-            offerData.max_salary = offerData.max_salary.replace(',', '.')
-
-            if (offerData.max_salary.trim() === '') // for backend validation
-            offerData.max_salary = null
-        }
-  
 
         if (!offerData.category_id || !offerData.city_id)
             setEmptyDropdownFields(true)

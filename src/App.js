@@ -22,6 +22,7 @@ import MyOffersView from './views/MyOffersView'
 import MyJobOffersView from './views/MyJobOffersView'
 import EditOfferView from './views/EditOfferView'
 import CreateJobOfferView from './views/CreateJobOfferView'
+import EditJobOfferView from './views/EditJobOfferView'
 
 import 'semantic-ui-css/semantic.min.css'
 import './sass/main.scss'
@@ -51,6 +52,7 @@ function App(props) {
           <Route path='/my-offers' exact component={MyOffersView} />
           <Route path='/my-job-offers' exact component={MyJobOffersView} />
           <Route path='/edit-offer/:offerId' component={EditOfferView} />
+          <Route path='/edit-joboffer/:offerId' component={EditJobOfferView} />
           <Route path='/create-joboffer' exact component={CreateJobOfferView} />
           <Route />
         </Switch>
