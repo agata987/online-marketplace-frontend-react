@@ -11,6 +11,11 @@ const  Panel = props => {
   let chats = []
   const [openModal, setOpenModal] = useState(false)
 
+  const [activeChat, setactiveChat] = useState({
+    id: null,
+    participantName: null
+  })
+
   useEffect(() => {
     if (props.chats.fetched) {
       props.chats.chats.map(chat => {
@@ -34,6 +39,7 @@ const  Panel = props => {
         chats.forEach(chat => {
           if(chat.participantName === props.newContact) {
             exists = true
+            handleOpenChat(chat.chatId, chat.participantName)
           }
         })
         
@@ -44,10 +50,6 @@ const  Panel = props => {
     
   },[props.newContact, props.chats.fetched])
 
-  const [activeChat, setactiveChat] = useState({
-    id: null,
-    participantName: null
-  })
 
   const handleOpenChat = (id, participantName) => {
     setactiveChat({id: id, participantName: participantName})
