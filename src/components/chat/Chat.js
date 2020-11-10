@@ -1,53 +1,49 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import {connect} from "react-redux";
 import {setMessages, addMessage} from '../../redux/actions/chatActions'
 import WebSocketInstance from '../../WebSocketInstance'
 import {Message, TextArea, Button, Segment} from 'semantic-ui-react'
 
-class Chat extends React.Component {
-    constructor(props) {
-        super(props)
+const Chat = props => {
 
-        this.state = {
-            message: ''
-        }
+    const [message, setMessage] = useState('')
 
+    useEffect(() => {
         WebSocketInstance.addCallbacks(
-            this.props.setMessages.bind(this),
-            this.props.addMessage.bind(this)
+            props.setMessages,
+            props.addMessage
         )
-        this.initialiseChat()
-    }
+    }, [])
 
-    waitForSocketConnection(callback) {
+    useEffect(() => {
+        waitForSocketConnection(() => {
+            WebSocketInstance.fetchMessages(
+                props.userId,
+                props.chatId
+            )
+        })
+        WebSocketInstance.connect(props.chatId)
+    }, [props.chatId])
+
+    const waitForSocketConnection = callback => {
         setTimeout(() => {
             if (WebSocketInstance.state() === 1)
                 callback()
-            else this.waitForSocketConnection(callback)
+            else waitForSocketConnection(callback)
         }, 100)
     }
 
-    initialiseChat() {
-        this.waitForSocketConnection(() => {
-            WebSocketInstance.fetchMessages(
-                this.props.userId,
-                this.props.chatId
-            )
-        })
-        WebSocketInstance.connect(this.props.chatId)
-    }
-
-    renderMessages = messages => {
-        return messages.map(message => <div style={message.author === this.props.userId ? {display: 'flex', flexDirection: 'row', justifyContent: 'right', margin: '5px'} : { margin: '5px'}}>
-            <Message  color={message.author === this.props.userId ? 'blue' : null} style={message.author === this.props.userId ? {width: '45%', textAlign: 'right'} : { width: '45%'}}>
-                {message.author !== this.props.userId ? <Message.Header>{this.props.participantName}:</Message.Header> :  <Message.Header>ja:</Message.Header>}
+    const renderMessages = messages => {
+        return messages.map(message => <div style={message.author === props.userId ? {display: 'flex', flexDirection: 'row', justifyContent: 'right', margin: '5px'} : { margin: '5px'}}>
+            <Message  color={message.author === props.userId ? 'blue' : null} style={message.author === props.userId ? {width: '45%', textAlign: 'right'} : { width: '45%'}}>
+                {message.author !== props.userId ? <Message.Header>{props.participantName}:</Message.Header> :  <Message.Header>ja:</Message.Header>}
                 <Message.Content style={{marginTop: '5px', marginBottom: '5px'}}>{message.content}</Message.Content>
-                <small>{this.renderTimestamp(message.timestamp)}</small>
+                <small>{renderTimestamp(message.timestamp)}</small>
             </Message>
         </div>)
     }
 
-    renderTimestamp = timestamp => {
+    const renderTimestamp = timestamp => {
         let prefix = "";
         const timeDiff = Math.round(
           (new Date().getTime() - new Date(timestamp).getTime()) / 60000
@@ -70,37 +66,35 @@ class Chat extends React.Component {
         return prefix;
       };
 
-    messageChangeHandler = e => {
+    const messageChangeHandler = e => {
         e.persist();
-        this.setState({message: e.target.value})
+        setMessage(e.target.value)
     }
 
-    sendMessageHandler = () => {
-        if (this.state.message.trim() !== ''){
+    const sendMessageHandler = () => {
+        if (message.trim() !== ''){
             const messageObject = {
-                from: this.props.userId,
-                content: this.state.message,
-                chatId: this.props.chatId
+                from: props.userId,
+                content: message,
+                chatId: props.chatId
             }
             WebSocketInstance.newChatMessage(messageObject)
-            this.setState({message: ''})
+            setMessage('')
         }
     }
 
-    render() {
 
-        return(
-            <div>
-                <Segment style={{overflow: 'auto', height: '550px', backgroundColor: '#cdd9e5'}}>
-                {this.props.messages ? this.renderMessages(this.props.messages) : null}
-                </Segment>
-                <div style={{display: 'flex', flexDirection: 'column'}}>
-                    <TextArea value={this.state.message} style={{width: '45%', margin: '0 0 10px auto', padding: '5px'}} placeholder='Wiadomość...' onChange={this.messageChangeHandler}/>
-                    <Button onClick={this.sendMessageHandler} color='orange' style={{width: '45%', marginRight: '0', marginLeft: 'auto'}}>Wyślij</Button>
-                </div>
+    return(
+        <div>
+            <Segment style={{overflow: 'auto', height: '550px', backgroundColor: '#cdd9e5'}}>
+            {props.messages ? renderMessages(props.messages) : null}
+            </Segment>
+            <div style={{display: 'flex', flexDirection: 'column'}}>
+                <TextArea value={message} style={{width: '45%', margin: '0 0 10px auto', padding: '5px'}} placeholder='Wiadomość...' onChange={messageChangeHandler}/>
+                <Button onClick={sendMessageHandler} color='orange' style={{width: '45%', marginRight: '0', marginLeft: 'auto'}}>Wyślij</Button>
             </div>
-        )
-    }
+        </div>
+    )
 
 }
 
