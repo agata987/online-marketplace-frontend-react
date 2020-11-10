@@ -15,9 +15,13 @@ const Offers = props => {
     setShowOffer(true)
   }
 
+  const deleteFromFavourites = id => {
+    alert(`usuwanie oferty o id: ${id}`)
+  }
+
   return (
     <div>
-      <OfferView offer={currentOffer} city={props.city} onRequestClose={() => setShowOffer(false)} isOpen={showOffer}/>
+      <OfferView favourites={props.favourites} offer={currentOffer} city={props.city} onRequestClose={() => setShowOffer(false)} isOpen={showOffer}/>
 
       <Item.Group relaxed>
       {props.items.map(item => 
@@ -31,12 +35,22 @@ const Offers = props => {
               <div className='stay' style={{mamarginTop: '2px'}}>{item.creation_date}</div>
             </Item.Meta>
             <Item.Description style={{display: 'flex', flexDirection: 'row', justifyContent: 'right'}}>
-              <Button onClick={() => showOfferHandle(item)} color='orange' animated='vertical' size='big'>
-              <Button.Content visible>Sprawdź ofertę</Button.Content>
+
+            {props.favourites ?             
+            <Button onClick={() => {deleteFromFavourites(item.id)}} color='gray' animated='vertical' size='big'>
+              <Button.Content visible>Usuń</Button.Content>
               <Button.Content hidden>
-                <Icon name='shop' />
+                <Icon name='delete' />
               </Button.Content>
-            </Button>
+            </Button> : null}
+
+              <Button onClick={() => showOfferHandle(item)} color='orange' animated='vertical' size='big'>
+                <Button.Content visible>Sprawdź ofertę</Button.Content>
+                <Button.Content hidden>
+                  <Icon name='shop' />
+                </Button.Content>
+              </Button>
+
             </Item.Description>
           </Item.Content>
         </Item>)}

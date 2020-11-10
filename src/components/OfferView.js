@@ -32,6 +32,10 @@ const OfferView = props => {
         } else setInfoModalOpen(true)
     }
 
+    const addToFavourites = id => {
+        alert(`dodawanie do ulubionych oferty o id ${id}`)
+    }
+
     return (
         <Hoc>
             {redirect ?  <Redirect to={`/messages/${userName}`} /> : null}
@@ -68,14 +72,17 @@ const OfferView = props => {
 
                     <Modal.Actions>
                         <div style={{marginBottom: '5px'}}>
+                            {!props.favourites && props.offer.id ?
                             <span style={{marginLeft: '5px'}}>
-                                <Button onClick={()=>{}} color='red' animated>
+                                <Button onClick={()=>{addToFavourites(props.offer.id)}} color='red' animated>
                                     <Button.Content hidden>Dodaj</Button.Content>
                                     <Button.Content visible>
                                         <Icon name='heart' />
                                     </Button.Content>
                                 </Button>
                             </span>
+                            : null}
+   
                             <span style={{marginLeft: '5px'}}>
                                 <Button onClick={sendMessageHandle} color='blue'  animated>
                                     <Button.Content visible>Wiadomość</Button.Content>

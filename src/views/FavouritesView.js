@@ -30,7 +30,6 @@ const FavouritesView = props => {
     return (
         <div>
               <Message
-                icon='info'
                 header='Ulubione'
                 content='Tu znajdują się ogłoszenia i oferty pracy dodane do ulubionych.'
             />
@@ -52,7 +51,7 @@ const FavouritesView = props => {
             </Menu>
 
             {activeTab === 'Ogłoszenia' ? (
-                props.offers.fetched ? <Offers items={props.offers.offers} /> : 
+                props.offers.fetched ? <Offers favourites items={props.offers.offers} /> : 
                 <div style={{width: '100%', padding: '60px', display: 'flex', justifyContent: 'center'}}>
                     <Loader active inline />
                 </div>
