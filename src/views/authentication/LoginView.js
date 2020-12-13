@@ -3,7 +3,10 @@ import LoginForm from '../../components/forms/LoginForm'
 
 const LoginView = () => {
     return (
-        <LoginForm />
+        <div style={{paddingTop: '5%'}}>
+            <LoginForm />
+        </div>
+        
     )
 }
 

@@ -23,6 +23,8 @@ import MyJobOffersView from './views/MyJobOffersView'
 import EditOfferView from './views/EditOfferView'
 import CreateJobOfferView from './views/CreateJobOfferView'
 import EditJobOfferView from './views/EditJobOfferView'
+import ResetPasswordView from './views/authentication/ResetPasswordView'
+import SendResetPasswordView from './views/authentication/SendResetPasswordView'
 
 import 'semantic-ui-css/semantic.min.css'
 import './sass/main.scss'
@@ -54,7 +56,8 @@ function App(props) {
           <Route path='/edit-offer/:offerId' component={EditOfferView} />
           <Route path='/edit-joboffer/:offerId' component={EditJobOfferView} />
           <Route path='/create-joboffer' exact component={CreateJobOfferView} />
-          <Route />
+          <Route path='/reset/:token'  component={ResetPasswordView} />
+          <Route path='/send-reset' exact component={SendResetPasswordView} />
         </Switch>
       </Router>
     </div>
