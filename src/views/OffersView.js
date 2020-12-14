@@ -1,193 +1,209 @@
-import React, {
-    useState, 
-    useEffect
-} from 'react'
-import { connect } from 'react-redux'
-import { 
-    fetchOffers, 
-    fetchPageOffers 
-} from '../redux/actions/offers/offersActions'
-import { fetchCategories } from '../redux/actions/offers/offerCategoriesActions'
-import { fetchCities } from '../redux/actions/citiesActions'
-
-import CategoriesMenu from '../components/CategoriesMenu'
-import CityMenu from '../components/CityMenu'
-import Offers from '../components/Offers'
-import SearchInput from '../components/SearchInput'
-import SimpleDropdownFilter from '../components/SimpleDropdownFilter'
-import LoginInfoModal from '../components/LoginInfoModal'
-
+import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
 import {
-  Button, 
-  Icon, 
-  Loader, 
-} from 'semantic-ui-react'
+  fetchOffers,
+  fetchPageOffers,
+} from '../redux/actions/offers/offersActions';
+import { fetchCategories } from '../redux/actions/offers/offerCategoriesActions';
+import { fetchCities } from '../redux/actions/citiesActions';
 
-const OffersView = props => {
+import CategoriesMenu from '../components/CategoriesMenu';
+import CityMenu from '../components/CityMenu';
+import Offers from '../components/Offers';
+import SearchInput from '../components/SearchInput';
+import SimpleDropdownFilter from '../components/SimpleDropdownFilter';
+import LoginInfoModal from '../components/LoginInfoModal';
 
-    // fetch OffersView data
-    useEffect(() => {
-        props.fetchCategories()
-        props.fetchCities()
-    }, [])
+import { Button, Icon, Loader } from 'semantic-ui-react';
 
-    // offers filters
-    const [searchValues, setSearchValues] = useState({
-        searchValue: '',
-        categoryId: '',
-        cityId: '',
-    })
+const OffersView = (props) => {
+  // fetch OffersView data
+  useEffect(() => {
+    props.fetchCategories();
+    props.fetchCities();
+  }, []);
 
-    // show this values to user
-    const [filtersValues, setFiltersValues] = useState({
-        order: 'Sortuj według',
-        cityName: 'Wybierz miasto'
-    })
+  // offers filters
+  const [searchValues, setSearchValues] = useState({
+    searchValue: '',
+    categoryId: '',
+    cityId: '',
+  });
 
-    // show 'must login' modal
-    const [modalOpen, setModalOpen] = useState(false)
+  // show this values to user
+  const [filtersValues, setFiltersValues] = useState({
+    order: 'Sortuj według',
+    cityName: 'Wybierz miasto',
+  });
 
-    useEffect(() => {
-        search()
-    }, [searchValues.categoryId, filtersValues])
+  // show 'must login' modal
+  const [modalOpen, setModalOpen] = useState(false);
 
-    const search = () => {
-        let ordering = '-creation_date'
+  useEffect(() => {
+    search();
+  }, [searchValues.categoryId, filtersValues]);
 
-        if (filtersValues.order === 'Najtańsze')
-            ordering = '-price'
+  const search = () => {
+    let ordering = '-creation_date';
 
-        props.fetchOffers(
-            searchValues.searchValue, 
-            searchValues.cityId, 
-            searchValues.categoryId, 
-            ordering
-        )
-    }
+    if (filtersValues.order === 'Najtańsze') ordering = '-price';
 
-    const showMustLoginInfo = () => {
-        if (!props.loggedIn)
-            setModalOpen(true)
-    }
-
-    // categories menu
-    const handleCategoriesMenuItemClick = (e, {name}) => {
-        setSearchValues({...searchValues, categoryId: name})
-    }
-
-    // search bar
-    const onSearchValueChange = e => {
-        e.persist();
-        setSearchValues({...searchValues, searchValue: e.target.value})
-    }
-
-    // city filter
-    const onClickCity = (e, cityId, cityName) => {
-        setSearchValues({...searchValues, cityId: cityId})
-        setFiltersValues({...filtersValues, cityName: cityName})
-    }
-
-    // ordering
-    const simpleFilterClick = (e, choice) => {
-        setFiltersValues({...filtersValues, order: choice})
-    }
-
-    return (
-        <div>
-            <LoginInfoModal 
-                onRequestClose={() => {setModalOpen(false)}} 
-                isOpen={modalOpen} 
-                text={<h2>Aby utworzyć nową ofertę <a href='/login'>zaloguj się</a>.</h2>}
-            />
-            
-            <div>
-                {props.categories.categories_fetched ? 
-                    <CategoriesMenu 
-                        categories={props.categories.categories} 
-                        handleItemClick={handleCategoriesMenuItemClick} 
-                        activeItem={searchValues.categoryId} /> 
-                : null}
-            </div>
-            
-            <div style={{display: 'flex', flexDirection: 'row', marginTop: '20px', width:'100%'}}>
-                {props.loggedIn ? 
-                    <a href='/create-offer'><Button color='linkedin'>Dodaj ofertę</Button></a> 
-                 : <Button color='linkedin' onClick={showMustLoginInfo}>Dodaj ofertę</Button>}
-                <SearchInput onSubmit={search} onChange={onSearchValueChange}/>
-            </div>
-
-            <h3>Filtry</h3>
-            <div style={{display: 'flex', flexDirection: 'row', marginBottom: '20px'}}>
-                <div>
-                    {props.cities.fetched ? 
-                        <CityMenu 
-                            city={filtersValues.cityName}  
-                            voivodeships={props.cities.voivodeships} 
-                            onClick={onClickCity}
-                        /> 
-                        : null}
-                </div>
-                <div style={{ marginLeft: '10px'}}>
-                    <SimpleDropdownFilter 
-                        title={filtersValues.order} 
-                        choices={['Najtańsze', 'Najnowsze']} 
-                        onClick={simpleFilterClick}
-                    />
-                </div>
-            </div>
-
-            <Button onClick={() => {
-                setSearchValues({...searchValues, categoryId: '', cityId: ''})
-                setFiltersValues({order: 'Sortuj według', cityName: 'Wybierz miasto'})
-                props.fetchOffers()
-                }}>Wszystkie oferty</Button>
-        
-            <div>
-                {props.offers.offers_fetched && props.categories.categories_fetched && props.cities.fetched ? 
-                <Offers items={props.offers.offers}/> 
-                : <div style={{width: '100%', padding: '60px', display: 'flex', justifyContent: 'center'}}>
-                    <Loader active inline />
-                </div>}
-            </div>
-
-            <div style={{width: '100%', display: 'flex',justifyContent: 'center', padding: '20px', maxWidth: '800px'}}>
-                <Button 
-                    color='linkedin' 
-                    disabled={props.offers.previousPage ? false : true} 
-                    onClick={() => {props.fetchPageOffers(props.offers.previousPage)}}
-                >
-                        <Icon name='angle left' />
-                </Button>
-                <Button 
-                    color='linkedin' 
-                    disabled={props.offers.nextPage ? false : true} 
-                    onClick={() => {props.fetchPageOffers(props.offers.nextPage)}}
-                >
-                    <Icon name='angle right' />
-                </Button>
-            </div>
-        </div>
+    props.fetchOffers(
+      searchValues.searchValue,
+      searchValues.cityId,
+      searchValues.categoryId,
+      ordering
     );
+  };
 
-}
+  const showMustLoginInfo = () => {
+    if (!props.loggedIn) setModalOpen(true);
+  };
 
-const mapStateToProps = state => {
-    return {
-      offers: state.offersReducer,
-      categories: state.offerCategoriesReducer,
-      cities: state.citiesReducer,
-      loggedIn: state.authReducer.user,
-    }
-}
-  
+  // categories menu
+  const handleCategoriesMenuItemClick = (e, { name }) => {
+    setSearchValues({ ...searchValues, categoryId: name });
+  };
 
-const mapDispatchToProps = dispatch => {
-    return {
-        fetchCategories: () => dispatch(fetchCategories()),
-        fetchOffers: (...args) => dispatch(fetchOffers(...args)),
-        fetchPageOffers: (link) => dispatch(fetchPageOffers(link)),
-        fetchCities: () => dispatch(fetchCities()),
-    }
-  }
+  // search bar
+  const onSearchValueChange = (e) => {
+    e.persist();
+    setSearchValues({ ...searchValues, searchValue: e.target.value });
+  };
 
-export default connect(mapStateToProps, mapDispatchToProps)(OffersView)
+  // city filter
+  const onClickCity = (e, cityId, cityName) => {
+    setSearchValues({ ...searchValues, cityId: cityId });
+    setFiltersValues({ ...filtersValues, cityName: cityName });
+  };
+
+  // ordering
+  const simpleFilterClick = (e, choice) => {
+    setFiltersValues({ ...filtersValues, order: choice });
+  };
+
+  return (
+    <div>
+      <LoginInfoModal
+        onRequestClose={() => {
+          setModalOpen(false);
+        }}
+        isOpen={modalOpen}
+        text={
+          <h2>
+            Aby utworzyć nową ofertę <a href="/login">zaloguj się</a>.
+          </h2>
+        }
+      />
+
+      <div>
+        {props.categories.categories_fetched ? (
+          <CategoriesMenu
+            categories={props.categories.categories}
+            handleItemClick={handleCategoriesMenuItemClick}
+            activeItem={searchValues.categoryId}
+          />
+        ) : null}
+      </div>
+
+      <div className="add_offer_btn">
+        {props.loggedIn ? (
+          <a href="/create-offer">
+            <Button color="linkedin">Dodaj ofertę</Button>
+          </a>
+        ) : (
+          <Button color="linkedin" onClick={showMustLoginInfo}>
+            Dodaj ofertę
+          </Button>
+        )}
+        <SearchInput onSubmit={search} onChange={onSearchValueChange} />
+      </div>
+
+      <h3>Filtry</h3>
+      <div className="offers_view_filters">
+        <div>
+          {props.cities.fetched ? (
+            <CityMenu
+              city={filtersValues.cityName}
+              voivodeships={props.cities.voivodeships}
+              onClick={onClickCity}
+            />
+          ) : null}
+        </div>
+        <div className="simple_dropdown_filer">
+          <SimpleDropdownFilter
+            title={filtersValues.order}
+            choices={['Najtańsze', 'Najnowsze']}
+            onClick={simpleFilterClick}
+          />
+        </div>
+      </div>
+
+      <Button
+        onClick={() => {
+          setSearchValues({ ...searchValues, categoryId: '', cityId: '' });
+          setFiltersValues({
+            order: 'Sortuj według',
+            cityName: 'Wybierz miasto',
+          });
+          props.fetchOffers();
+        }}
+      >
+        Wszystkie oferty
+      </Button>
+
+      <div>
+        {props.offers.offers_fetched &&
+        props.categories.categories_fetched &&
+        props.cities.fetched ? (
+          <Offers items={props.offers.offers} />
+        ) : (
+          <div className="loader_container">
+            <Loader active inline />
+          </div>
+        )}
+      </div>
+
+      <div className="pagination_btns">
+        <Button
+          color="linkedin"
+          disabled={props.offers.previousPage ? false : true}
+          onClick={() => {
+            props.fetchPageOffers(props.offers.previousPage);
+          }}
+        >
+          <Icon name="angle left" />
+        </Button>
+        <Button
+          color="linkedin"
+          disabled={props.offers.nextPage ? false : true}
+          onClick={() => {
+            props.fetchPageOffers(props.offers.nextPage);
+          }}
+        >
+          <Icon name="angle right" />
+        </Button>
+      </div>
+    </div>
+  );
+};
+
+const mapStateToProps = (state) => {
+  return {
+    offers: state.offersReducer,
+    categories: state.offerCategoriesReducer,
+    cities: state.citiesReducer,
+    loggedIn: state.authReducer.user,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchCategories: () => dispatch(fetchCategories()),
+    fetchOffers: (...args) => dispatch(fetchOffers(...args)),
+    fetchPageOffers: (link) => dispatch(fetchPageOffers(link)),
+    fetchCities: () => dispatch(fetchCities()),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(OffersView);

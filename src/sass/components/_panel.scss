@@ -1,0 +1,19 @@
+.panel_modal {
+  &-header_item {
+    color: green;
+  }
+
+  &-description_item {
+    &__contact {
+      font-size: 2rem;
+      margin-bottom: 20px;
+    }
+
+    &__message {
+      font-size: 1.5rem;
+      &-username {
+        color: green;
+      }
+    }
+  }
+}

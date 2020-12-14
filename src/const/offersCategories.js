@@ -1,52 +1,52 @@
 // dummy data, the app uses data from mongo db
 // only an example
 export const OffersCategories = [
-   {
+  {
     name: 'Elektronika',
-    icon: 'computer'
-   },
-   {
+    icon: 'computer',
+  },
+  {
     name: 'Moda',
-    icon: 'shopping bag'
-   },
-   {
+    icon: 'shopping bag',
+  },
+  {
     name: 'Dom i ogród',
-    icon: 'leaf'
-   },
-   {
+    icon: 'leaf',
+  },
+  {
     name: 'Dla Dzieci',
-    icon: 'child'
-   },
-   {
+    icon: 'child',
+  },
+  {
     name: 'Zwierzęta',
-    icon: 'paw'
-   },
-   {
+    icon: 'paw',
+  },
+  {
     name: 'Sport i hobby',
-    icon: 'volleyball ball'
-   },
-   {
+    icon: 'volleyball ball',
+  },
+  {
     name: 'Motoryzacja',
-    icon: 'car'
-   },
-   {
+    icon: 'car',
+  },
+  {
     name: 'Usługi i firmy',
-    icon: 'building'
-   },
-   {
+    icon: 'building',
+  },
+  {
     name: 'Nieruchomości',
-    icon: 'home'
-   },
-   {
+    icon: 'home',
+  },
+  {
     name: 'Oddam za darmo',
-    icon: 'box'
-   },
-   {
+    icon: 'box',
+  },
+  {
     name: 'Zamienię',
-    icon: 'exchange'
-   },
-   {
-      name: 'Inne',
-      icom: 'th large'
-   }
-]
+    icon: 'exchange',
+  },
+  {
+    name: 'Inne',
+    icom: 'th large',
+  },
+];

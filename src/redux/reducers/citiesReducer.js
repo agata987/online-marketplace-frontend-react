@@ -1,16 +1,17 @@
 const defaultState = {
-    fetched: false
-}
+  fetched: false,
+};
 
 const citiesReducer = (state = defaultState, action) => {
-    switch(action.type){
-        case 'SET_CITIES':
-            return {
-                fetched: true,
-                voivodeships: action.payload
-            }
-        default: return state
-    }
-}
+  switch (action.type) {
+    case 'SET_CITIES':
+      return {
+        fetched: true,
+        voivodeships: action.payload,
+      };
+    default:
+      return state;
+  }
+};
 
-export default citiesReducer
+export default citiesReducer;

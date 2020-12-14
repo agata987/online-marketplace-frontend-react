@@ -1,0 +1,8 @@
+.login_info_modal-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    &-button_container{
+        margin-top: 20px;
+    }
+}

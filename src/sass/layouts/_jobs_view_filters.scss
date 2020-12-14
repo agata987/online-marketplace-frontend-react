@@ -1,0 +1,32 @@
+.btn_and_search_input{
+    display: flex;
+    flex-direction: row;
+    margin-top: 25px;
+    width: 100%;
+}
+
+.jobs_filters{
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+
+    &-filter{
+        margin-right: 10px;
+        margin-bottom: 10px;
+
+        &__right{
+            margin-right: 10px;
+        }
+    }
+}
+
+.job_filters_secondary{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+
+    &-radio_container{
+        margin-top: 20px;
+    }
+}

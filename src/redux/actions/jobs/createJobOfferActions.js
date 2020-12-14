@@ -1,30 +1,34 @@
-import API_Handler from '../../../API_Handler'
+import API_Handler from '../../../API_Handler';
 
-const setLoading = () => ({type: 'LOADING_'})
-const setDone = () => ({type: 'DONE_'})
-const setErrors = payload => ({type: 'ERRORS_', payload})
-const createEditReset = () => ({type: 'CREATE EDIT RESET_'})
+const setLoading = () => ({ type: 'LOADING_' });
+const setDone = () => ({ type: 'DONE_' });
+const setErrors = (payload) => ({ type: 'ERRORS_', payload });
+const createEditReset = () => ({ type: 'CREATE EDIT RESET_' });
 
-export const createJobOffer = jobOfferData => dispatch => {
-    dispatch(setLoading())
+export const createJobOffer = (jobOfferData) => (dispatch) => {
+  dispatch(setLoading());
 
-    API_Handler(true, {method: 'post', url: 'joboffers/', data: jobOfferData})
+  API_Handler(true, { method: 'post', url: 'joboffers/', data: jobOfferData })
     .then(() => {
-        dispatch(setDone())
+      dispatch(setDone());
     })
-    .catch(err => dispatch(setErrors(err.response.data)))
-}
+    .catch((err) => dispatch(setErrors(err.response.data)));
+};
 
-export const editOffer = (offerId, newOfferData) => dispatch => {
-    dispatch(setLoading())
+export const editOffer = (offerId, newOfferData) => (dispatch) => {
+  dispatch(setLoading());
 
-    API_Handler(true, {method: 'patch', url: `joboffers/${offerId}/`, data: newOfferData})
+  API_Handler(true, {
+    method: 'patch',
+    url: `joboffers/${offerId}/`,
+    data: newOfferData,
+  })
     .then(() => {
-        dispatch(setDone())
+      dispatch(setDone());
     })
-    .catch(err => dispatch(setErrors(err.response.data)))
-}
+    .catch((err) => dispatch(setErrors(err.response.data)));
+};
 
-export const reset = () => dispatch => {
-    dispatch(createEditReset())
-}
+export const reset = () => (dispatch) => {
+  dispatch(createEditReset());
+};

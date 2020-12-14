@@ -1,32 +1,36 @@
-import API_Handler from '../../../API_Handler'
+import API_Handler from '../../../API_Handler';
 
-const setLoading = () => ({type: 'LOADING'})
-const setDone = () => ({type: 'DONE'})
-const setErrors = payload => ({type: 'ERRORS', payload})
-const createEditReset = () => ({type: 'CREATE EDIT RESET'})
+const setLoading = () => ({ type: 'LOADING' });
+const setDone = () => ({ type: 'DONE' });
+const setErrors = (payload) => ({ type: 'ERRORS', payload });
+const createEditReset = () => ({ type: 'CREATE EDIT RESET' });
 
-export const createOffer = offerData => dispatch => {
-    dispatch(setLoading())
+export const createOffer = (offerData) => (dispatch) => {
+  dispatch(setLoading());
 
-    API_Handler(true, {method: 'post', url: 'offers/', data: offerData})
+  API_Handler(true, { method: 'post', url: 'offers/', data: offerData })
     .then(() => {
-        dispatch(setDone())
+      dispatch(setDone());
     })
-    .catch(err => dispatch(setErrors(err.response.data)))
-}
+    .catch((err) => dispatch(setErrors(err.response.data)));
+};
 
-export const editOffer = (offerId, newOfferData) => dispatch => {
-    dispatch(setLoading())
+export const editOffer = (offerId, newOfferData) => (dispatch) => {
+  dispatch(setLoading());
 
-    console.log('DANE', newOfferData)
+  console.log('DANE', newOfferData);
 
-    API_Handler(true, {method: 'patch', url: `offers/${offerId}/`, data: newOfferData})
+  API_Handler(true, {
+    method: 'patch',
+    url: `offers/${offerId}/`,
+    data: newOfferData,
+  })
     .then(() => {
-        dispatch(setDone())
+      dispatch(setDone());
     })
-    .catch(err => dispatch(setErrors(err.response.data)))
-}
+    .catch((err) => dispatch(setErrors(err.response.data)));
+};
 
-export const reset = () => dispatch => {
-    dispatch(createEditReset())
-}
+export const reset = () => (dispatch) => {
+  dispatch(createEditReset());
+};

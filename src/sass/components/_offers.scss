@@ -1,0 +1,44 @@
+.offer {
+  &_item {
+    max-width: $offers-width;
+  }
+
+  &_view {
+    &-actions {
+      margin-bottom: 5px;
+      display: flex;
+      flex-direction: row;
+      justify-content: right;
+      align-items: center;
+      &-btn {
+        margin-left: 5px;
+      }
+    }
+  }
+}
+
+.simple_dropdown_filer {
+  margin-left: 10px;
+}
+
+.offers_search_form {
+  width: 100%;
+  margin-left: 10px;
+  &-input {
+    max-width: 60%;
+    height: 100%;
+  }
+}
+
+.my_offer_view {
+  &-actions {
+    margin-bottom: 5px;
+    &-btn {
+      margin-bottom: 5px;
+    }
+  }
+}
+
+.my_offer_element {
+  margin-top: 2px;
+}

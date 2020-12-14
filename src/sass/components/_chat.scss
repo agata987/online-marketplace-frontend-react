@@ -1,0 +1,16 @@
+.text_input {
+  display: flex;
+  flex-direction: column;
+}
+
+.message {
+  &__author {
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
+    margin: 5px;
+  }
+  &__other {
+    margin: 5px;
+  }
+}
