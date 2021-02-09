@@ -1,6 +1,6 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## online marketplace project for job and sales offers, basic CRUD, add to favourites, communicate through an online chat 
 
--> online marketplace project for job and sales offers, basic CRUD, add to favourites, communicate through an online chat 
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
 
