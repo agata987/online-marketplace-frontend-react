@@ -1,5 +1,7 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+-> online marketplace project for job and sales offers, basic CRUD, add to favourites, communicate through an online chat 
+
 ## Available Scripts
 
 In the project directory, you can run:
